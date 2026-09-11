@@ -1,0 +1,27 @@
+<x-layouts.app title="Articles">
+    <section class="pt-20 pb-16 sm:pt-28">
+        <x-ui.section width="narrow" class="!py-0">
+            <x-ui.eyebrow>Articles</x-ui.eyebrow>
+            <h1 class="mt-5 text-balance font-serif text-5xl leading-[1.05] text-cream sm:text-6xl">Reporting, explainers and stories.</h1>
+        </x-ui.section>
+    </section>
+
+    <x-ui.section class="hairline-t" width="wide">
+        <div class="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+            @foreach ($articles as $article)
+                <a href="{{ route('articles.show', $article) }}" class="group block">
+                    <div class="aspect-[16/10] overflow-hidden rounded-2xl border border-hairline bg-surface">
+                        @if ($article->cover_image_path)
+                            <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($article->cover_image_path) }}" alt="" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                        @endif
+                    </div>
+                    <p class="mt-4 text-xs text-faint">{{ $article->published_at->format('d M Y') }}</p>
+                    <p class="mt-2 font-medium text-cream group-hover:text-ember-soft">{{ $article->title }}</p>
+                    <p class="mt-1 text-sm text-muted">{{ $article->excerpt }}</p>
+                </a>
+            @endforeach
+        </div>
+
+        <div class="mt-12">{{ $articles->links('vendor.pagination.satfyf') }}</div>
+    </x-ui.section>
+</x-layouts.app>

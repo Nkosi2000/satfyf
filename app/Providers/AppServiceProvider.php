@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Models\SiteSetting;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,9 +21,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Paginator::defaultView('vendor.pagination.satfyf');
-        Paginator::defaultSimpleView('vendor.pagination.satfyf');
-
         View::composer('components.footer', function ($view): void {
             $view->with('settings', [
-                ...S
+                ...SiteSetting::group('contact'),
+                ...SiteSetting::group('social'),
+                ...SiteSetting::group('footer'),
+            ]);
+        });
+    }
+}

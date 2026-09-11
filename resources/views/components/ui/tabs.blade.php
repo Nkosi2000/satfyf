@@ -18,4 +18,7 @@
 
     @foreach ($tabs as $i => $tab)
         <div data-tab-panel="{{ $i }}" class="pt-8" @if ($i !== 0) hidden @endif>
-            <p class="max-w-xl text-balance text-base leading-relaxed
+            <p class="max-w-xl text-balance text-base leading-relaxed text-muted sm:text-lg">{{ $tab['body'] }}</p>
+        </div>
+    @endforeach
+</div>

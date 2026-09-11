@@ -14,6 +14,7 @@
         ['label' => 'Contact submissions', 'route' => 'admin.contact-submissions.index'],
         ['label' => 'Newsletter subscribers', 'route' => 'admin.newsletter-subscribers.index'],
         ['label' => 'Site settings', 'route' => 'admin.settings.edit'],
+        ['label' => 'My Account', 'route' => 'admin.account.edit'],
     ];
 @endphp
 

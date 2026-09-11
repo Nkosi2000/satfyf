@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\ContactSubmissionController;
@@ -48,5 +49,8 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
 
         Route::get('settings', [SiteSettingController::class, 'edit'])->name('settings.edit');
         Route::put('settings', [SiteSettingController::class, 'update'])->name('settings.update');
+
+        Route::get('account', [AccountController::class, 'edit'])->name('account.edit');
+        Route::put('account/password', [AccountController::class, 'updatePassword'])->name('account.password.update');
     });
 });
