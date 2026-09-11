@@ -1,0 +1,58 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+
+    /* Ink & surfaces — deepened from the SATFYF brand navy */
+    --color-ink: #07080f;
+    --color-ink-raised: #0d101c;
+    --color-surface: #10131f;
+    --color-surface-2: #171b2c;
+    --color-hairline: rgb(243 237 226 / 10%);
+    --color-hairline-strong: rgb(243 237 226 / 18%);
+
+    /* Text */
+    --color-cream: #f4efe4;
+    --color-muted: #a2a9c4;
+    --color-faint: #6b7191;
+
+    /* Brand accents — warm gold from the logo, cool periwinkle counterpart */
+    --color-ember: #f2a530;
+    --color-ember-soft: #f7c877;
+    --color-ember-deep: #c9781a;
+    --color-signal: #8ba1ff;
+    --color-signal-deep: #5f6fd1;
+
+    --shadow-ring: 0 0 0 1px var(--color-hairline);
+}
+
+@layer base {
+    body {
+        background-color: var(--color-ink);
+        color: var(--color-cream);
+        -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+        background-color: var(--color-ember);
+        color: var(--color-ink);
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-ember-soft);
+        outline-offset: 2px;
+    }
+}
+
+@utility hairline-b {
+    border-bottom: 1px solid var(--color-hairline);
+}
+
+@utility hairline-t {
+    border-top: 1px solid var(--color-hairline);
+}

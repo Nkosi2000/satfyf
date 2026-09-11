@@ -1,0 +1,93 @@
+@php
+    $explore = [
+        ['label' => 'Who We Are', 'route' => 'who-we-are'],
+        ['label' => 'Why We Exist', 'route' => 'why-we-exist'],
+        ['label' => 'What We Do', 'route' => 'what-we-do'],
+        ['label' => 'Get Involved', 'route' => 'get-involved'],
+    ];
+
+    $resourcesNav = [
+        ['label' => 'Articles', 'route' => 'articles.index'],
+        ['label' => 'Events', 'route' => 'events.index'],
+        ['label' => 'Resources', 'route' => 'resources.index'],
+        ['label' => 'Gallery', 'route' => 'gallery'],
+        ['label' => 'Partners', 'route' => 'partners'],
+    ];
+
+    $socials = [
+        ['label' => 'Facebook', 'url' => $settings['social_facebook'] ?? null, 'icon' => 'facebook'],
+        ['label' => 'Instagram', 'url' => $settings['social_instagram'] ?? null, 'icon' => 'instagram'],
+        ['label' => 'Twitter', 'url' => $settings['social_twitter'] ?? null, 'icon' => 'twitter'],
+        ['label' => 'YouTube', 'url' => $settings['social_youtube'] ?? null, 'icon' => 'youtube'],
+    ];
+@endphp
+
+<footer class="hairline-t bg-ink-raised">
+    <x-ui.section width="wide" class="!py-16">
+        <div class="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
+            <div>
+                <a href="{{ route('home') }}" class="inline-flex items-center">
+                    <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="SATFYF" class="h-10 w-auto rounded-md" />
+                </a>
+                <p class="mt-4 max-w-xs text-sm text-muted">
+                    {{ $settings['footer_tagline'] ?? 'A smoke free generation in our lifetime.' }}
+                </p>
+                <x-newsletter-form class="mt-6" />
+            </div>
+
+            <div>
+                <h3 class="text-sm font-medium text-cream">Explore</h3>
+                <ul class="mt-4 space-y-3">
+                    @foreach ($explore as $link)
+                        <li><a href="{{ route($link['route']) }}" class="text-sm text-muted hover:text-cream">{{ $link['label'] }}</a></li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-sm font-medium text-cream">Resources</h3>
+                <ul class="mt-4 space-y-3">
+                    @foreach ($resourcesNav as $link)
+                        <li><a href="{{ route($link['route']) }}" class="text-sm text-muted hover:text-cream">{{ $link['label'] }}</a></li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-sm font-medium text-cream">Contact</h3>
+                <ul class="mt-4 space-y-3 text-sm text-muted">
+                    @if (! empty($settings['contact_address']))
+                        <li>{{ $settings['contact_address'] }}</li>
+                    @endif
+                    @if (! empty($settings['contact_phone_office']))
+                        <li><a href="tel:{{ $settings['contact_phone_office'] }}" class="hover:text-cream">{{ $settings['contact_phone_office'] }}</a></li>
+                    @endif
+                    @if (! empty($settings['contact_email']))
+                        <li><a href="mailto:{{ $settings['contact_email'] }}" class="hover:text-cream">{{ $settings['contact_email'] }}</a></li>
+                    @endif
+                </ul>
+
+                <div class="mt-5 flex items-center gap-3">
+                    @foreach ($socials as $social)
+                        @if ($social['url'])
+                            <a
+                                href="{{ $social['url'] }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="{{ $social['label'] }}"
+                                class="flex h-9 w-9 items-center justify-center rounded-full border border-hairline-strong text-muted transition-colors hover:text-cream"
+                            >
+                                <x-icon.social :name="$social['icon']" class="h-4 w-4" />
+                            </a>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        <div class="hairline-t mt-12 flex flex-col gap-3 pt-8 text-xs text-faint sm:flex-row sm:items-center sm:justify-between">
+            <p>&copy; {{ now()->year }} South African Tobacco-Free Youth Forum. All rights reserved.</p>
+            <p>We speak and spread the truth about smoking.</p>
+        </div>
+    </x-ui.section>
+</footer>
