@@ -1,5 +1,6 @@
 @php
     $links = [
+        ['label' => 'Home', 'route' => 'home'],
         ['label' => 'Who We Are', 'route' => 'who-we-are'],
         ['label' => 'Why We Exist', 'route' => 'why-we-exist'],
         ['label' => 'What We Do', 'route' => 'what-we-do'],
