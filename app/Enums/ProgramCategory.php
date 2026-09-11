@@ -12,10 +12,10 @@ enum ProgramCategory: string
     public function label(): string
     {
         return match ($this) {
-            self::Advocacy => 'Advocacy & Campaigns',
-            self::Education => 'Education & Outreach',
-            self::Community => 'Community Engagement',
-            self::Media => 'Media & Digital',
+            self::Advocacy => __('Advocacy & Campaigns'),
+            self::Education => __('Education & Outreach'),
+            self::Community => __('Community Engagement'),
+            self::Media => __('Media & Digital'),
         };
     }
 }

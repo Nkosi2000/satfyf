@@ -1,17 +1,17 @@
 @php
     $explore = [
-        ['label' => 'Who We Are', 'route' => 'who-we-are'],
-        ['label' => 'Why We Exist', 'route' => 'why-we-exist'],
-        ['label' => 'What We Do', 'route' => 'what-we-do'],
-        ['label' => 'Get Involved', 'route' => 'get-involved'],
+        ['label' => __('Who We Are'), 'route' => 'who-we-are'],
+        ['label' => __('Why We Exist'), 'route' => 'why-we-exist'],
+        ['label' => __('What We Do'), 'route' => 'what-we-do'],
+        ['label' => __('Get Involved'), 'route' => 'get-involved'],
     ];
 
     $resourcesNav = [
-        ['label' => 'Articles', 'route' => 'articles.index'],
-        ['label' => 'Events', 'route' => 'events.index'],
-        ['label' => 'Resources', 'route' => 'resources.index'],
-        ['label' => 'Gallery', 'route' => 'gallery'],
-        ['label' => 'Partners', 'route' => 'partners'],
+        ['label' => __('Articles'), 'route' => 'articles.index'],
+        ['label' => __('Events'), 'route' => 'events.index'],
+        ['label' => __('Resources'), 'route' => 'resources.index'],
+        ['label' => __('Gallery'), 'route' => 'gallery'],
+        ['label' => __('Partners'), 'route' => 'partners'],
     ];
 
     $socials = [
@@ -27,43 +27,43 @@
         <div class="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
             <div>
                 <a href="{{ route('home') }}" class="inline-flex items-center">
-                    <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="SATFYF" class="h-10 w-auto rounded-md" />
+                    <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="SATFYF" class="h-14 w-auto rounded-md" />
                 </a>
                 <p class="mt-4 max-w-xs text-sm text-muted">
-                    {{ $settings['footer_tagline'] ?? 'A smoke free generation in our lifetime.' }}
+                    {{ $settings['footer_tagline'] ?? __('A smoke free generation in our lifetime.') }}
                 </p>
                 <x-newsletter-form class="mt-6" />
             </div>
 
             <div>
-                <h3 class="text-sm font-medium text-cream">Explore</h3>
+                <h3 class="text-sm font-medium text-fg">{{ __('Explore') }}</h3>
                 <ul class="mt-4 space-y-3">
                     @foreach ($explore as $link)
-                        <li><a href="{{ route($link['route']) }}" class="text-sm text-muted hover:text-cream">{{ $link['label'] }}</a></li>
+                        <li><a href="{{ route($link['route']) }}" class="text-sm text-muted hover:text-fg">{{ $link['label'] }}</a></li>
                     @endforeach
                 </ul>
             </div>
 
             <div>
-                <h3 class="text-sm font-medium text-cream">Resources</h3>
+                <h3 class="text-sm font-medium text-fg">{{ __('Resources') }}</h3>
                 <ul class="mt-4 space-y-3">
                     @foreach ($resourcesNav as $link)
-                        <li><a href="{{ route($link['route']) }}" class="text-sm text-muted hover:text-cream">{{ $link['label'] }}</a></li>
+                        <li><a href="{{ route($link['route']) }}" class="text-sm text-muted hover:text-fg">{{ $link['label'] }}</a></li>
                     @endforeach
                 </ul>
             </div>
 
             <div>
-                <h3 class="text-sm font-medium text-cream">Contact</h3>
+                <h3 class="text-sm font-medium text-fg">{{ __('Contact') }}</h3>
                 <ul class="mt-4 space-y-3 text-sm text-muted">
                     @if (! empty($settings['contact_address']))
                         <li>{{ $settings['contact_address'] }}</li>
                     @endif
                     @if (! empty($settings['contact_phone_office']))
-                        <li><a href="tel:{{ $settings['contact_phone_office'] }}" class="hover:text-cream">{{ $settings['contact_phone_office'] }}</a></li>
+                        <li><a href="tel:{{ $settings['contact_phone_office'] }}" class="hover:text-fg">{{ $settings['contact_phone_office'] }}</a></li>
                     @endif
                     @if (! empty($settings['contact_email']))
-                        <li><a href="mailto:{{ $settings['contact_email'] }}" class="hover:text-cream">{{ $settings['contact_email'] }}</a></li>
+                        <li><a href="mailto:{{ $settings['contact_email'] }}" class="hover:text-fg">{{ $settings['contact_email'] }}</a></li>
                     @endif
                 </ul>
 
@@ -75,7 +75,7 @@
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="{{ $social['label'] }}"
-                                class="flex h-9 w-9 items-center justify-center rounded-full border border-hairline-strong text-muted transition-colors hover:text-cream"
+                                class="flex h-9 w-9 items-center justify-center rounded-full border border-hairline-strong text-muted transition-colors hover:text-fg"
                             >
                                 <x-icon.social :name="$social['icon']" class="h-4 w-4" />
                             </a>
@@ -86,8 +86,8 @@
         </div>
 
         <div class="hairline-t mt-12 flex flex-col gap-3 pt-8 text-xs text-faint sm:flex-row sm:items-center sm:justify-between">
-            <p>&copy; {{ now()->year }} South African Tobacco-Free Youth Forum. All rights reserved.</p>
-            <p>We speak and spread the truth about smoking.</p>
+            <p>&copy; {{ now()->year }} {{ __('South African Tobacco-Free Youth Forum. All rights reserved.') }}</p>
+            <p>{{ __('We speak and spread the truth about smoking.') }}</p>
         </div>
     </x-ui.section>
 </footer>

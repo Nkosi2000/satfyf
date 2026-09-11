@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\ProgramCategory;
+use App\Models\Concerns\HasTranslations;
+use Database\Factories\ProgramFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -12,8 +14,13 @@ use Illuminate\Database\Eloquent\Model;
 #[Fillable(['title', 'category', 'description', 'order', 'published'])]
 class Program extends Model
 {
-    /** @use HasFactory<\Database\Factories\ProgramFactory> */
-    use HasFactory, HasUuids;
+    /** @use HasFactory<ProgramFactory> */
+    use HasFactory, HasTranslations, HasUuids;
+
+    /**
+     * @var array<int, string>
+     */
+    protected array $translatable = ['title', 'description'];
 
     protected function casts(): array
     {

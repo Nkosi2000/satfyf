@@ -1,7 +1,7 @@
 @props(['question', 'open' => false])
 
 <details class="group hairline-b py-5" @if ($open) open @endif>
-    <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-cream marker:content-none [&::-webkit-details-marker]:hidden">
+    <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-fg marker:content-none [&::-webkit-details-marker]:hidden">
         <span class="text-base font-medium sm:text-lg">{{ $question }}</span>
         <span class="relative h-5 w-5 shrink-0 text-muted">
             <span class="absolute inset-0 flex items-center justify-center transition-transform duration-200 group-open:rotate-45">

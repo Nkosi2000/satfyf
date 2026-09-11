@@ -31,10 +31,10 @@ describe('store', function () {
         Storage::fake('public');
 
         $response = $this->actingAs($this->admin)->post(route('admin.articles.store'), [
-            'title' => 'New Article',
+            'title' => ['en' => 'New Article'],
             'slug' => 'new-article',
-            'excerpt' => 'A short summary.',
-            'body' => 'Full **markdown** body.',
+            'excerpt' => ['en' => 'A short summary.'],
+            'body' => ['en' => 'Full **markdown** body.'],
             'author_name' => 'Admin Writer',
             'cover_image' => UploadedFile::fake()->image('cover.jpg'),
             'published_at' => now()->format('Y-m-d\TH:i'),
@@ -50,7 +50,7 @@ describe('store', function () {
     it('rejects a submission with an empty payload', function () {
         $response = $this->actingAs($this->admin)->post(route('admin.articles.store'), []);
 
-        $response->assertSessionHasErrors(['title', 'slug', 'excerpt', 'body']);
+        $response->assertSessionHasErrors(['title.en', 'slug', 'excerpt.en', 'body.en']);
         expect(Article::query()->count())->toBe(0);
     });
 
@@ -58,13 +58,35 @@ describe('store', function () {
         Article::factory()->create(['slug' => 'taken-slug']);
 
         $response = $this->actingAs($this->admin)->post(route('admin.articles.store'), [
-            'title' => 'Another Article',
+            'title' => ['en' => 'Another Article'],
             'slug' => 'taken-slug',
-            'excerpt' => 'Summary.',
-            'body' => 'Body.',
+            'excerpt' => ['en' => 'Summary.'],
+            'body' => ['en' => 'Body.'],
         ]);
 
         $response->assertSessionHasErrors('slug');
+    });
+
+    it('stores every submitted locale of a translatable field, each resolving under its own locale', function () {
+        $response = $this->actingAs($this->admin)->post(route('admin.articles.store'), [
+            'title' => ['en' => 'English Title', 'zu' => 'Isihloko SesiZulu', 'st' => '', 'af' => null],
+            'slug' => 'multi-locale-article',
+            'excerpt' => ['en' => 'English excerpt.'],
+            'body' => ['en' => 'English body.'],
+        ]);
+
+        $response->assertRedirect(route('admin.articles.index'));
+
+        $article = Article::query()->where('slug', 'multi-locale-article')->firstOrFail();
+        expect($article->translations('title'))->toBe(['en' => 'English Title', 'zu' => 'Isihloko SesiZulu']);
+
+        app()->setLocale('zu');
+        expect($article->refresh()->title)->toBe('Isihloko SesiZulu');
+
+        app()->setLocale('af');
+        expect($article->refresh()->title)->toBe('English Title');
+
+        app()->setLocale('en');
     });
 });
 
@@ -75,10 +97,10 @@ describe('update', function () {
         Storage::disk('public')->put('articles/old.jpg', 'old contents');
 
         $response = $this->actingAs($this->admin)->put(route('admin.articles.update', $article), [
-            'title' => 'Updated Title',
+            'title' => ['en' => 'Updated Title'],
             'slug' => $article->slug,
-            'excerpt' => $article->excerpt,
-            'body' => $article->body,
+            'excerpt' => ['en' => $article->excerpt],
+            'body' => ['en' => $article->body],
             'cover_image' => UploadedFile::fake()->image('new-cover.jpg'),
         ]);
 
@@ -94,10 +116,10 @@ describe('update', function () {
         $article = Article::factory()->create(['slug' => 'stable-slug']);
 
         $response = $this->actingAs($this->admin)->put(route('admin.articles.update', $article), [
-            'title' => 'Renamed',
+            'title' => ['en' => 'Renamed'],
             'slug' => 'stable-slug',
-            'excerpt' => $article->excerpt,
-            'body' => $article->body,
+            'excerpt' => ['en' => $article->excerpt],
+            'body' => ['en' => $article->body],
         ]);
 
         $response->assertRedirect(route('admin.articles.index'));

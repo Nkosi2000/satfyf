@@ -8,10 +8,10 @@
                 data-tab-trigger="{{ $i }}"
                 role="tab"
                 aria-selected="{{ $i === 0 ? 'true' : 'false' }}"
-                class="group relative pb-4 text-sm font-medium text-muted transition-colors aria-selected:text-cream"
+                class="group relative pb-4 text-sm font-medium text-muted transition-colors aria-selected:text-fg"
             >
                 {{ $tab['label'] }}
-                <span class="absolute inset-x-0 -bottom-px h-px scale-x-0 bg-ember-soft transition-transform duration-200 group-aria-selected:scale-x-100"></span>
+                <span class="absolute inset-x-0 -bottom-px h-px scale-x-0 bg-primary-soft transition-transform duration-200 group-aria-selected:scale-x-100"></span>
             </button>
         @endforeach
     </div>

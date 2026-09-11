@@ -18,7 +18,9 @@ class SiteSetting extends Model
 
     public static function get(string $key, ?string $default = null): ?string
     {
-        return static::allRows()->firstWhere('key', $key)['value'] ?? $default;
+        $row = static::allRows()->firstWhere('key', $key);
+
+        return $row === null ? $default : (static::resolveValue($row['value']) ?? $default);
     }
 
     /**
@@ -28,8 +30,50 @@ class SiteSetting extends Model
     {
         return static::allRows()
             ->where('group', $group)
-            ->pluck('value', 'key')
+            ->mapWithKeys(fn (array $row) => [$row['key'] => static::resolveValue($row['value'])])
             ->all();
+    }
+
+    /**
+     * Decode a raw {"en": ..., "zu": ...} JSON value and resolve it against
+     * the current request's locale. Done by hand (not via the shared
+     * Translatable cast) because allRows() caches plain, un-cast arrays —
+     * casting here would bake one locale into a cache shared by every
+     * visitor. See the class-level caching note below.
+     */
+    protected static function resolveValue(?string $raw): ?string
+    {
+        if ($raw === null) {
+            return null;
+        }
+
+        $decoded = json_decode($raw, true);
+
+        if (! is_array($decoded)) {
+            return $raw;
+        }
+
+        $locale = app()->getLocale();
+        $fallback = config('app.fallback_locale');
+
+        return $decoded[$locale] ?? $decoded[$fallback] ?? null;
+    }
+
+    /**
+     * The raw, un-resolved per-locale values for this setting — used by the
+     * admin settings form to prefill all 4 locale inputs at once.
+     *
+     * @return array<string, string>
+     */
+    public function translations(): array
+    {
+        if ($this->value === null) {
+            return [];
+        }
+
+        $decoded = json_decode($this->value, true);
+
+        return is_array($decoded) ? $decoded : [];
     }
 
     public static function forgetCache(): void

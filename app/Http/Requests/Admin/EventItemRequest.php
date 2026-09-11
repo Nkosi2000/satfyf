@@ -2,12 +2,15 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Http\Requests\Concerns\ValidatesTranslatable;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class EventItemRequest extends FormRequest
 {
+    use ValidatesTranslatable;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -24,10 +27,10 @@ class EventItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', 'alpha_dash', Rule::unique('event_items', 'slug')->ignore($this->route('event_item'))],
-            'description' => ['required', 'string'],
-            'location' => ['nullable', 'string', 'max:255'],
+            ...$this->translatableRules('title', ['string', 'max:255']),
+            'slug' => ['required', 'string', 'max:255', 'alpha_dash', Rule::unique('event_items', 'slug')->ignore($this->route('event'))],
+            ...$this->translatableRules('description', ['string']),
+            ...$this->translatableRules('location', ['string', 'max:255'], required: false),
             'starts_at' => ['required', 'date'],
             'ends_at' => ['nullable', 'date', 'after_or_equal:starts_at'],
             'cover_image' => ['nullable', 'image', 'max:4096'],

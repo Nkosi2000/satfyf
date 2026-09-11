@@ -4,22 +4,26 @@
         @method('PUT')
 
         @foreach ($settings as $group => $items)
-            <div class="rounded-xl border border-slate-200 bg-white p-6">
+            <div class="rounded-xl border border-hairline-strong bg-surface p-6">
                 <h2 class="font-semibold capitalize">{{ $group }}</h2>
 
                 <div class="mt-4 grid gap-5">
                     @foreach ($items as $setting)
-                        <x-admin.field
+                        @php
+                            $translations = $setting->translations();
+                            $longest = collect($translations)->map(fn ($value) => strlen((string) $value))->max() ?? 0;
+                        @endphp
+                        <x-admin.translatable-field
                             :name="'settings['.$setting->key.']'"
                             :label="\Illuminate\Support\Str::headline($setting->key)"
-                            :type="strlen((string) $setting->value) > 100 ? 'textarea' : 'text'"
-                            :value="$setting->value"
+                            :type="$longest > 100 ? 'textarea' : 'text'"
+                            :translations="$translations"
                         />
                     @endforeach
                 </div>
             </div>
         @endforeach
 
-        <button type="submit" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800">Save settings</button>
+        <x-ui.button type="submit" size="sm">Save settings</x-ui.button>
     </form>
 </x-admin.layout>

@@ -21,6 +21,6 @@ class ContactController extends Controller
     {
         ContactSubmission::query()->create($request->validated());
 
-        return back()->with('contact_success', 'Thanks for reaching out — we\'ll get back to you soon.');
+        return back()->with('contact_success', __('Thanks for reaching out — we\'ll get back to you soon.'));
     }
 }

@@ -5,7 +5,7 @@ use App\Models\Partner;
 it('renders each simple public page successfully', function (string $uri, string $expectedText) {
     $this->get($uri)
         ->assertOk()
-        ->assertSee($expectedText, false);
+        ->assertSee($expectedText);
 })->with([
     'home' => ['/', 'South African Tobacco-Free Youth Forum'],
     'who we are' => ['/who-we-are', 'Youth voices, not youth audiences.'],

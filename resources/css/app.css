@@ -8,45 +8,169 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
     --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
 
-    /* Ink & surfaces — deepened from the SATFYF brand navy */
-    --color-ink: #07080f;
-    --color-ink-raised: #0d101c;
-    --color-surface: #10131f;
-    --color-surface-2: #171b2c;
-    --color-hairline: rgb(243 237 226 / 10%);
-    --color-hairline-strong: rgb(243 237 226 / 18%);
+    /* Slightly larger than Tailwind's stock xs/sm steps — eyebrows, dates,
+       captions and body copy set in these sizes were reading too small. */
+    --text-xs: 0.8125rem;
+    --text-xs--line-height: 1.125rem;
+    --text-sm: 0.9375rem;
+    --text-sm--line-height: 1.375rem;
 
-    /* Text */
-    --color-cream: #f4efe4;
-    --color-muted: #a2a9c4;
-    --color-faint: #6b7191;
+    /*
+     * The six official South African flag colours, used as the literal
+     * brand reference: green #007A4D, gold #FFB612, red #DE3831,
+     * blue #002395, black #000000, white #FFFFFF. Every token below either
+     * IS one of these six exactly, or is a tint/shade of one — introduced
+     * only where the flag hex itself would fail text-contrast in that
+     * specific role (documented inline below). Light values live here (the
+     * default); .dark overrides every one of these same custom properties.
+     * Structural tokens (ink/surface/hairline/fg/muted/faint) keep generic,
+     * role-based names since they're roles, not hues.
+     */
+    --color-ink: #ffffff;
+    --color-ink-raised: #f4f4f2;
+    --color-surface: #ffffff;
+    --color-surface-2: #ececea;
+    --color-hairline: rgb(0 0 0 / 9%);
+    --color-hairline-strong: rgb(0 0 0 / 18%);
 
-    /* Brand accents — warm gold from the logo, cool periwinkle counterpart */
-    --color-ember: #f2a530;
-    --color-ember-soft: #f7c877;
-    --color-ember-deep: #c9781a;
-    --color-signal: #8ba1ff;
-    --color-signal-deep: #5f6fd1;
+    --color-fg: #000000;
+    --color-muted: #45484c;
+    --color-faint: #797c80;
+
+    /* Green #007A4D — already ~4.8:1 on white, used as-is for text too. */
+    --color-primary: #007a4d;
+    --color-primary-soft: #1a9b68;
+    --color-primary-deep: #00522f;
+    --color-primary-rgb: 0 122 77;
+
+    /* Gold #FFB612 — ~1.3:1 on white, unusable as light-mode text; shaded
+       down for text/labels, kept exact for fills where text sits on top. */
+    --color-secondary: #8a5d00;
+    --color-secondary-soft: #ffb612;
+    --color-secondary-deep: #5e3f00;
+
+    /* Blue #002395 — very high contrast on white, used as-is. */
+    --color-tertiary: #002395;
+    --color-tertiary-deep: #001a6e;
+
+    /* Red #DE3831 — borderline (~3.7:1) for small text on white; shaded
+       down for text, kept exact for fills/borders. */
+    --color-danger: #a32a24;
+    --color-danger-soft: #de3831;
+
+    --color-on-accent: #ffffff;
 
     --shadow-ring: 0 0 0 1px var(--color-hairline);
+
+    /* Flag-band gradient used for the hairline that separates one page
+       section from the next — the literal official hex values, not the
+       contrast-adjusted text/fill tokens above, since this is a decorative
+       fill rather than text. Black/white are left out: either would
+       disappear into the page background in one of the two themes. */
+    --gradient-flag: linear-gradient(90deg, #007a4d, #ffb612, #de3831, #002395);
+    --gradient-flag-vertical: linear-gradient(180deg, #007a4d, #ffb612, #de3831, #002395);
+
+    /* Motion */
+    --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.dark {
+    --color-ink: #000000;
+    --color-ink-raised: #0a0a0a;
+    --color-surface: #0f0f0f;
+    --color-surface-2: #191919;
+    --color-hairline: rgb(255 255 255 / 10%);
+    --color-hairline-strong: rgb(255 255 255 / 18%);
+
+    --color-fg: #ffffff;
+    --color-muted: #a6a6a6;
+    --color-faint: #707070;
+
+    /* Green #007A4D reads too dark as text on black; brightened for that
+       one role. Fills keep the exact flag green. */
+    --color-primary: #007a4d;
+    --color-primary-soft: #2ecc81;
+    --color-primary-deep: #00522f;
+    --color-primary-rgb: 0 122 77;
+
+    /* Gold #FFB612 has excellent contrast on black — used as-is. */
+    --color-secondary: #ffc94d;
+    --color-secondary-soft: #ffb612;
+    --color-secondary-deep: #c9781a;
+
+    /* Blue #002395 is nearly invisible on black; brightened for text,
+       fills keep the exact flag blue. */
+    --color-tertiary: #5a7cff;
+    --color-tertiary-deep: #002395;
+
+    /* Red #DE3831 already reads clearly on black — used as-is for both. */
+    --color-danger: #ff6b5b;
+    --color-danger-soft: #de3831;
+
+    --color-on-accent: #ffffff;
 }
 
 @layer base {
+    /* Smooth theme crossfade: every element's background, border, text and
+       icon colour eases between light and dark together on toggle, not
+       just the page background. Paint-only properties — no layout or
+       transform cost — so this is safe applied this broadly. Lower
+       specificity than any class-based transition rule below, so those
+       still win on the properties they care about (e.g. a card's hover
+       lift keeps its own faster, snappier timing). */
+    *,
+    ::before,
+    ::after {
+        transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+        transition-duration: 400ms;
+        transition-timing-function: ease;
+    }
+
     body {
         background-color: var(--color-ink);
-        color: var(--color-cream);
+        color: var(--color-fg);
         -webkit-font-smoothing: antialiased;
     }
 
     ::selection {
-        background-color: var(--color-ember);
-        color: var(--color-ink);
+        background-color: var(--color-primary-soft);
+        color: var(--color-on-accent);
     }
 
     :focus-visible {
-        outline: 2px solid var(--color-ember-soft);
+        outline: 2px solid var(--color-primary-soft);
         outline-offset: 2px;
     }
+}
+
+/* Scrollbar in the flag's colours, echoing the section-divider gradient.
+   Firefox's `scrollbar-color` has no gradient support, so it falls back to
+   a single flag green rather than trying to approximate the band. */
+html {
+    scrollbar-color: #007a4d transparent;
+    scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-image: var(--gradient-flag-vertical);
+    background-clip: padding-box;
+    border: 3px solid transparent;
+    border-radius: 9999px;
+    transition: border-width 150ms ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    border-width: 2px;
 }
 
 @utility hairline-b {
@@ -54,5 +178,236 @@
 }
 
 @utility hairline-t {
-    border-top: 1px solid var(--color-hairline);
+    border-top: 1px solid transparent;
+    border-image: var(--gradient-flag) 1;
+}
+
+/* Image loading placeholders — every <img> gets a grey shimmer skeleton
+   until it actually finishes loading (see image-loading.js, which marks
+   [data-loaded] on load/error). No per-template opt-in needed. */
+@keyframes img-shimmer {
+    from {
+        background-position: 200% 0;
+    }
+
+    to {
+        background-position: -200% 0;
+    }
+}
+
+img {
+    transition:
+        opacity 250ms ease,
+        background-color 400ms ease,
+        border-color 400ms ease;
+}
+
+img:not([data-loaded]) {
+    background-color: var(--color-surface-2);
+    background-image: linear-gradient(
+        100deg,
+        transparent 30%,
+        var(--color-hairline-strong) 50%,
+        transparent 70%
+    );
+    background-size: 200% 100%;
+    animation: img-shimmer 1.6s ease-in-out infinite;
+    opacity: 0.7;
+}
+
+/* Images without a height-constraining parent (e.g. the masonry gallery,
+   which intentionally has no fixed aspect ratio) collapse to 0 height
+   before their intrinsic size is known, leaving no box for the shimmer to
+   fill. `.h-full` images already get their height from a sized wrapper, so
+   they're excluded — this only fills the gap for genuinely unsized ones. */
+img:not(.h-full):not([data-loaded]) {
+    min-height: 12rem;
+}
+
+img[data-loaded] {
+    animation: none;
+    background-image: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    img:not([data-loaded]) {
+        animation: none;
+    }
+}
+
+/* Seamless infinite marquee — duplicate the track's content once so -50%
+   loops back to an identical starting frame. */
+@keyframes marquee {
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.marquee-track {
+    animation: marquee 28s linear infinite;
+}
+
+.marquee-track:hover {
+    animation-play-state: paused;
+}
+
+/* Scroll reveal — slides up + fades in once per element, exactly when it
+   actually reaches the viewport while scrolling (see reveal.js, plain
+   IntersectionObserver, no global timer that could fire early). */
+.reveal {
+    opacity: 0;
+    transform: translateY(56px);
+    transition:
+        opacity 1500ms var(--ease-out-strong),
+        transform 1500ms var(--ease-out-strong),
+        background-color 400ms ease,
+        border-color 400ms ease,
+        color 400ms ease;
+}
+
+.reveal[data-visible] {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Same idea, but staggers each direct child as the group scrolls into view. */
+.reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(56px);
+    transition:
+        opacity 1300ms var(--ease-out-strong),
+        transform 1300ms var(--ease-out-strong),
+        background-color 400ms ease,
+        border-color 400ms ease,
+        color 400ms ease;
+}
+
+.reveal-stagger[data-visible] > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-stagger > *:nth-child(2) {
+    transition-delay: 200ms;
+}
+
+.reveal-stagger > *:nth-child(3) {
+    transition-delay: 400ms;
+}
+
+.reveal-stagger > *:nth-child(4) {
+    transition-delay: 600ms;
+}
+
+.reveal-stagger > *:nth-child(5) {
+    transition-delay: 800ms;
+}
+
+.reveal-stagger > *:nth-child(n + 6) {
+    transition-delay: 1000ms;
+}
+
+/* Lift + brighten on hover — cards, tiles. Declared after .reveal so that,
+   on equal specificity, a hover transform always wins over the reveal's
+   resting transform instead of being silently overridden once revealed.
+   Pointer-gated so touch taps don't get stuck in a "hovered" transform. */
+@media (hover: hover) and (pointer: fine) {
+    .hover-lift {
+        transition:
+            transform 200ms var(--ease-out-strong),
+            border-color 200ms ease,
+            background-color 400ms ease,
+            color 400ms ease;
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-4px);
+        border-color: var(--color-hairline-strong);
+    }
+
+    .hover-zoom {
+        overflow: hidden;
+    }
+
+    .hover-zoom img {
+        transition:
+            transform 500ms var(--ease-out-strong),
+            opacity 250ms ease,
+            background-color 400ms ease;
+    }
+
+    .hover-zoom:hover img {
+        transform: scale(1.06);
+    }
+}
+
+/* One-time hero entrance stagger */
+@keyframes hero-rise {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-enter > * {
+    opacity: 0;
+    animation: hero-rise 700ms var(--ease-out-strong) forwards;
+}
+
+.hero-enter > *:nth-child(1) {
+    animation-delay: 60ms;
+}
+
+.hero-enter > *:nth-child(2) {
+    animation-delay: 140ms;
+}
+
+.hero-enter > *:nth-child(3) {
+    animation-delay: 220ms;
+}
+
+.hero-enter > *:nth-child(4) {
+    animation-delay: 300ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+        animation: none;
+    }
+
+    .reveal,
+    .reveal-stagger > * {
+        transform: none;
+        transition:
+            opacity 300ms ease,
+            transform 1ms,
+            background-color 400ms ease,
+            border-color 400ms ease,
+            color 400ms ease;
+        transition-delay: 0ms;
+    }
+
+    .reveal[data-visible],
+    .reveal-stagger[data-visible] > * {
+        opacity: 1;
+    }
+
+    .hero-enter > * {
+        animation-name: hero-rise;
+        animation-duration: 1ms;
+        animation-fill-mode: forwards;
+    }
+
+    .hover-lift:hover {
+        transform: none;
+    }
+
+    .hover-zoom:hover img {
+        transform: none;
+    }
 }

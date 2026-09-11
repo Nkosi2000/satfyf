@@ -21,11 +21,16 @@ class SiteSettingController extends Controller
     {
         $values = $request->validate([
             'settings' => ['required', 'array'],
-            'settings.*' => ['nullable', 'string', 'max:5000'],
+            'settings.*' => ['nullable', 'array'],
+            'settings.*.*' => ['nullable', 'string', 'max:5000'],
         ])['settings'];
 
-        foreach ($values as $key => $value) {
-            SiteSetting::query()->where('key', $key)->update(['value' => $value]);
+        foreach ($values as $key => $locales) {
+            $locales = array_filter($locales, fn ($value) => $value !== null && $value !== '');
+
+            SiteSetting::query()->where('key', $key)->update([
+                'value' => $locales === [] ? null : json_encode($locales),
+            ]);
         }
 
         SiteSetting::forgetCache();

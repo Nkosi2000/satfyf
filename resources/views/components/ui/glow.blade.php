@@ -1,9 +1,10 @@
-@props(['tone' => 'ember'])
+@props(['tone' => 'primary'])
 
 @php
     $tones = [
-        'ember' => 'from-ember/35',
-        'signal' => 'from-signal/30',
+        'primary' => 'from-primary/25',
+        'secondary' => 'from-secondary-soft/25',
+        'tertiary' => 'from-tertiary/20',
     ];
 @endphp
 
@@ -11,6 +12,6 @@
     aria-hidden="true"
     {{ $attributes->class([
         'pointer-events-none absolute rounded-full blur-3xl bg-radial to-transparent',
-        $tones[$tone] ?? $tones['ember'],
+        $tones[$tone] ?? $tones['primary'],
     ]) }}
 ></div>

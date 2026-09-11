@@ -1,12 +1,12 @@
 <x-admin.layout title="Gallery">
     <div class="flex items-center justify-between">
-        <p class="text-sm text-slate-500">{{ $images->total() }} images</p>
-        <a href="{{ route('admin.gallery-images.create') }}" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800">Add image</a>
+        <p class="text-sm text-muted">{{ $images->total() }} images</p>
+        <x-ui.button href="{{ route('admin.gallery-images.create') }}" size="sm">Add image</x-ui.button>
     </div>
 
     <div class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         @foreach ($images as $image)
-            <div class="overflow-hidden rounded-xl border border-slate-200 bg-white">
+            <div class="overflow-hidden rounded-xl border border-hairline-strong bg-surface">
                 <img
                     src="{{ str_starts_with($image->image_path, 'http') ? $image->image_path : \Illuminate\Support\Facades\Storage::disk('public')->url($image->image_path) }}"
                     alt="{{ $image->caption }}"
@@ -14,13 +14,13 @@
                 />
                 <div class="p-3">
                     <p class="truncate text-sm font-medium">{{ $image->caption ?: 'Untitled' }}</p>
-                    <p class="text-xs text-slate-500">{{ $image->category }}</p>
+                    <p class="text-xs text-muted">{{ $image->category }}</p>
                     <div class="mt-2 flex items-center gap-3 text-sm">
-                        <a href="{{ route('admin.gallery-images.edit', $image) }}" class="font-medium text-slate-600 hover:text-slate-900">Edit</a>
+                        <a href="{{ route('admin.gallery-images.edit', $image) }}" class="font-medium text-muted hover:text-fg">Edit</a>
                         <form method="POST" action="{{ route('admin.gallery-images.destroy', $image) }}" onsubmit="return confirm('Delete this image?')">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="font-medium text-red-500 hover:text-red-700">Delete</button>
+                            <button type="submit" class="font-medium text-danger-soft hover:text-danger">Delete</button>
                         </form>
                     </div>
                 </div>

@@ -2,7 +2,7 @@
 
 <div {{ $attributes }}>
     @if (session('newsletter_success'))
-        <p class="mb-3 text-sm text-ember-soft">{{ session('newsletter_success') }}</p>
+        <p class="mb-3 text-sm text-primary-soft">{{ session('newsletter_success') }}</p>
     @endif
 
     <form
@@ -11,7 +11,7 @@
         class="flex w-full max-w-sm flex-col gap-3 sm:flex-row {{ $align === 'center' ? 'mx-auto' : '' }}"
     >
         @csrf
-        <label for="newsletter-email" class="sr-only">Email address</label>
+        <label for="newsletter-email" class="sr-only">{{ __('Email address') }}</label>
         <input
             id="newsletter-email"
             type="email"
@@ -19,12 +19,12 @@
             required
             placeholder="you@example.com"
             value="{{ old('email') }}"
-            class="w-full rounded-full border border-hairline-strong bg-surface px-4 py-2.5 text-sm text-cream placeholder:text-faint focus:border-ember-soft"
+            class="w-full rounded-full border border-hairline-strong bg-surface px-4 py-2.5 text-sm text-fg placeholder:text-faint focus:border-primary-soft"
         />
-        <x-ui.button type="submit" size="sm" class="shrink-0">Subscribe</x-ui.button>
+        <x-ui.button type="submit" size="sm" class="shrink-0">{{ __('Subscribe') }}</x-ui.button>
     </form>
 
     @error('email')
-        <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
+        <p class="mt-2 text-sm text-danger">{{ $message }}</p>
     @enderror
 </div>

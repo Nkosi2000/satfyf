@@ -45,7 +45,10 @@ class SiteSettingSeeder extends Seeder
 
         foreach ($settings as $group => $pairs) {
             foreach ($pairs as $key => $value) {
-                SiteSetting::query()->updateOrCreate(['key' => $key], ['group' => $group, 'value' => $value]);
+                SiteSetting::query()->updateOrCreate(
+                    ['key' => $key],
+                    ['group' => $group, 'value' => json_encode(['en' => $value])],
+                );
             }
         }
     }

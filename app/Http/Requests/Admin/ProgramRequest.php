@@ -3,12 +3,15 @@
 namespace App\Http\Requests\Admin;
 
 use App\Enums\ProgramCategory;
+use App\Http\Requests\Concerns\ValidatesTranslatable;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class ProgramRequest extends FormRequest
 {
+    use ValidatesTranslatable;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -25,9 +28,9 @@ class ProgramRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
+            ...$this->translatableRules('title', ['string', 'max:255']),
             'category' => ['required', Rule::enum(ProgramCategory::class)],
-            'description' => ['required', 'string', 'max:2000'],
+            ...$this->translatableRules('description', ['string', 'max:2000']),
             'order' => ['nullable', 'integer', 'min:0'],
             'published' => ['sometimes', 'boolean'],
         ];

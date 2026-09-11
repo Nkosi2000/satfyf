@@ -1,14 +1,14 @@
 @php($event = $event ?? null)
 
 <div class="grid gap-5 sm:grid-cols-2">
-    <x-admin.field name="title" label="Title" :value="$event?->title" />
+    <x-admin.translatable-field name="title" label="Title" :translations="$event?->translations('title') ?? []" />
     <x-admin.field name="slug" label="Slug" :value="$event?->slug" hint="Used in the event URL." />
 </div>
 
-<x-admin.field name="description" label="Description" type="textarea" :value="$event?->description" class="mt-5" />
+<x-admin.translatable-field name="description" label="Description" type="textarea" :translations="$event?->translations('description') ?? []" class="mt-5" />
 
 <div class="mt-5 grid gap-5 sm:grid-cols-3">
-    <x-admin.field name="location" label="Location" :value="$event?->location" />
+    <x-admin.translatable-field name="location" label="Location" :translations="$event?->translations('location') ?? []" />
     <x-admin.field name="starts_at" label="Starts at" type="datetime-local" :value="$event?->starts_at?->format('Y-m-d\TH:i')" />
     <x-admin.field name="ends_at" label="Ends at" type="datetime-local" :value="$event?->ends_at?->format('Y-m-d\TH:i')" />
 </div>

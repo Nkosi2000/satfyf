@@ -48,7 +48,7 @@ export function initAdmin() {
                 body: JSON.stringify({ body: textarea.value }),
             });
 
-            preview.innerHTML = response.ok ? await response.text() : '<p class="text-red-400">Could not render preview.</p>';
+            preview.innerHTML = response.ok ? await response.text() : '<p class="text-danger-soft">Could not render preview.</p>';
         };
 
         writeTab.addEventListener('click', showWrite);

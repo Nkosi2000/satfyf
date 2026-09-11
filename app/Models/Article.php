@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasTranslations;
+use Database\Factories\ArticleFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -12,8 +14,13 @@ use Illuminate\Support\Str;
 #[Fillable(['title', 'slug', 'excerpt', 'body', 'cover_image_path', 'author_name', 'published_at'])]
 class Article extends Model
 {
-    /** @use HasFactory<\Database\Factories\ArticleFactory> */
-    use HasFactory, HasUuids;
+    /** @use HasFactory<ArticleFactory> */
+    use HasFactory, HasTranslations, HasUuids;
+
+    /**
+     * @var array<int, string>
+     */
+    protected array $translatable = ['title', 'excerpt', 'body'];
 
     protected function casts(): array
     {

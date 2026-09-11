@@ -10,8 +10,8 @@ enum PartnerType: string
     public function label(): string
     {
         return match ($this) {
-            self::Partner => 'Partner',
-            self::Collaborator => 'Collaborator',
+            self::Partner => __('Partner'),
+            self::Collaborator => __('Collaborator'),
         };
     }
 }

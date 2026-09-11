@@ -15,6 +15,6 @@ class NewsletterController extends Controller
             'subscribed_at' => now(),
         ]);
 
-        return back()->with('newsletter_success', 'You\'re subscribed. Thanks for joining us.');
+        return back()->with('newsletter_success', __('You\'re subscribed. Thanks for joining us.'));
     }
 }

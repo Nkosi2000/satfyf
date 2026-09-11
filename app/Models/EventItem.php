@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasTranslations;
+use Database\Factories\EventItemFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -11,8 +13,13 @@ use Illuminate\Database\Eloquent\Model;
 #[Fillable(['title', 'slug', 'description', 'location', 'starts_at', 'ends_at', 'cover_image_path', 'is_featured', 'published'])]
 class EventItem extends Model
 {
-    /** @use HasFactory<\Database\Factories\EventItemFactory> */
-    use HasFactory, HasUuids;
+    /** @use HasFactory<EventItemFactory> */
+    use HasFactory, HasTranslations, HasUuids;
+
+    /**
+     * @var array<int, string>
+     */
+    protected array $translatable = ['title', 'description', 'location'];
 
     protected function casts(): array
     {

@@ -6,7 +6,7 @@
 ])
 
 @php
-    $base = 'inline-flex items-center justify-center gap-2 rounded-full font-medium transition duration-150 ease-out disabled:opacity-50 disabled:pointer-events-none';
+    $base = 'inline-flex items-center justify-center gap-2 rounded-full font-medium transition duration-150 ease-out active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none disabled:active:scale-100';
 
     $sizes = [
         'sm' => 'px-4 py-2 text-sm',
@@ -15,9 +15,9 @@
     ];
 
     $variants = [
-        'primary' => 'bg-gradient-to-b from-ember-soft to-ember text-ink shadow-[0_1px_0_0_rgba(255,255,255,0.3)_inset,0_8px_24px_-8px_rgba(242,165,48,0.55)] hover:brightness-105 active:brightness-95',
-        'secondary' => 'border border-hairline-strong text-cream hover:bg-surface hover:border-cream/30',
-        'ghost' => 'text-muted hover:text-cream',
+        'primary' => 'bg-gradient-to-b from-primary-soft to-primary text-on-accent shadow-[0_1px_0_0_rgba(255,255,255,0.3)_inset,0_8px_24px_-8px_rgb(var(--color-primary-rgb)/0.45)] hover:brightness-105 active:brightness-95',
+        'secondary' => 'border border-hairline-strong text-fg hover:bg-surface hover:border-fg/30',
+        'ghost' => 'text-muted hover:text-fg',
     ];
 
     $classes = $base . ' ' . ($sizes[$size] ?? $sizes['md']) . ' ' . ($variants[$variant] ?? $variants['primary']);

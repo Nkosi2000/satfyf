@@ -2,11 +2,14 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Http\Requests\Concerns\ValidatesTranslatable;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ResourceRequest extends FormRequest
 {
+    use ValidatesTranslatable;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,10 +26,10 @@ class ResourceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string', 'max:1000'],
+            ...$this->translatableRules('title', ['string', 'max:255']),
+            ...$this->translatableRules('description', ['string', 'max:1000'], required: false),
             'file' => [$this->isMethod('post') ? 'required' : 'nullable', 'file', 'max:20480'],
-            'category' => ['nullable', 'string', 'max:100'],
+            ...$this->translatableRules('category', ['string', 'max:100'], required: false),
             'published' => ['sometimes', 'boolean'],
         ];
     }

@@ -1,58 +1,78 @@
 @php
+    // Each link's hover underline cycles through the flag's four chromatic
+    // colours (green, red, gold, blue) in a fixed rotation, continuing
+    // across both link groups so the sequence reads as one continuous nav.
     $links = [
-        ['label' => 'Home', 'route' => 'home'],
-        ['label' => 'Who We Are', 'route' => 'who-we-are'],
-        ['label' => 'Why We Exist', 'route' => 'why-we-exist'],
-        ['label' => 'What We Do', 'route' => 'what-we-do'],
-        ['label' => 'Articles', 'route' => 'articles.index'],
-        ['label' => 'Events', 'route' => 'events.index'],
+        ['label' => __('Home'), 'route' => 'home', 'accent' => 'bg-primary-soft'],
+        ['label' => __('Who We Are'), 'route' => 'who-we-are', 'accent' => 'bg-danger-soft'],
+        ['label' => __('Why We Exist'), 'route' => 'why-we-exist', 'accent' => 'bg-secondary-soft'],
+        ['label' => __('What We Do'), 'route' => 'what-we-do', 'accent' => 'bg-tertiary'],
+        ['label' => __('Articles'), 'route' => 'articles.index', 'accent' => 'bg-primary-soft'],
+        ['label' => __('Events'), 'route' => 'events.index', 'accent' => 'bg-danger-soft'],
     ];
 
     $moreLinks = [
-        ['label' => 'Resources', 'route' => 'resources.index'],
-        ['label' => 'Gallery', 'route' => 'gallery'],
-        ['label' => 'Partners', 'route' => 'partners'],
-        ['label' => 'Contact Us', 'route' => 'contact'],
+        ['label' => __('Resources'), 'route' => 'resources.index', 'accent' => 'bg-secondary-soft'],
+        ['label' => __('Gallery'), 'route' => 'gallery', 'accent' => 'bg-tertiary'],
+        ['label' => __('Partners'), 'route' => 'partners', 'accent' => 'bg-primary-soft'],
+        ['label' => __('Contact Us'), 'route' => 'contact', 'accent' => 'bg-danger-soft'],
     ];
 @endphp
 
 <header data-site-header class="sticky top-0 z-50 border-b border-transparent transition-colors duration-300 [&.is-scrolled]:border-hairline [&.is-scrolled]:bg-ink/80 [&.is-scrolled]:backdrop-blur-md">
-    <div class="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4">
-        <a href="{{ route('home') }}" class="flex items-center gap-2 shrink-0">
-            <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="SATFYF" class="h-9 w-auto rounded-md" />
-        </a>
+    <div class="mx-auto flex w-full max-w-[120rem] items-center justify-between gap-8 px-6 py-5 sm:px-8">
+        <div class="flex items-center gap-10">
+            <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-2">
+                <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="SATFYF" class="h-12 w-auto rounded-md sm:h-14" />
+            </a>
 
-        <nav class="hidden items-center gap-7 lg:flex" aria-label="Primary">
-            @foreach ($links as $link)
-                <a
-                    href="{{ route($link['route']) }}"
-                    class="text-sm text-muted transition-colors hover:text-cream {{ request()->routeIs($link['route']) ? 'text-cream' : '' }}"
-                >{{ $link['label'] }}</a>
-            @endforeach
-        </nav>
+            <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary">
+                @foreach ($links as $link)
+                    <a
+                        href="{{ route($link['route']) }}"
+                        class="group relative py-1 text-sm text-muted transition-colors hover:text-fg {{ request()->routeIs($link['route']) ? 'text-fg' : '' }}"
+                    >
+                        {{ $link['label'] }}
+                        <span class="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 {{ $link['accent'] }} transition-[transform,background-color] duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
+                    </a>
+                @endforeach
+            </nav>
+        </div>
 
-        <div class="hidden items-center gap-5 lg:flex">
+        <div class="hidden items-center gap-6 lg:flex">
             @foreach ($moreLinks as $link)
                 <a
                     href="{{ route($link['route']) }}"
-                    class="text-sm text-muted transition-colors hover:text-cream {{ request()->routeIs($link['route']) ? 'text-cream' : '' }}"
-                >{{ $link['label'] }}</a>
+                    class="group relative py-1 text-sm text-muted transition-colors hover:text-fg {{ request()->routeIs($link['route']) ? 'text-fg' : '' }}"
+                >
+                    {{ $link['label'] }}
+                    <span class="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 {{ $link['accent'] }} transition-[transform,background-color] duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
+                </a>
             @endforeach
-            <x-ui.button href="{{ route('get-involved') }}" size="sm">Get Involved</x-ui.button>
+            <x-ui.button href="{{ route('get-involved') }}" size="sm">{{ __('Get Involved') }}</x-ui.button>
+            <x-language-switcher />
+            <x-theme-toggle />
         </div>
 
-        <button
-            type="button"
-            data-nav-toggle
-            aria-expanded="false"
-            aria-controls="mobile-nav"
-            class="flex h-10 w-10 items-center justify-center rounded-full border border-hairline-strong text-cream lg:hidden"
-        >
-            <span class="sr-only">Toggle menu</span>
-            <svg viewBox="0 0 20 20" fill="none" class="h-5 w-5" aria-hidden="true">
-                <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-            </svg>
-        </button>
+        <div class="flex items-center gap-3 lg:hidden">
+            <x-language-switcher />
+            <x-theme-toggle />
+
+            <button
+                type="button"
+                data-nav-toggle
+                aria-expanded="false"
+                aria-controls="mobile-nav"
+                class="group flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-hairline-strong text-fg transition-colors hover:border-fg/30"
+            >
+                <span class="sr-only">{{ __('Toggle menu') }}</span>
+                <span class="relative flex h-3.5 w-4 flex-col justify-between">
+                    <span class="h-px w-full bg-current transition-transform duration-200 ease-in-out-strong group-aria-expanded:translate-y-[6.5px] group-aria-expanded:rotate-45"></span>
+                    <span class="h-px w-full bg-current transition-opacity duration-150 ease-out group-aria-expanded:opacity-0"></span>
+                    <span class="h-px w-full bg-current transition-transform duration-200 ease-in-out-strong group-aria-expanded:-translate-y-[6.5px] group-aria-expanded:-rotate-45"></span>
+                </span>
+            </button>
+        </div>
     </div>
 
     <div
@@ -62,13 +82,16 @@
         class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=true]:grid-rows-[1fr] lg:hidden"
     >
         <nav class="overflow-hidden border-t border-hairline" aria-label="Mobile">
-            <div class="flex flex-col gap-1 px-6 py-4">
+            <div class="flex flex-col gap-1 px-6 py-5">
                 @foreach ([...$links, ...$moreLinks] as $link)
-                    <a href="{{ route($link['route']) }}" class="rounded-lg px-3 py-2.5 text-sm text-muted hover:bg-surface hover:text-cream">
+                    <a
+                        href="{{ route($link['route']) }}"
+                        class="rounded-lg px-3 py-2.5 text-sm text-muted transition-colors hover:bg-surface hover:text-fg"
+                    >
                         {{ $link['label'] }}
                     </a>
                 @endforeach
-                <x-ui.button href="{{ route('get-involved') }}" class="mt-2 justify-center">Get Involved</x-ui.button>
+                <x-ui.button href="{{ route('get-involved') }}" class="mt-2 justify-center">{{ __('Get Involved') }}</x-ui.button>
             </div>
         </nav>
     </div>

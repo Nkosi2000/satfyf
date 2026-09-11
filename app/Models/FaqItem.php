@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasTranslations;
+use Database\Factories\FaqItemFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -11,8 +13,13 @@ use Illuminate\Database\Eloquent\Model;
 #[Fillable(['question', 'answer', 'order', 'published'])]
 class FaqItem extends Model
 {
-    /** @use HasFactory<\Database\Factories\FaqItemFactory> */
-    use HasFactory, HasUuids;
+    /** @use HasFactory<FaqItemFactory> */
+    use HasFactory, HasTranslations, HasUuids;
+
+    /**
+     * @var array<int, string>
+     */
+    protected array $translatable = ['question', 'answer'];
 
     protected function casts(): array
     {

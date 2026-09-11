@@ -1,7 +1,7 @@
 @php($program = $program ?? null)
 
 <div class="grid gap-5 sm:grid-cols-2">
-    <x-admin.field name="title" label="Title" :value="$program?->title" />
+    <x-admin.translatable-field name="title" label="Title" :translations="$program?->translations('title') ?? []" />
     <x-admin.field
         name="category"
         label="Category"
@@ -11,7 +11,7 @@
     />
 </div>
 
-<x-admin.field name="description" label="Description" type="textarea" :value="$program?->description" class="mt-5" />
+<x-admin.translatable-field name="description" label="Description" type="textarea" :translations="$program?->translations('description') ?? []" class="mt-5" />
 
 <div class="mt-5 grid gap-5 sm:grid-cols-2">
     <x-admin.field name="order" label="Order" type="number" :value="$program?->order ?? 0" />

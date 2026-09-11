@@ -18,6 +18,14 @@ describe('index', function () {
             ->assertOk()
             ->assertDontSee('Draft Article');
     });
+
+    it('renders the pagination controls when there is more than one page', function () {
+        Article::factory()->count(15)->create();
+
+        $this->get('/articles')
+            ->assertOk()
+            ->assertSee('Page navigation');
+    });
 });
 
 describe('show', function () {

@@ -36,35 +36,35 @@ class EventItemController extends Controller
         return redirect()->route('admin.events.index')->with('success', 'Event saved.');
     }
 
-    public function edit(EventItem $eventItem): View
+    public function edit(EventItem $event): View
     {
-        return view('admin.events.edit', ['event' => $eventItem]);
+        return view('admin.events.edit', ['event' => $event]);
     }
 
-    public function update(EventItemRequest $request, EventItem $eventItem): RedirectResponse
+    public function update(EventItemRequest $request, EventItem $event): RedirectResponse
     {
         $data = $request->safe()->except('cover_image');
 
         if ($request->hasFile('cover_image')) {
-            if ($eventItem->cover_image_path) {
-                Storage::disk('public')->delete($eventItem->cover_image_path);
+            if ($event->cover_image_path) {
+                Storage::disk('public')->delete($event->cover_image_path);
             }
 
             $data['cover_image_path'] = $request->file('cover_image')->store('events', 'public');
         }
 
-        $eventItem->update($data);
+        $event->update($data);
 
         return redirect()->route('admin.events.index')->with('success', 'Event updated.');
     }
 
-    public function destroy(EventItem $eventItem): RedirectResponse
+    public function destroy(EventItem $event): RedirectResponse
     {
-        if ($eventItem->cover_image_path) {
-            Storage::disk('public')->delete($eventItem->cover_image_path);
+        if ($event->cover_image_path) {
+            Storage::disk('public')->delete($event->cover_image_path);
         }
 
-        $eventItem->delete();
+        $event->delete();
 
         return redirect()->route('admin.events.index')->with('success', 'Event removed.');
     }

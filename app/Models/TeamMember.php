@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasTranslations;
+use Database\Factories\TeamMemberFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -11,8 +13,13 @@ use Illuminate\Database\Eloquent\Model;
 #[Fillable(['name', 'role', 'bio', 'photo_path', 'order', 'published'])]
 class TeamMember extends Model
 {
-    /** @use HasFactory<\Database\Factories\TeamMemberFactory> */
-    use HasFactory, HasUuids;
+    /** @use HasFactory<TeamMemberFactory> */
+    use HasFactory, HasTranslations, HasUuids;
+
+    /**
+     * @var array<int, string>
+     */
+    protected array $translatable = ['role', 'bio'];
 
     protected function casts(): array
     {

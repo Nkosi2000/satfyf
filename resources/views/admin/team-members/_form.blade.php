@@ -2,10 +2,10 @@
 
 <div class="grid gap-5 sm:grid-cols-2">
     <x-admin.field name="name" label="Name" :value="$teamMember?->name" />
-    <x-admin.field name="role" label="Role" :value="$teamMember?->role" />
+    <x-admin.translatable-field name="role" label="Role" :translations="$teamMember?->translations('role') ?? []" />
 </div>
 
-<x-admin.field name="bio" label="Bio" type="textarea" :value="$teamMember?->bio" class="mt-5" />
+<x-admin.translatable-field name="bio" label="Bio" type="textarea" :translations="$teamMember?->translations('bio') ?? []" class="mt-5" />
 
 <div class="mt-5 grid gap-5 sm:grid-cols-2">
     <x-admin.field name="photo" label="Photo" type="file" :value="$teamMember?->photo_path" />
