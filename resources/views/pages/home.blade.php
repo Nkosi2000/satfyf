@@ -42,7 +42,7 @@
                     </defs>
                 </svg>
                 <div class="absolute inset-10 flex flex-col items-center justify-center rounded-full border border-hairline bg-surface/70 text-center">
-                    <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="" class="h-16 w-16 rounded-full object-cover" />
+                    <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="" class="brand-mark h-16 w-16 rounded-full object-cover" />
                     <p class="mt-4 font-serif text-4xl text-secondary">2030</p>
                     <p class="text-xs tracking-[0.14em] text-muted uppercase">{{ __('Our Vision') }}</p>
                 </div>

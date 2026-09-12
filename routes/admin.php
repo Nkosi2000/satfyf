@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\ArticleImageController;
 use App\Http\Controllers\Admin\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\ContactSubmissionController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -29,6 +30,8 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::post('markdown-preview', [MarkdownPreviewController::class, 'store'])->name('markdown-preview');
+        Route::post('articles/{article}/images', [ArticleImageController::class, 'store'])->name('articles.images.store');
+        Route::delete('articles/{article}/images/{image}', [ArticleImageController::class, 'destroy'])->name('articles.images.destroy');
 
         Route::resource('team-members', TeamMemberController::class)->except('show');
         Route::resource('programs', ProgramController::class)->except('show');

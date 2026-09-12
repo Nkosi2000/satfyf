@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'anthropic' => [
+        'api_key' => env('ANTHROPIC_API_KEY'),
+        'model' => env('ANTHROPIC_MODEL', 'claude-sonnet-5'),
+        'daily_message_cap' => env('ANTHROPIC_DAILY_MESSAGE_CAP', 500),
+    ],
+
 ];

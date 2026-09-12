@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
@@ -23,6 +24,7 @@ Route::middleware('locale')->group(function (): void {
 
     Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
     Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
+    Route::get('/articles/{article}/attachment', [ArticleController::class, 'attachment'])->name('articles.attachment');
 
     Route::get('/events', [EventController::class, 'index'])->name('events.index');
     Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
@@ -40,6 +42,9 @@ Route::middleware('locale')->group(function (): void {
     Route::post('/newsletter', [NewsletterController::class, 'store'])->name('newsletter.store');
 
     Route::get('/language/{locale}', SetLocaleController::class)->name('language.set');
+
+    Route::get('/chat/conversations/{conversation}', [ChatController::class, 'show'])->name('chat.conversations.show');
+    Route::post('/chat/messages', [ChatController::class, 'store'])->middleware('throttle:chat')->name('chat.messages.store');
 });
 
 require __DIR__.'/admin.php';

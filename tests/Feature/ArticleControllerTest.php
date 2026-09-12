@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Article;
+use Illuminate\Support\Facades\Storage;
 
 describe('index', function () {
     it('lists published articles', function () {
@@ -48,5 +49,78 @@ describe('show', function () {
         $article = Article::factory()->create(['published_at' => now()->addWeek()]);
 
         $this->get(route('articles.show', $article))->assertNotFound();
+    });
+
+    it('shows a download link when the article has an attachment', function () {
+        $article = Article::factory()->create([
+            'attachment_path' => 'articles/attachments/report.pdf',
+            'attachment_name' => 'report.pdf',
+        ]);
+
+        $this->get(route('articles.show', $article))
+            ->assertOk()
+            ->assertSee('Download attachment')
+            ->assertSee('report.pdf');
+    });
+
+    it('does not show a download link when the article has no attachment', function () {
+        $article = Article::factory()->create();
+
+        $this->get(route('articles.show', $article))
+            ->assertOk()
+            ->assertDontSee('Download attachment');
+    });
+
+    it('shows body images in order', function () {
+        Storage::fake('public');
+        Storage::disk('public')->put('articles/images/second.jpg', 'contents');
+        Storage::disk('public')->put('articles/images/first.jpg', 'contents');
+        $article = Article::factory()->create();
+        $article->images()->create(['image_path' => 'articles/images/second.jpg', 'order' => 2]);
+        $article->images()->create(['image_path' => 'articles/images/first.jpg', 'order' => 1]);
+
+        $response = $this->get(route('articles.show', $article));
+
+        $response->assertOk();
+        $firstPosition = strpos($response->getContent(), 'articles/images/first.jpg');
+        $secondPosition = strpos($response->getContent(), 'articles/images/second.jpg');
+        expect($firstPosition)->toBeLessThan($secondPosition);
+    });
+
+    it('does not render an image gallery when the article has no body images', function () {
+        $article = Article::factory()->create();
+
+        $this->get(route('articles.show', $article))
+            ->assertOk()
+            ->assertDontSee('articles/images/', false);
+    });
+});
+
+describe('attachment', function () {
+    it('redirects to the stored file for a published article', function () {
+        Storage::fake('public');
+        Storage::disk('public')->put('articles/attachments/report.pdf', 'contents');
+        $article = Article::factory()->create([
+            'attachment_path' => 'articles/attachments/report.pdf',
+            'attachment_name' => 'report.pdf',
+        ]);
+
+        $this->get(route('articles.attachment', $article))
+            ->assertRedirect(Storage::disk('public')->url('articles/attachments/report.pdf'));
+    });
+
+    it('returns 404 when the article has no attachment', function () {
+        $article = Article::factory()->create();
+
+        $this->get(route('articles.attachment', $article))->assertNotFound();
+    });
+
+    it('returns 404 for a draft article', function () {
+        $article = Article::factory()->draft()->create([
+            'attachment_path' => 'articles/attachments/report.pdf',
+            'attachment_name' => 'report.pdf',
+        ]);
+
+        $this->get(route('articles.attachment', $article))->assertNotFound();
     });
 });

@@ -7,5 +7,7 @@
             <x-ui.button type="submit" size="sm">Save</x-ui.button>
             <a href="{{ route('admin.articles.index') }}" class="text-sm text-muted hover:text-fg">Cancel</a>
         </div>
+
+        <p class="mt-4 text-xs text-muted">Save the article first — you'll be able to add body images once it exists.</p>
     </form>
 </x-admin.layout>

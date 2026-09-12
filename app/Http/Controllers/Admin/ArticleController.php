@@ -25,25 +25,33 @@ class ArticleController extends Controller
 
     public function store(ArticleRequest $request): RedirectResponse
     {
-        $data = $request->safe()->except('cover_image');
+        $data = $request->safe()->except(['cover_image', 'attachment']);
 
         if ($request->hasFile('cover_image')) {
             $data['cover_image_path'] = $request->file('cover_image')->store('articles', 'public');
         }
 
-        Article::query()->create($data);
+        if ($request->hasFile('attachment')) {
+            $data['attachment_path'] = $request->file('attachment')->store('articles/attachments', 'public');
+            $data['attachment_name'] = $request->file('attachment')->getClientOriginalName();
+        }
 
-        return redirect()->route('admin.articles.index')->with('success', 'Article saved.');
+        $article = Article::query()->create($data);
+
+        return redirect()->route('admin.articles.edit', $article)->with('success', 'Article saved.');
     }
 
     public function edit(Article $article): View
     {
-        return view('admin.articles.edit', ['article' => $article]);
+        return view('admin.articles.edit', [
+            'article' => $article,
+            'images' => $article->images,
+        ]);
     }
 
     public function update(ArticleRequest $request, Article $article): RedirectResponse
     {
-        $data = $request->safe()->except('cover_image');
+        $data = $request->safe()->except(['cover_image', 'attachment']);
 
         if ($request->hasFile('cover_image')) {
             if ($article->cover_image_path) {
@@ -51,6 +59,15 @@ class ArticleController extends Controller
             }
 
             $data['cover_image_path'] = $request->file('cover_image')->store('articles', 'public');
+        }
+
+        if ($request->hasFile('attachment')) {
+            if ($article->attachment_path) {
+                Storage::disk('public')->delete($article->attachment_path);
+            }
+
+            $data['attachment_path'] = $request->file('attachment')->store('articles/attachments', 'public');
+            $data['attachment_name'] = $request->file('attachment')->getClientOriginalName();
         }
 
         $article->update($data);
@@ -63,6 +80,12 @@ class ArticleController extends Controller
         if ($article->cover_image_path) {
             Storage::disk('public')->delete($article->cover_image_path);
         }
+
+        if ($article->attachment_path) {
+            Storage::disk('public')->delete($article->attachment_path);
+        }
+
+        Storage::disk('public')->delete($article->images()->pluck('image_path')->all());
 
         $article->delete();
 

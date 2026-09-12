@@ -44,7 +44,7 @@
     <div class="flex min-h-screen">
         <aside class="hidden w-64 shrink-0 border-r border-hairline-strong bg-surface lg:block">
             <a href="{{ route('admin.dashboard') }}" class="flex h-16 items-center gap-2.5 border-b border-hairline-strong px-5">
-                <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="SATFYF" class="h-9 w-auto rounded-md" />
+                <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="SATFYF" class="brand-mark h-9 w-auto rounded-md" />
                 <span class="text-sm font-semibold text-fg">Admin</span>
             </a>
             <nav class="flex flex-col gap-0.5 p-3">

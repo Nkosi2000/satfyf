@@ -6,6 +6,7 @@ import { initSliders } from './modules/slider';
 import { initTheme } from './modules/theme';
 import { initImageLoading } from './modules/image-loading';
 import { initLanguageSwitcher } from './modules/language-switcher';
+import { initChatbot } from './modules/chatbot';
 
 initNav();
 initTabs();
@@ -15,3 +16,4 @@ initSliders();
 initTheme();
 initImageLoading();
 initLanguageSwitcher();
+initChatbot();

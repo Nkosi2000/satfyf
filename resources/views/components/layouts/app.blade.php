@@ -34,6 +34,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-ink font-sans antialiased">
+    <div class="site-edge-accent" aria-hidden="true"></div>
+
     <x-nav />
 
     <main>
@@ -41,5 +43,6 @@
     </main>
 
     <x-footer />
+    <x-chatbot />
 </body>
 </html>

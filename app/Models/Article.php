@@ -9,9 +9,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
-#[Fillable(['title', 'slug', 'excerpt', 'body', 'cover_image_path', 'author_name', 'published_at'])]
+#[Fillable(['title', 'slug', 'excerpt', 'body', 'cover_image_path', 'attachment_path', 'attachment_name', 'author_name', 'published_at'])]
 class Article extends Model
 {
     /** @use HasFactory<ArticleFactory> */
@@ -46,5 +47,18 @@ class Article extends Model
     public function renderedBody(): string
     {
         return Str::markdown($this->body);
+    }
+
+    /**
+     * Always returned in display order — there's no case where an
+     * unordered list of an article's body images is useful, so the
+     * ordering lives on the relationship itself rather than relying on
+     * every call site to remember `->ordered()`.
+     *
+     * @return HasMany<ArticleImage, $this>
+     */
+    public function images(): HasMany
+    {
+        return $this->hasMany(ArticleImage::class)->orderBy('order');
     }
 }

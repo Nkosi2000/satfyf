@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Article;
+use App\Models\ArticleImage;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -40,9 +41,9 @@ describe('store', function () {
             'published_at' => now()->format('Y-m-d\TH:i'),
         ]);
 
-        $response->assertRedirect(route('admin.articles.index'));
-
         $article = Article::query()->where('slug', 'new-article')->firstOrFail();
+        $response->assertRedirect(route('admin.articles.edit', $article));
+
         expect($article->title)->toBe('New Article');
         Storage::disk('public')->assertExists($article->cover_image_path);
     });
@@ -67,6 +68,24 @@ describe('store', function () {
         $response->assertSessionHasErrors('slug');
     });
 
+    it('creates an article with an uploaded attachment', function () {
+        Storage::fake('public');
+
+        $response = $this->actingAs($this->admin)->post(route('admin.articles.store'), [
+            'title' => ['en' => 'Article With Attachment'],
+            'slug' => 'article-with-attachment',
+            'excerpt' => ['en' => 'A short summary.'],
+            'body' => ['en' => 'Full body.'],
+            'attachment' => UploadedFile::fake()->create('report.pdf', 100, 'application/pdf'),
+        ]);
+
+        $article = Article::query()->where('slug', 'article-with-attachment')->firstOrFail();
+        $response->assertRedirect(route('admin.articles.edit', $article));
+
+        expect($article->attachment_name)->toBe('report.pdf');
+        Storage::disk('public')->assertExists($article->attachment_path);
+    });
+
     it('stores every submitted locale of a translatable field, each resolving under its own locale', function () {
         $response = $this->actingAs($this->admin)->post(route('admin.articles.store'), [
             'title' => ['en' => 'English Title', 'zu' => 'Isihloko SesiZulu', 'st' => '', 'af' => null],
@@ -75,9 +94,9 @@ describe('store', function () {
             'body' => ['en' => 'English body.'],
         ]);
 
-        $response->assertRedirect(route('admin.articles.index'));
-
         $article = Article::query()->where('slug', 'multi-locale-article')->firstOrFail();
+        $response->assertRedirect(route('admin.articles.edit', $article));
+
         expect($article->translations('title'))->toBe(['en' => 'English Title', 'zu' => 'Isihloko SesiZulu']);
 
         app()->setLocale('zu');
@@ -112,6 +131,30 @@ describe('update', function () {
         Storage::disk('public')->assertExists($article->cover_image_path);
     });
 
+    it('replaces an existing attachment and removes the old file', function () {
+        Storage::fake('public');
+        $article = Article::factory()->create([
+            'attachment_path' => 'articles/attachments/old.pdf',
+            'attachment_name' => 'old.pdf',
+        ]);
+        Storage::disk('public')->put('articles/attachments/old.pdf', 'old contents');
+
+        $response = $this->actingAs($this->admin)->put(route('admin.articles.update', $article), [
+            'title' => ['en' => $article->title],
+            'slug' => $article->slug,
+            'excerpt' => ['en' => $article->excerpt],
+            'body' => ['en' => $article->body],
+            'attachment' => UploadedFile::fake()->create('new-report.pdf', 100, 'application/pdf'),
+        ]);
+
+        $response->assertRedirect(route('admin.articles.index'));
+
+        $article->refresh();
+        expect($article->attachment_name)->toBe('new-report.pdf');
+        Storage::disk('public')->assertMissing('articles/attachments/old.pdf');
+        Storage::disk('public')->assertExists($article->attachment_path);
+    });
+
     it('allows keeping the existing slug unchanged', function () {
         $article = Article::factory()->create(['slug' => 'stable-slug']);
 
@@ -127,14 +170,101 @@ describe('update', function () {
     });
 });
 
-it('deletes an article and its cover image', function () {
+it('deletes an article, its cover image, its attachment, and its body images', function () {
     Storage::fake('public');
-    $article = Article::factory()->create(['cover_image_path' => 'articles/to-delete.jpg']);
+    $article = Article::factory()->create([
+        'cover_image_path' => 'articles/to-delete.jpg',
+        'attachment_path' => 'articles/attachments/to-delete.pdf',
+    ]);
     Storage::disk('public')->put('articles/to-delete.jpg', 'contents');
+    Storage::disk('public')->put('articles/attachments/to-delete.pdf', 'contents');
+    Storage::disk('public')->put('articles/images/gallery.jpg', 'contents');
+    $article->images()->create(['image_path' => 'articles/images/gallery.jpg', 'order' => 1]);
 
     $response = $this->actingAs($this->admin)->delete(route('admin.articles.destroy', $article));
 
     $response->assertRedirect(route('admin.articles.index'));
     expect(Article::query()->find($article->id))->toBeNull();
+    expect(ArticleImage::query()->count())->toBe(0);
     Storage::disk('public')->assertMissing('articles/to-delete.jpg');
+    Storage::disk('public')->assertMissing('articles/attachments/to-delete.pdf');
+    Storage::disk('public')->assertMissing('articles/images/gallery.jpg');
+});
+
+describe('images', function () {
+    it('redirects guests away', function () {
+        $article = Article::factory()->create();
+
+        $this->post(route('admin.articles.images.store', $article), [
+            'images' => [UploadedFile::fake()->image('a.jpg')],
+        ])->assertRedirect(route('admin.login'));
+    });
+
+    it('uploads multiple images and assigns increasing order', function () {
+        Storage::fake('public');
+        $article = Article::factory()->create();
+
+        $response = $this->actingAs($this->admin)->post(route('admin.articles.images.store', $article), [
+            'images' => [
+                UploadedFile::fake()->image('a.jpg'),
+                UploadedFile::fake()->image('b.jpg'),
+            ],
+        ]);
+
+        $response->assertRedirect(route('admin.articles.edit', $article));
+
+        $images = $article->images()->get();
+        expect($images)->toHaveCount(2);
+        expect($images->pluck('order')->all())->toBe([1, 2]);
+        foreach ($images as $image) {
+            Storage::disk('public')->assertExists($image->image_path);
+        }
+    });
+
+    it('appends to existing images rather than replacing them', function () {
+        Storage::fake('public');
+        $article = Article::factory()->create();
+        $article->images()->create(['image_path' => 'articles/images/existing.jpg', 'order' => 1]);
+
+        $this->actingAs($this->admin)->post(route('admin.articles.images.store', $article), [
+            'images' => [UploadedFile::fake()->image('new.jpg')],
+        ]);
+
+        expect($article->images()->count())->toBe(2);
+    });
+
+    it('rejects a non-image file', function () {
+        $article = Article::factory()->create();
+
+        $response = $this->actingAs($this->admin)->post(route('admin.articles.images.store', $article), [
+            'images' => [UploadedFile::fake()->create('not-an-image.pdf', 100, 'application/pdf')],
+        ]);
+
+        $response->assertSessionHasErrors('images.0');
+    });
+
+    it('deletes an image and its file', function () {
+        Storage::fake('public');
+        Storage::disk('public')->put('articles/images/to-delete.jpg', 'contents');
+        $article = Article::factory()->create();
+        $image = $article->images()->create(['image_path' => 'articles/images/to-delete.jpg', 'order' => 1]);
+
+        $response = $this->actingAs($this->admin)->delete(route('admin.articles.images.destroy', [$article, $image]));
+
+        $response->assertRedirect(route('admin.articles.edit', $article));
+        expect(ArticleImage::query()->find($image->id))->toBeNull();
+        Storage::disk('public')->assertMissing('articles/images/to-delete.jpg');
+    });
+
+    it('refuses to delete an image belonging to a different article', function () {
+        $article = Article::factory()->create();
+        $otherArticle = Article::factory()->create();
+        $image = $otherArticle->images()->create(['image_path' => 'articles/images/other.jpg', 'order' => 1]);
+
+        $this->actingAs($this->admin)
+            ->delete(route('admin.articles.images.destroy', [$article, $image]))
+            ->assertNotFound();
+
+        expect(ArticleImage::query()->find($image->id))->not->toBeNull();
+    });
 });

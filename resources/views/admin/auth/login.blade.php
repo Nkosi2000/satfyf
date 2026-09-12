@@ -21,7 +21,7 @@
     <x-theme-toggle class="absolute right-4 top-4 sm:right-6 sm:top-6" />
 
     <div class="w-full max-w-sm rounded-2xl border border-hairline-strong bg-surface p-8 shadow-sm">
-        <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="SATFYF" class="h-12 w-auto rounded-md" />
+        <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="SATFYF" class="brand-mark h-12 w-auto rounded-md" />
         <h1 class="mt-6 text-xl font-semibold text-fg">Admin sign in</h1>
         <p class="mt-1 text-sm text-muted">Manage the SATFYF website.</p>
 

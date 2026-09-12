@@ -62,8 +62,28 @@
     @endforeach
 </div>
 
-<div class="mt-5 grid gap-5 sm:grid-cols-3">
+<div class="mt-5 grid gap-5 sm:grid-cols-2">
     <x-admin.field name="cover_image" label="Cover image" type="file" :value="$article?->cover_image_path" />
+
+    <div class="flex flex-col gap-1.5">
+        <label for="field-attachment" class="text-sm font-medium text-fg">Attachment (e.g. PDF)</label>
+        <input
+            id="field-attachment"
+            type="file"
+            name="attachment"
+            class="w-full rounded-lg border border-hairline-strong bg-surface px-3 py-2 text-sm text-fg file:mr-3 file:rounded-md file:border-0 file:bg-surface-2 file:px-3 file:py-1.5 file:text-sm file:text-fg"
+        />
+        @if ($article?->attachment_name)
+            <p class="text-xs text-muted">Current file: {{ $article->attachment_name }}</p>
+        @endif
+        <p class="text-xs text-muted">Shown as a download link on the article. Uploading a new file replaces it.</p>
+        @error('attachment')
+            <p class="text-xs text-danger-soft">{{ $message }}</p>
+        @enderror
+    </div>
+</div>
+
+<div class="mt-5 grid gap-5 sm:grid-cols-2">
     <x-admin.field name="author_name" label="Author" :value="$article?->author_name" />
     <x-admin.field
         name="published_at"

@@ -23,10 +23,10 @@
     <div class="mx-auto flex w-full max-w-[120rem] items-center justify-between gap-8 px-6 py-5 sm:px-8">
         <div class="flex items-center gap-10">
             <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-2">
-                <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="SATFYF" class="h-12 w-auto rounded-md sm:h-14" />
+                <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="SATFYF" class="brand-mark h-12 w-auto rounded-md sm:h-14" />
             </a>
 
-            <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary">
+            <nav class="hidden items-center gap-8 min-[1450px]:flex" aria-label="Primary">
                 @foreach ($links as $link)
                     <a
                         href="{{ route($link['route']) }}"
@@ -39,7 +39,7 @@
             </nav>
         </div>
 
-        <div class="hidden items-center gap-6 lg:flex">
+        <div class="hidden items-center gap-6 min-[1450px]:flex">
             @foreach ($moreLinks as $link)
                 <a
                     href="{{ route($link['route']) }}"
@@ -54,7 +54,7 @@
             <x-theme-toggle />
         </div>
 
-        <div class="flex items-center gap-3 lg:hidden">
+        <div class="flex items-center gap-3 min-[1450px]:hidden">
             <x-language-switcher />
             <x-theme-toggle />
 
@@ -66,10 +66,16 @@
                 class="group flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-hairline-strong text-fg transition-colors hover:border-fg/30"
             >
                 <span class="sr-only">{{ __('Toggle menu') }}</span>
-                <span class="relative flex h-3.5 w-4 flex-col justify-between">
-                    <span class="h-px w-full bg-current transition-transform duration-200 ease-in-out-strong group-aria-expanded:translate-y-[6.5px] group-aria-expanded:rotate-45"></span>
+                {{-- Height is 15px (not the nearer 14px step) so the three
+                     bars split into two whole-pixel 6px gaps instead of
+                     fractional 5.5px ones — keeping every bar edge, and the
+                     translate distance below, on a whole pixel so the X's
+                     crossing point can't drift a sub-pixel off-center from
+                     browser to browser. --}}
+                <span class="relative flex h-[15px] w-4 flex-col justify-between">
+                    <span class="h-px w-full bg-current transition-transform duration-200 ease-in-out-strong group-aria-expanded:translate-y-[7px] group-aria-expanded:rotate-45"></span>
                     <span class="h-px w-full bg-current transition-opacity duration-150 ease-out group-aria-expanded:opacity-0"></span>
-                    <span class="h-px w-full bg-current transition-transform duration-200 ease-in-out-strong group-aria-expanded:-translate-y-[6.5px] group-aria-expanded:-rotate-45"></span>
+                    <span class="h-px w-full bg-current transition-transform duration-200 ease-in-out-strong group-aria-expanded:-translate-y-[7px] group-aria-expanded:-rotate-45"></span>
                 </span>
             </button>
         </div>
@@ -79,7 +85,7 @@
         id="mobile-nav"
         data-nav-menu
         data-open="false"
-        class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=true]:grid-rows-[1fr] lg:hidden"
+        class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=true]:grid-rows-[1fr] min-[1450px]:hidden"
     >
         <nav class="overflow-hidden border-t border-hairline" aria-label="Mobile">
             <div class="flex flex-col gap-1 px-6 py-5">

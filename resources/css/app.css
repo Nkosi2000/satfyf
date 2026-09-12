@@ -182,6 +182,34 @@ html {
     border-image: var(--gradient-flag) 1;
 }
 
+/* A single, site-wide accent: a slanted sliver of the flag gradient pinned
+   to the right edge of the viewport, sitting behind every section (the page
+   background shows through everywhere a section's own content column
+   doesn't reach it — nav and footer paint their own full-width background
+   over it as normal). Kept to a low opacity so it reads as texture rather
+   than a colour block in either theme, and hidden below the width where a
+   side gutter stops existing to show it in. */
+.site-edge-accent {
+    position: fixed;
+    inset: 0 0 0 auto;
+    z-index: 1;
+    width: clamp(3rem, 6vw, 8rem);
+    background: var(--gradient-flag-vertical);
+    clip-path: polygon(38% 0, 100% 0, 100% 100%, 0 100%);
+    opacity: 0.05;
+    pointer-events: none;
+}
+
+.dark .site-edge-accent {
+    opacity: 0.09;
+}
+
+@media (max-width: 1279px) {
+    .site-edge-accent {
+        display: none;
+    }
+}
+
 /* Image loading placeholders — every <img> gets a grey shimmer skeleton
    until it actually finishes loading (see image-loading.js, which marks
    [data-loaded] on load/error). No per-template opt-in needed. */
@@ -202,7 +230,7 @@ img {
         border-color 400ms ease;
 }
 
-img:not([data-loaded]) {
+img:not(.brand-mark):not([data-loaded]) {
     background-color: var(--color-surface-2);
     background-image: linear-gradient(
         100deg,
@@ -219,8 +247,12 @@ img:not([data-loaded]) {
    which intentionally has no fixed aspect ratio) collapse to 0 height
    before their intrinsic size is known, leaving no box for the shimmer to
    fill. `.h-full` images already get their height from a sized wrapper, so
-   they're excluded — this only fills the gap for genuinely unsized ones. */
-img:not(.h-full):not([data-loaded]) {
+   they're excluded — this only fills the gap for genuinely unsized ones.
+   `.brand-mark` (the site logo, wherever it appears) is excluded outright:
+   it's a small fixed-size mark, not a content photo, and 12rem is taller
+   than it will ever render, which made it flash oversized before settling
+   into place. */
+img:not(.h-full):not(.brand-mark):not([data-loaded]) {
     min-height: 12rem;
 }
 
@@ -231,6 +263,10 @@ img[data-loaded] {
 
 @media (prefers-reduced-motion: reduce) {
     img:not([data-loaded]) {
+        animation: none;
+    }
+
+    [data-chatbot-typing] .animate-bounce {
         animation: none;
     }
 }

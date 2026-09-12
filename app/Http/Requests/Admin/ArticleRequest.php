@@ -32,6 +32,7 @@ class ArticleRequest extends FormRequest
             ...$this->translatableRules('excerpt', ['string', 'max:500']),
             ...$this->translatableRules('body', ['string']),
             'cover_image' => ['nullable', 'image', 'max:4096'],
+            'attachment' => ['nullable', 'file', 'max:20480'],
             'author_name' => ['nullable', 'string', 'max:255'],
             'published_at' => ['nullable', 'date'],
         ];
