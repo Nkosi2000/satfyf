@@ -1,14 +1,12 @@
 <x-layouts.app :title="__('Contact Us')">
-    <section class="pt-24 pb-20 sm:pt-32">
-        <x-ui.section width="narrow" class="!py-0">
-            <x-ui.eyebrow>{{ __('Contact Us') }}</x-ui.eyebrow>
-            <h1 class="mt-5 text-balance font-serif text-5xl leading-[1.05] text-fg sm:text-6xl">{{ __("Let's talk.") }}</h1>
-        </x-ui.section>
-    </section>
+    <x-ui.page-hero eyebrow="{{ __('Contact Us') }}" subtext="{{ __('Questions about starting a chapter, media enquiries, partnership ideas, or just something on your mind — reach us directly, or send a message below.') }}">
+        {{ __("Let's talk.") }}
+    </x-ui.page-hero>
 
     <x-ui.section class="hairline-t" width="wide">
         <div class="grid gap-16 lg:grid-cols-[0.8fr_1.2fr]">
             <div class="space-y-6">
+                <p class="text-balance text-lg leading-relaxed text-muted">{{ __("We're a small, youth-led team, so a real person reads every message — expect a reply within a few working days.") }}</p>
                 @if (! empty($contact['contact_address']))
                     <div>
                         <p class="text-xs tracking-[0.14em] text-faint uppercase">{{ __('Address') }}</p>

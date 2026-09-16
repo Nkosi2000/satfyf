@@ -22,12 +22,13 @@
     ];
 @endphp
 
-<footer class="hairline-t bg-ink-raised">
+<footer class="glass hairline-t">
     <x-ui.section width="wide" class="!py-16">
         <div class="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
             <div>
                 <a href="{{ route('home') }}" class="inline-flex items-center">
-                    <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="SATFYF" class="brand-mark h-14 w-auto rounded-md" />
+                    <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" data-logo-variant="light" alt="SATFYF" class="brand-mark h-14 w-auto rounded-md" />
+                    <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO-dark-mode.jpg') }}" data-logo-variant="dark" alt="SATFYF" class="brand-mark h-14 w-auto rounded-md" />
                 </a>
                 <p class="mt-4 max-w-xs text-sm text-muted">
                     {{ $settings['footer_tagline'] ?? __('A smoke free generation in our lifetime.') }}

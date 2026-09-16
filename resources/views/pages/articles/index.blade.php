@@ -1,10 +1,7 @@
 <x-layouts.app :title="__('Articles')">
-    <section class="pt-24 pb-20 sm:pt-32">
-        <x-ui.section width="narrow" class="!py-0">
-            <x-ui.eyebrow>{{ __('Articles') }}</x-ui.eyebrow>
-            <h1 class="mt-5 text-balance font-serif text-5xl leading-[1.05] text-fg sm:text-6xl">{{ __('Reporting, explainers and stories.') }}</h1>
-        </x-ui.section>
-    </section>
+    <x-ui.page-hero eyebrow="{{ __('Articles') }}" subtext="{{ __('Fact-checked coverage of tobacco harm, industry tactics and policy — plus the campaigns, chapters and young people driving the response.') }}">
+        {{ __('Reporting, explainers and stories.') }}
+    </x-ui.page-hero>
 
     <x-ui.section class="hairline-t" width="wide">
         <div class="reveal-stagger grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">

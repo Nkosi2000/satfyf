@@ -1,15 +1,6 @@
 export function initNav() {
-    const header = document.querySelector('[data-site-header]');
     const toggle = document.querySelector('[data-nav-toggle]');
     const menu = document.querySelector('[data-nav-menu]');
-
-    if (header) {
-        const onScroll = () => {
-            header.classList.toggle('is-scrolled', window.scrollY > 8);
-        };
-        onScroll();
-        window.addEventListener('scroll', onScroll, { passive: true });
-    }
 
     if (toggle && menu) {
         toggle.addEventListener('click', () => {

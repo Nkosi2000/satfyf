@@ -4,9 +4,11 @@
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    /* One typeface for the whole site — headings, subheadings, nav and body
+       copy all inherit this from <body>'s font-sans class, so none of them
+       need their own font-family override any more. */
+    --font-sans: 'Zalando Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
-    --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
 
     /* Slightly larger than Tailwind's stock xs/sm steps — eyebrows, dates,
        captions and body copy set in these sizes were reading too small. */
@@ -16,15 +18,17 @@
     --text-sm--line-height: 1.375rem;
 
     /*
-     * The six official South African flag colours, used as the literal
-     * brand reference: green #007A4D, gold #FFB612, red #DE3831,
-     * blue #002395, black #000000, white #FFFFFF. Every token below either
-     * IS one of these six exactly, or is a tint/shade of one — introduced
-     * only where the flag hex itself would fail text-contrast in that
-     * specific role (documented inline below). Light values live here (the
-     * default); .dark overrides every one of these same custom properties.
-     * Structural tokens (ink/surface/hairline/fg/muted/faint) keep generic,
-     * role-based names since they're roles, not hues.
+     * The organisation's own seven-colour brand palette (replaces the
+     * earlier South African-flag reference): green #007847, yellow
+     * #FCB618, blue #212E7B, red #ED2442, orange #F89E41, brown #AD5726
+     * and dark brown #311218. Every token below is either one of these
+     * seven exactly (the fill/"-soft" role) or a WCAG-checked tint/shade of
+     * one, introduced only where the exact hex would fail text-contrast in
+     * that specific role (documented inline below, ratios computed against
+     * white in light mode / black in dark mode). Light values live here
+     * (the default); .dark overrides every one of these same custom
+     * properties. Structural tokens (ink/surface/hairline/fg/muted/faint)
+     * keep generic, role-based names since they're roles, not hues.
      */
     --color-ink: #ffffff;
     --color-ink-raised: #f4f4f2;
@@ -37,38 +41,51 @@
     --color-muted: #45484c;
     --color-faint: #797c80;
 
-    /* Green #007A4D — already ~4.8:1 on white, used as-is for text too. */
-    --color-primary: #007a4d;
-    --color-primary-soft: #1a9b68;
-    --color-primary-deep: #00522f;
-    --color-primary-rgb: 0 122 77;
+    /* Green #007847 — ~5.6:1 on white, used as-is for text too. -soft is a
+       brighter tint (kept close to the exact hex's own button-gradient
+       contrast) for fills/gradients; -deep is a darker shade. */
+    --color-primary: #007847;
+    --color-primary-soft: #009c5c;
+    --color-primary-deep: #004a2c;
+    --color-primary-rgb: 0 120 71;
 
-    /* Gold #FFB612 — ~1.3:1 on white, unusable as light-mode text; shaded
+    /* Yellow #FCB618 — ~1.8:1 on white, unusable as light-mode text; shaded
        down for text/labels, kept exact for fills where text sits on top. */
-    --color-secondary: #8a5d00;
-    --color-secondary-soft: #ffb612;
-    --color-secondary-deep: #5e3f00;
+    --color-secondary: #906402;
+    --color-secondary-soft: #fcb618;
+    --color-secondary-deep: #634501;
 
-    /* Blue #002395 — very high contrast on white, used as-is. */
-    --color-tertiary: #002395;
-    --color-tertiary-deep: #001a6e;
+    /* Blue #212E7B — ~12:1 on white, used as-is. */
+    --color-tertiary: #212e7b;
+    --color-tertiary-deep: #161f53;
 
-    /* Red #DE3831 — borderline (~3.7:1) for small text on white; shaded
+    /* Red #ED2442 — ~4.3:1 on white, borderline for small text; shaded
        down for text, kept exact for fills/borders. */
-    --color-danger: #a32a24;
-    --color-danger-soft: #de3831;
+    --color-danger: #d7122f;
+    --color-danger-soft: #ed2442;
+
+    /* Orange #F89E41 — ~2.1:1 on white, unusable as light-mode text; shaded
+       down for text, kept exact for fills. */
+    --color-orange: #a45606;
+    --color-orange-soft: #f89e41;
+    --color-orange-deep: #783f04;
+
+    /* Brown #AD5726 — ~5:1 on white, used as-is. Dark brown #311218 is used
+       only as a decorative deep/fill shade, never as text. */
+    --color-brown: #ad5726;
+    --color-brown-deep: #311218;
 
     --color-on-accent: #ffffff;
 
     --shadow-ring: 0 0 0 1px var(--color-hairline);
 
-    /* Flag-band gradient used for the hairline that separates one page
-       section from the next — the literal official hex values, not the
-       contrast-adjusted text/fill tokens above, since this is a decorative
-       fill rather than text. Black/white are left out: either would
-       disappear into the page background in one of the two themes. */
-    --gradient-flag: linear-gradient(90deg, #007a4d, #ffb612, #de3831, #002395);
-    --gradient-flag-vertical: linear-gradient(180deg, #007a4d, #ffb612, #de3831, #002395);
+    /* Brand-band gradient used for the hairline that separates one page
+       section from the next — the exact brand hexes ordered dark to light,
+       not the contrast-adjusted text/fill tokens above, since this is a
+       decorative fill rather than text. Black/white are left out: either
+       would disappear into the page background in one of the two themes. */
+    --gradient-brand: linear-gradient(90deg, #311218, #212e7b, #ad5726, #007847, #ed2442, #f89e41, #fcb618);
+    --gradient-brand-vertical: linear-gradient(180deg, #311218, #212e7b, #ad5726, #007847, #ed2442, #f89e41, #fcb618);
 
     /* Motion */
     --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
@@ -87,28 +104,59 @@
     --color-muted: #a6a6a6;
     --color-faint: #707070;
 
-    /* Green #007A4D reads too dark as text on black; brightened for that
-       one role. Fills keep the exact flag green. */
-    --color-primary: #007a4d;
-    --color-primary-soft: #2ecc81;
-    --color-primary-deep: #00522f;
-    --color-primary-rgb: 0 122 77;
+    /* Green #007847 reads fine as text on black too; -soft is brightened
+       further so it still pops as a button-gradient fill against black. */
+    --color-primary: #007847;
+    --color-primary-soft: #00b56a;
+    --color-primary-deep: #004a2c;
+    --color-primary-rgb: 0 120 71;
 
-    /* Gold #FFB612 has excellent contrast on black — used as-is. */
-    --color-secondary: #ffc94d;
-    --color-secondary-soft: #ffb612;
-    --color-secondary-deep: #c9781a;
+    /* Yellow #FCB618 has excellent contrast on black — a paler tint carries
+       the text role so it still reads distinctly from the exact fill. */
+    --color-secondary: #f7ba31;
+    --color-secondary-soft: #fcb618;
+    --color-secondary-deep: #ac7802;
 
-    /* Blue #002395 is nearly invisible on black; brightened for text,
-       fills keep the exact flag blue. */
-    --color-tertiary: #5a7cff;
-    --color-tertiary-deep: #002395;
+    /* Blue #212E7B is too dark for text on black; brightened for text,
+       fills keep the exact brand blue. */
+    --color-tertiary: #6273d5;
+    --color-tertiary-deep: #212e7b;
 
-    /* Red #DE3831 already reads clearly on black — used as-is for both. */
-    --color-danger: #ff6b5b;
-    --color-danger-soft: #de3831;
+    /* Red #ED2442 already reads clearly on black; brightened slightly for
+       a touch more headroom, fills keep the exact brand red. */
+    --color-danger: #ef3e59;
+    --color-danger-soft: #ed2442;
+
+    /* Orange #F89E41 reads clearly on black already; a paler tint carries
+       the text role, fills keep the exact brand orange. */
+    --color-orange: #f4a859;
+    --color-orange-soft: #f89e41;
+    --color-orange-deep: #783f04;
+
+    /* Brown #AD5726 is borderline on black; brightened for text. Dark
+       brown stays a decorative-only shade, unchanged. */
+    --color-brown: #c1612a;
+    --color-brown-deep: #311218;
 
     --color-on-accent: #ffffff;
+}
+
+/* Swaps the nav logo for its dark-mode variant. Driven purely by the `.dark`
+   class (the same one the inline pre-paint script in the layout head sets
+   synchronously, before first paint) rather than JS run after the fact, so
+   there's no flash of the wrong logo — the theme-toggle icons already have
+   one, and a large, immediately-visible logo would make it far more
+   noticeable. */
+[data-logo-variant='dark'] {
+    display: none;
+}
+
+.dark [data-logo-variant='dark'] {
+    display: block;
+}
+
+.dark [data-logo-variant='light'] {
+    display: none;
 }
 
 @layer base {
@@ -144,11 +192,11 @@
     }
 }
 
-/* Scrollbar in the flag's colours, echoing the section-divider gradient.
+/* Scrollbar in the brand's colours, echoing the section-divider gradient.
    Firefox's `scrollbar-color` has no gradient support, so it falls back to
-   a single flag green rather than trying to approximate the band. */
+   a single brand green rather than trying to approximate the band. */
 html {
-    scrollbar-color: #007a4d transparent;
+    scrollbar-color: #007847 transparent;
     scrollbar-width: thin;
 }
 
@@ -162,7 +210,7 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-image: var(--gradient-flag-vertical);
+    background-image: var(--gradient-brand-vertical);
     background-clip: padding-box;
     border: 3px solid transparent;
     border-radius: 9999px;
@@ -178,11 +226,56 @@ html {
 }
 
 @utility hairline-t {
-    border-top: 1px solid transparent;
-    border-image: var(--gradient-flag) 1;
+    border-top: 3px solid transparent;
+    border-image: var(--gradient-brand) 1;
 }
 
-/* A single, site-wide accent: a slanted sliver of the flag gradient pinned
+/* Glassmorphism, site-wide: a translucent, backdrop-blurred surface with a
+   saturation boost (the saturation is what keeps a blur from reading as
+   flat grey mud) and a hairline-thin inner highlight standing in for light
+   catching a glass edge. Reads off --color-ink directly, so it's a white
+   glass in light mode and a black glass in dark mode with no separate
+   override needed. Pair with glass-float on genuinely floating surfaces
+   (nav, chat panel, dropdowns) for an added lift shadow — left off here so
+   cards sitting flush in a grid don't compete with their neighbours. */
+@utility glass {
+    background-color: color-mix(in oklab, var(--color-ink) 55%, transparent);
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 14%);
+}
+
+@utility glass-float {
+    box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 14%),
+        0 8px 30px -12px rgb(0 0 0 / 35%);
+}
+
+/* Shared spacing/transition for a row inside a hairline-divided list (the
+   programme, event and resource lists) that turns to glass on hover — see
+   hover:glass. Deliberately doesn't set `display`: rows are a mix of flex
+   and block layouts depending on their content, so each usage keeps its
+   own display/alignment classes alongside this one. The negative margin
+   lets the glass fill bleed slightly past the row's own text into the
+   section's existing side padding, rather than looking clipped to it. */
+@utility glass-row {
+    border-radius: 0.75rem;
+    padding-inline: 1rem;
+    margin-inline: -1rem;
+    transition-property: background-color, backdrop-filter, box-shadow;
+    transition-duration: 200ms;
+}
+
+/* Browsers without backdrop-filter support would otherwise render .glass at
+   55% opacity with nothing softening whatever's behind it — bumped to a
+   near-opaque solid fallback so text stays readable either way. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass {
+        background-color: color-mix(in oklab, var(--color-ink) 92%, transparent);
+    }
+}
+
+/* A single, site-wide accent: a slanted sliver of the brand gradient pinned
    to the right edge of the viewport, sitting behind every section (the page
    background shows through everywhere a section's own content column
    doesn't reach it — nav and footer paint their own full-width background
@@ -194,7 +287,7 @@ html {
     inset: 0 0 0 auto;
     z-index: 1;
     width: clamp(3rem, 6vw, 8rem);
-    background: var(--gradient-flag-vertical);
+    background: var(--gradient-brand-vertical);
     clip-path: polygon(38% 0, 100% 0, 100% 100%, 0 100%);
     opacity: 0.05;
     pointer-events: none;
@@ -207,6 +300,148 @@ html {
 @media (max-width: 1279px) {
     .site-edge-accent {
         display: none;
+    }
+}
+
+/* Ambient, site-wide backdrop: six blurred brand-colour blobs, fixed to the
+   viewport (so they stay put rather than scrolling away) and drifting
+   slowly and independently. Sits behind the edge accent and every section,
+   giving the plain stretches between hero glows some quiet motion instead
+   of flat colour. Kept very low-opacity so it reads as ambient texture, not
+   decoration, in both themes. */
+.ambient-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.ambient-backdrop span {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    opacity: 0.06;
+    will-change: transform;
+}
+
+.dark .ambient-backdrop span {
+    opacity: 0.11;
+}
+
+.ambient-backdrop span:nth-child(1) {
+    top: -12%;
+    left: -10%;
+    height: 42vw;
+    width: 42vw;
+    max-height: 32rem;
+    max-width: 32rem;
+    background: var(--color-primary);
+    animation: ambient-drift-a 26s ease-in-out infinite;
+}
+
+.ambient-backdrop span:nth-child(2) {
+    top: 8%;
+    right: -14%;
+    height: 36vw;
+    width: 36vw;
+    max-height: 28rem;
+    max-width: 28rem;
+    background: var(--color-secondary-soft);
+    animation: ambient-drift-b 32s ease-in-out infinite;
+}
+
+.ambient-backdrop span:nth-child(3) {
+    bottom: -16%;
+    left: 20%;
+    height: 38vw;
+    width: 38vw;
+    max-height: 30rem;
+    max-width: 30rem;
+    background: var(--color-danger-soft);
+    animation: ambient-drift-c 30s ease-in-out infinite;
+}
+
+.ambient-backdrop span:nth-child(4) {
+    bottom: 4%;
+    right: 8%;
+    height: 28vw;
+    width: 28vw;
+    max-height: 22rem;
+    max-width: 22rem;
+    background: var(--color-tertiary);
+    animation: ambient-drift-a 24s ease-in-out infinite reverse;
+}
+
+.ambient-backdrop span:nth-child(5) {
+    top: 32%;
+    left: 6%;
+    height: 26vw;
+    width: 26vw;
+    max-height: 20rem;
+    max-width: 20rem;
+    background: var(--color-orange-soft);
+    animation: ambient-drift-b 28s ease-in-out infinite reverse;
+}
+
+.ambient-backdrop span:nth-child(6) {
+    bottom: 30%;
+    right: 22%;
+    height: 24vw;
+    width: 24vw;
+    max-height: 18rem;
+    max-width: 18rem;
+    background: var(--color-brown);
+    animation: ambient-drift-c 34s ease-in-out infinite reverse;
+}
+
+@keyframes ambient-drift-a {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(4%, 6%) scale(1.12);
+    }
+}
+
+@keyframes ambient-drift-b {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-6%, 4%) scale(1.08);
+    }
+}
+
+/* Fallback for the thermal-heatmap WebGL panel — shown until the canvas
+   paints its first frame, and left visible in place of the canvas if WebGL
+   isn't available at all. Echoes the shader's own cold-void-to-hot-core
+   look: a near-black backdrop with a warm ember glow. */
+.thermal-heatmap-fallback {
+    background-color: #050208;
+    background-image: radial-gradient(ellipse 65% 55% at 50% 55%, rgb(220 90 40 / 35%), transparent 70%);
+}
+
+/* Fallback for the fluid-smoke WebGL panel — a soft, low-opacity smudge
+   rather than a hard-edged block, since the real effect is transparent by
+   default and meant to sit inside a section that already has its own
+   background (the footer). */
+.fluid-smoke-fallback {
+    background-image: radial-gradient(ellipse 70% 60% at 50% 100%, rgb(90 90 86 / 12%), transparent 70%);
+}
+
+@keyframes ambient-drift-c {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(5%, -5%) scale(1.1);
     }
 }
 
@@ -259,6 +494,21 @@ img:not(.h-full):not(.brand-mark):not([data-loaded]) {
 img[data-loaded] {
     animation: none;
     background-image: none;
+}
+
+/* Pauses every continuous, indefinitely-running CSS animation the moment
+   the tab itself isn't visible (see visibility.js, which toggles this class
+   on <html> from the page's visibilitychange event) — no reason to keep
+   compositing the ambient backdrop, the vision ring or the marquee in a
+   backgrounded tab nobody's looking at. WebGL canvases pause themselves the
+   same way via the shared render loop in webgl-canvas.js. Finite-iteration
+   animations (chatbot-ping, hero-enter) are left out — they stop on their
+   own in a few seconds either way. */
+.tab-hidden .ambient-backdrop span,
+.tab-hidden .vision-ring-spin,
+.tab-hidden .empty-state-ping,
+.tab-hidden .marquee-track {
+    animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -411,6 +661,96 @@ img[data-loaded] {
     animation-delay: 300ms;
 }
 
+/* Slow continuous rotation for the home hero's brand-gradient vision ring —
+   reads as a quietly "live" indicator rather than a static illustration. */
+@keyframes ring-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.vision-ring-spin {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ring-spin 40s linear infinite;
+}
+
+/* Soft attention ring behind the chat launcher — a handful of gentle pulses
+   on load, then it stops rather than pulsing forever. Reused around empty
+   states so a "coming soon" panel doesn't read as inert. */
+@keyframes soft-ping {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1.7);
+        opacity: 0;
+    }
+}
+
+.chatbot-ping {
+    animation: soft-ping 2.2s ease-out 3;
+}
+
+.empty-state-ping {
+    animation: soft-ping 2.4s ease-out infinite;
+}
+
+/* Reading-progress bar spanning the very top of the viewport, filled in the
+   brand gradient and scaled by scroll position (see scroll-progress.js). */
+.scroll-progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 3px;
+    z-index: 60;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    background-image: var(--gradient-brand);
+    pointer-events: none;
+}
+
+/* Mobile nav links fade + rise in, staggered, once the panel opens — the
+   panel itself already animates open via the grid-rows transition above;
+   this keeps the links from just popping in with it. The container is only
+   ever visible below the 1450px breakpoint, so no extra media gate is
+   needed here. */
+[data-nav-menu] nav a {
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+        opacity 300ms var(--ease-out-strong),
+        transform 300ms var(--ease-out-strong),
+        background-color 400ms ease,
+        color 400ms ease;
+}
+
+[data-nav-menu][data-open='true'] nav a {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-nav-menu][data-open='true'] nav a:nth-child(2) {
+    transition-delay: 40ms;
+}
+
+[data-nav-menu][data-open='true'] nav a:nth-child(3) {
+    transition-delay: 80ms;
+}
+
+[data-nav-menu][data-open='true'] nav a:nth-child(4) {
+    transition-delay: 120ms;
+}
+
+[data-nav-menu][data-open='true'] nav a:nth-child(5) {
+    transition-delay: 160ms;
+}
+
+[data-nav-menu][data-open='true'] nav a:nth-child(n + 6) {
+    transition-delay: 200ms;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .marquee-track {
         animation: none;
@@ -445,5 +785,18 @@ img[data-loaded] {
 
     .hover-zoom:hover img {
         transform: none;
+    }
+
+    .vision-ring-spin,
+    .chatbot-ping,
+    .empty-state-ping,
+    .ambient-backdrop span {
+        animation: none;
+    }
+
+    [data-nav-menu] nav a {
+        opacity: 1;
+        transform: none;
+        transition: none;
     }
 }

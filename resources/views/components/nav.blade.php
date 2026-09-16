@@ -1,36 +1,44 @@
 @php
-    // Each link's hover underline cycles through the flag's four chromatic
-    // colours (green, red, gold, blue) in a fixed rotation, continuing
-    // across both link groups so the sequence reads as one continuous nav.
+    // Each link's hover underline cycles through the brand's seven
+    // colours (green, red, yellow, blue, orange, brown) in a fixed
+    // rotation, continuing across both link groups so the sequence reads
+    // as one continuous nav.
     $links = [
         ['label' => __('Home'), 'route' => 'home', 'accent' => 'bg-primary-soft'],
         ['label' => __('Who We Are'), 'route' => 'who-we-are', 'accent' => 'bg-danger-soft'],
         ['label' => __('Why We Exist'), 'route' => 'why-we-exist', 'accent' => 'bg-secondary-soft'],
         ['label' => __('What We Do'), 'route' => 'what-we-do', 'accent' => 'bg-tertiary'],
-        ['label' => __('Articles'), 'route' => 'articles.index', 'accent' => 'bg-primary-soft'],
-        ['label' => __('Events'), 'route' => 'events.index', 'accent' => 'bg-danger-soft'],
+        ['label' => __('Articles'), 'route' => 'articles.index', 'accent' => 'bg-orange-soft'],
+        ['label' => __('Events'), 'route' => 'events.index', 'accent' => 'bg-brown'],
     ];
 
     $moreLinks = [
-        ['label' => __('Resources'), 'route' => 'resources.index', 'accent' => 'bg-secondary-soft'],
-        ['label' => __('Gallery'), 'route' => 'gallery', 'accent' => 'bg-tertiary'],
-        ['label' => __('Partners'), 'route' => 'partners', 'accent' => 'bg-primary-soft'],
-        ['label' => __('Contact Us'), 'route' => 'contact', 'accent' => 'bg-danger-soft'],
+        ['label' => __('Resources'), 'route' => 'resources.index', 'accent' => 'bg-primary-soft'],
+        ['label' => __('Gallery'), 'route' => 'gallery', 'accent' => 'bg-danger-soft'],
+        ['label' => __('Partners'), 'route' => 'partners', 'accent' => 'bg-secondary-soft'],
+        ['label' => __('Contact Us'), 'route' => 'contact', 'accent' => 'bg-tertiary'],
     ];
 @endphp
 
-<header data-site-header class="sticky top-0 z-50 border-b border-transparent transition-colors duration-300 [&.is-scrolled]:border-hairline [&.is-scrolled]:bg-ink/80 [&.is-scrolled]:backdrop-blur-md">
-    <div class="mx-auto flex w-full max-w-[120rem] items-center justify-between gap-8 px-6 py-5 sm:px-8">
+{{--
+    A floating glass pill, pinned to the top of the viewport as the page
+    scrolls (persistent navigation on every section, not just the hero).
+    See the glass/glass-float utilities in app.css for what the classes
+    below pull in.
+--}}
+<header data-site-header class="sticky inset-x-0 top-0 z-50 px-3 pt-3">
+    <div class="glass glass-float mx-auto flex w-full max-w-[120rem] items-center justify-between gap-8 rounded-full border border-hairline px-8 py-3">
         <div class="flex items-center gap-10">
             <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-2">
-                <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="SATFYF" class="brand-mark h-12 w-auto rounded-md sm:h-14" />
+                <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" data-logo-variant="light" alt="SATFYF" class="brand-mark h-12 w-auto rounded-md sm:h-14" />
+                <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO-dark-mode.jpg') }}" data-logo-variant="dark" alt="SATFYF" class="brand-mark h-12 w-auto rounded-md sm:h-14" />
             </a>
 
             <nav class="hidden items-center gap-8 min-[1450px]:flex" aria-label="Primary">
                 @foreach ($links as $link)
                     <a
                         href="{{ route($link['route']) }}"
-                        class="group relative py-1 text-sm text-muted transition-colors hover:text-fg {{ request()->routeIs($link['route']) ? 'text-fg' : '' }}"
+                        class="group relative py-1 text-base font-bold text-muted transition-colors hover:text-fg {{ request()->routeIs($link['route']) ? 'text-fg' : '' }}"
                     >
                         {{ $link['label'] }}
                         <span class="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 {{ $link['accent'] }} transition-[transform,background-color] duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
@@ -43,7 +51,7 @@
             @foreach ($moreLinks as $link)
                 <a
                     href="{{ route($link['route']) }}"
-                    class="group relative py-1 text-sm text-muted transition-colors hover:text-fg {{ request()->routeIs($link['route']) ? 'text-fg' : '' }}"
+                    class="group relative py-1 text-base font-bold text-muted transition-colors hover:text-fg {{ request()->routeIs($link['route']) ? 'text-fg' : '' }}"
                 >
                     {{ $link['label'] }}
                     <span class="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 {{ $link['accent'] }} transition-[transform,background-color] duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
@@ -87,12 +95,12 @@
         data-open="false"
         class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=true]:grid-rows-[1fr] min-[1450px]:hidden"
     >
-        <nav class="overflow-hidden border-t border-hairline" aria-label="Mobile">
+        <nav class="glass overflow-hidden border-t border-hairline" aria-label="Mobile">
             <div class="flex flex-col gap-1 px-6 py-5">
                 @foreach ([...$links, ...$moreLinks] as $link)
                     <a
                         href="{{ route($link['route']) }}"
-                        class="rounded-lg px-3 py-2.5 text-sm text-muted transition-colors hover:bg-surface hover:text-fg"
+                        class="rounded-lg px-3 py-2.5 text-base font-bold text-muted transition-colors hover:bg-surface hover:text-fg"
                     >
                         {{ $link['label'] }}
                     </a>

@@ -1,19 +1,16 @@
 <x-layouts.app>
     {{-- Hero --}}
     <section class="relative overflow-hidden pt-20 pb-24 sm:pt-28 sm:pb-32">
-        <x-ui.glow tone="primary" class="-top-24 left-1/2 h-[32rem] w-[32rem] -translate-x-1/2 opacity-60" />
-        <x-ui.glow tone="tertiary" class="top-40 -right-32 h-96 w-96 opacity-40" />
-
         <div class="hero-enter relative mx-auto grid w-full max-w-[120rem] gap-16 px-6 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div class="max-w-2xl">
-                <x-ui.eyebrow icon>{{ $hero['hero_eyebrow'] ?? __('South African Tobacco-Free Youth Forum') }}</x-ui.eyebrow>
+                <x-ui.eyebrow class="w-full justify-center text-center">{{ $hero['hero_eyebrow'] ?? __('South African Tobacco-Free Youth Forum') }}</x-ui.eyebrow>
 
-                <h1 class="mt-5 text-balance font-serif text-5xl leading-[1.05] text-fg sm:text-6xl lg:text-7xl">
+                <h1 class="mt-5 text-balance text-4xl leading-[1.05] text-fg sm:text-5xl lg:text-6xl">
                     {{ $hero['hero_heading'] ?? __('Speak up. Stand out.') }}
                     <span class="block text-primary-soft">{{ $hero['hero_heading_accent'] ?? __('A smoke-free generation.') }}</span>
                 </h1>
 
-                <p class="mt-6 max-w-lg text-balance text-base leading-relaxed text-muted sm:text-lg">
+                <p class="mt-6 max-w-lg text-balance text-lg leading-relaxed text-muted sm:text-xl">
                     {{ $hero['hero_subtext'] ?? '' }}
                 </p>
 
@@ -31,19 +28,23 @@
                     <circle
                         cx="100" cy="100" r="88" fill="none" stroke="url(#vision-ring)" stroke-width="2"
                         stroke-linecap="round" stroke-dasharray="374" stroke-dashoffset="90"
+                        class="vision-ring-spin"
                     />
                     <defs>
                         <linearGradient id="vision-ring" x1="0" y1="0" x2="1" y2="1">
-                            <stop offset="0%" stop-color="#007a4d" />
-                            <stop offset="33%" stop-color="#ffb612" />
-                            <stop offset="66%" stop-color="#de3831" />
-                            <stop offset="100%" stop-color="#002395" />
+                            <stop offset="0%" stop-color="#311218" />
+                            <stop offset="17%" stop-color="#212e7b" />
+                            <stop offset="34%" stop-color="#ad5726" />
+                            <stop offset="50%" stop-color="#007847" />
+                            <stop offset="67%" stop-color="#ed2442" />
+                            <stop offset="84%" stop-color="#f89e41" />
+                            <stop offset="100%" stop-color="#fcb618" />
                         </linearGradient>
                     </defs>
                 </svg>
                 <div class="absolute inset-10 flex flex-col items-center justify-center rounded-full border border-hairline bg-surface/70 text-center">
                     <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="" class="brand-mark h-16 w-16 rounded-full object-cover" />
-                    <p class="mt-4 font-serif text-4xl text-secondary">2030</p>
+                    <p class="mt-4 text-4xl text-secondary">2030</p>
                     <p class="text-xs tracking-[0.14em] text-muted uppercase">{{ __('Our Vision') }}</p>
                 </div>
             </div>
@@ -51,25 +52,25 @@
     </section>
 
     {{-- Why we exist --}}
-    <x-ui.section class="hairline-t">
+    <x-ui.section class="hairline-t" width="wide">
         <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
             <x-ui.section-header eyebrow="{{ __('Why We Exist') }}">
                 {{ $mission['mission_tagline'] ?? __('We speak and spread the truth about smoking.') }}
             </x-ui.section-header>
 
-            <div class="space-y-7 text-balance text-base leading-relaxed text-muted sm:text-lg">
+            <div class="space-y-7 text-balance text-lg leading-relaxed text-muted sm:text-xl">
                 <p class="max-w-3xl">{{ $mission['mission_statement'] ?? '' }}</p>
                 <ul class="reveal-stagger grid gap-4 sm:grid-cols-3">
-                    <li class="hover-lift rounded-xl border border-hairline p-5 text-sm text-fg">{{ $mission['vision_2030_1'] ?? '' }}</li>
-                    <li class="hover-lift rounded-xl border border-hairline p-5 text-sm text-fg">{{ $mission['vision_2030_2'] ?? '' }}</li>
-                    <li class="hover-lift rounded-xl border border-hairline p-5 text-sm text-fg">{{ $mission['vision_2030_3'] ?? '' }}</li>
+                    <li class="glass hover-lift rounded-xl border border-hairline p-5 text-sm text-fg">{{ $mission['vision_2030_1'] ?? '' }}</li>
+                    <li class="glass hover-lift rounded-xl border border-hairline p-5 text-sm text-fg">{{ $mission['vision_2030_2'] ?? '' }}</li>
+                    <li class="glass hover-lift rounded-xl border border-hairline p-5 text-sm text-fg">{{ $mission['vision_2030_3'] ?? '' }}</li>
                 </ul>
             </div>
         </div>
     </x-ui.section>
 
     {{-- What we do --}}
-    <x-ui.section class="hairline-t">
+    <x-ui.section class="hairline-t" width="wide">
         <div class="flex flex-wrap items-end justify-between gap-6">
             <x-ui.section-header eyebrow="{{ __('Our Programmes') }}">
                 {{ __('Built around what young people need.') }}
@@ -80,7 +81,7 @@
         <div class="reveal-stagger mt-10 hairline-t">
             @foreach ($programs as $category => $items)
                 @php($categoryLabel = $items->first()->category->label())
-                <a href="{{ route('what-we-do') }}" class="group flex items-center justify-between gap-6 py-5 hairline-b">
+                <a href="{{ route('what-we-do') }}" class="group glass-row flex items-center justify-between gap-6 py-5 hairline-b hover:glass">
                     <div>
                         <p class="font-medium text-fg">{{ $categoryLabel }}</p>
                         <p class="mt-1 text-sm text-muted">{{ $items->pluck('title')->join(', ') }}</p>
@@ -92,7 +93,7 @@
     </x-ui.section>
 
     {{-- Why SATFYF is different --}}
-    <x-ui.section class="hairline-t" width="narrow">
+    <x-ui.section class="hairline-t" width="wide">
         <x-ui.section-header eyebrow="{{ __('Why It Matters') }}">{{ __('More than awareness.') }}</x-ui.section-header>
 
         <x-ui.tabs class="mt-10" :tabs="[
@@ -104,7 +105,7 @@
     </x-ui.section>
 
     {{-- Stats --}}
-    <x-ui.section class="hairline-t">
+    <x-ui.section class="hairline-t" width="wide">
         <div class="reveal-stagger grid grid-cols-2 gap-8 sm:grid-cols-4">
             <x-ui.stat value="2030" label="{{ __('Vision target year') }}" />
             <x-ui.stat :value="$programs->flatten()->count().'+'" label="{{ __('Active programmes') }}" />
@@ -124,13 +125,13 @@
 
                 <div class="reveal-stagger mt-8 space-y-6">
                     @forelse ($articles as $article)
-                        <a href="{{ route('articles.show', $article) }}" class="group block hairline-b pb-6">
+                        <a href="{{ route('articles.show', $article) }}" class="group glass-row block pb-6 hairline-b hover:glass">
                             <p class="text-xs text-faint">{{ $article->published_at->translatedFormat('d M Y') }}</p>
                             <p class="mt-2 font-medium text-fg group-hover:text-primary-soft">{{ $article->title }}</p>
                             <p class="mt-1 text-sm text-muted">{{ $article->excerpt }}</p>
                         </a>
                     @empty
-                        <p class="text-sm text-muted">{{ __('Articles are coming soon.') }}</p>
+                        <x-ui.empty-state>{{ __('Articles are coming soon.') }}</x-ui.empty-state>
                     @endforelse
                 </div>
             </div>
@@ -143,12 +144,12 @@
 
                 <div class="reveal-stagger mt-8 space-y-6">
                     @forelse ($events as $event)
-                        <a href="{{ route('events.show', $event) }}" class="group block hairline-b pb-6">
+                        <a href="{{ route('events.show', $event) }}" class="group glass-row block pb-6 hairline-b hover:glass">
                             <p class="text-xs text-faint">{{ $event->starts_at->translatedFormat('d M Y, H:i') }} &middot; {{ $event->location }}</p>
                             <p class="mt-2 font-medium text-fg group-hover:text-primary-soft">{{ $event->title }}</p>
                         </a>
                     @empty
-                        <p class="text-sm text-muted">{{ __('No upcoming events right now — check back soon.') }}</p>
+                        <x-ui.empty-state>{{ __('No upcoming events right now — check back soon.') }}</x-ui.empty-state>
                     @endforelse
                 </div>
             </div>
@@ -159,6 +160,7 @@
     @if ($partners->isNotEmpty())
         <section class="hairline-t py-24 sm:py-32">
             <p class="text-center text-xs tracking-[0.14em] text-faint uppercase">{{ __('Partners & Collaborative') }}</p>
+            <p class="mx-auto mt-3 max-w-xl text-balance text-center text-sm text-muted">{{ __('Schools, health organisations and community groups working alongside us to put tobacco-free choices within reach of more young people.') }}</p>
             <div class="relative mt-10 overflow-hidden [-webkit-mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
                 <div class="marquee-track flex w-max items-center gap-16">
                     @for ($set = 0; $set < 2; $set++)
@@ -213,7 +215,7 @@
 
     {{-- FAQ --}}
     @if ($faqs->isNotEmpty())
-        <x-ui.section class="hairline-t" width="narrow">
+        <x-ui.section class="hairline-t" width="wide">
             <x-ui.section-header>{{ __('Questions.') }}</x-ui.section-header>
             <x-ui.accordion class="reveal-stagger mt-8">
                 @foreach ($faqs as $faq)
@@ -224,10 +226,9 @@
     @endif
 
     {{-- Closing CTA --}}
-    <section class="relative hairline-t py-24 text-center">
-        <x-ui.glow tone="primary" class="top-0 left-1/2 h-80 w-80 -translate-x-1/2 opacity-50" />
-        <div class="relative mx-auto max-w-xl px-6">
-            <h2 class="text-balance font-serif text-4xl text-fg sm:text-5xl">
+    <section class="relative hairline-t overflow-hidden py-24 text-center">
+        <div class="reveal relative mx-auto max-w-xl px-6">
+            <h2 class="text-balance text-4xl text-fg sm:text-5xl">
                 {{ $hero['hero_heading'] ?? __('Speak up. Stand out.') }}
                 <span class="text-primary-soft">{{ $hero['hero_heading_accent'] ?? __('A smoke-free generation.') }}</span>
             </h2>

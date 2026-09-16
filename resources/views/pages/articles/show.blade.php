@@ -1,10 +1,12 @@
 <x-layouts.app :title="$article->title" :description="$article->excerpt">
     <article class="pt-24 pb-24 sm:pt-32">
-        <x-ui.section width="narrow" class="!py-0">
+        <x-ui.section width="wide" class="!py-0">
             <a href="{{ route('articles.index') }}" class="text-sm text-muted hover:text-fg">&larr; {{ __('All articles') }}</a>
 
-            <p class="mt-6 text-xs text-faint">{{ $article->published_at->translatedFormat('d M Y') }} @if ($article->author_name) &middot; {{ $article->author_name }} @endif</p>
-            <h1 class="mt-3 text-balance font-serif text-4xl leading-[1.1] text-fg sm:text-5xl">{{ $article->title }}</h1>
+            <div class="hero-enter">
+                <p class="mt-6 text-xs text-faint">{{ $article->published_at->translatedFormat('d M Y') }} @if ($article->author_name) &middot; {{ $article->author_name }} @endif</p>
+                <h1 class="mt-3 text-balance text-4xl leading-[1.1] text-fg sm:text-5xl">{{ $article->title }}</h1>
+            </div>
 
             @if ($article->cover_image_path)
                 <div class="mt-8 aspect-[16/9] overflow-hidden rounded-2xl border border-hairline">
@@ -12,7 +14,7 @@
                 </div>
             @endif
 
-            <div class="mt-10 max-w-2xl space-y-5 text-base leading-relaxed text-muted [&_a]:text-primary-soft [&_a]:underline [&_h2]:mt-8 [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:text-fg [&_img]:w-full [&_img]:rounded-2xl [&_img]:border [&_img]:border-hairline [&_strong]:text-fg">
+            <div class="mt-10 max-w-2xl space-y-5 text-base leading-relaxed text-muted [&_a]:text-primary-soft [&_a]:underline [&_h2]:mt-8 [&_h2]:text-2xl [&_h2]:text-fg [&_img]:w-full [&_img]:rounded-2xl [&_img]:border [&_img]:border-hairline [&_strong]:text-fg">
                 {!! $article->renderedBody() !!}
             </div>
 
@@ -48,7 +50,7 @@
                 <x-ui.section-header eyebrow="{{ __('Keep Reading') }}">{{ __('More articles.') }}</x-ui.section-header>
                 <div class="reveal-stagger mt-8 grid gap-8 sm:grid-cols-3">
                     @foreach ($related as $item)
-                        <a href="{{ route('articles.show', $item) }}" class="group block">
+                        <a href="{{ route('articles.show', $item) }}" class="group glass-row block py-3 hover:glass">
                             <p class="text-xs text-faint">{{ $item->published_at->translatedFormat('d M Y') }}</p>
                             <p class="mt-2 font-medium text-fg group-hover:text-primary-soft">{{ $item->title }}</p>
                         </a>

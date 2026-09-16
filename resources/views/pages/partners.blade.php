@@ -1,14 +1,11 @@
 <x-layouts.app :title="__('Partners & Collaborative')">
-    <section class="pt-24 pb-20 sm:pt-32">
-        <x-ui.section width="narrow" class="!py-0">
-            <x-ui.eyebrow>{{ __('Partners & Collaborative') }}</x-ui.eyebrow>
-            <h1 class="mt-5 text-balance font-serif text-5xl leading-[1.05] text-fg sm:text-6xl">{{ __("We don't do this alone.") }}</h1>
-        </x-ui.section>
-    </section>
+    <x-ui.page-hero eyebrow="{{ __('Partners & Collaborative') }}" subtext="{{ __('Schools, health organisations, government departments and community groups who share the venues, the credibility and the reach it takes to put tobacco-free choices in front of more young people.') }}">
+        {{ __("We don't do this alone.") }}
+    </x-ui.page-hero>
 
     @foreach ($types as $type)
         @if ($partners->has($type->value))
-            <x-ui.section class="hairline-t">
+            <x-ui.section class="hairline-t" width="wide">
                 <x-ui.section-header :eyebrow="$type->label()">
                     {{ trans_choice(':count organisation|:count organisations', $partners[$type->value]->count(), ['count' => $partners[$type->value]->count()]) }}
                 </x-ui.section-header>

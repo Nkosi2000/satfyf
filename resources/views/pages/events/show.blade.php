@@ -1,23 +1,25 @@
 <x-layouts.app :title="$event->title">
     <article class="pt-24 pb-24 sm:pt-32">
-        <x-ui.section width="narrow" class="!py-0">
+        <x-ui.section width="wide" class="!py-0">
             <a href="{{ route('events.index') }}" class="text-sm text-muted hover:text-fg">&larr; {{ __('All events') }}</a>
 
-            <x-ui.eyebrow class="mt-6">{{ $event->isUpcoming() ? __('Upcoming') : __('Past Event') }}</x-ui.eyebrow>
-            <h1 class="mt-3 text-balance font-serif text-4xl leading-[1.1] text-fg sm:text-5xl">{{ $event->title }}</h1>
+            <div class="hero-enter">
+                <x-ui.eyebrow class="mt-6">{{ $event->isUpcoming() ? __('Upcoming') : __('Past Event') }}</x-ui.eyebrow>
+                <h1 class="mt-3 text-balance text-4xl leading-[1.1] text-fg sm:text-5xl">{{ $event->title }}</h1>
 
-            <dl class="mt-6 flex flex-wrap gap-x-8 gap-y-2 text-sm text-muted">
-                <div>
-                    <dt class="text-faint">{{ __('When') }}</dt>
-                    <dd class="text-fg">{{ $event->starts_at->translatedFormat('d M Y, H:i') }}</dd>
-                </div>
-                @if ($event->location)
+                <dl class="mt-6 flex flex-wrap gap-x-8 gap-y-2 text-sm text-muted">
                     <div>
-                        <dt class="text-faint">{{ __('Where') }}</dt>
-                        <dd class="text-fg">{{ $event->location }}</dd>
+                        <dt class="text-faint">{{ __('When') }}</dt>
+                        <dd class="text-fg">{{ $event->starts_at->translatedFormat('d M Y, H:i') }}</dd>
                     </div>
-                @endif
-            </dl>
+                    @if ($event->location)
+                        <div>
+                            <dt class="text-faint">{{ __('Where') }}</dt>
+                            <dd class="text-fg">{{ $event->location }}</dd>
+                        </div>
+                    @endif
+                </dl>
+            </div>
 
             @if ($event->cover_image_path)
                 <div class="mt-8 aspect-[16/9] overflow-hidden rounded-2xl border border-hairline">

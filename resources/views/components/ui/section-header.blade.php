@@ -10,7 +10,7 @@
         <x-ui.eyebrow class="mb-4">{{ $eyebrow }}</x-ui.eyebrow>
     @endif
 
-    <h2 class="text-balance font-serif text-4xl leading-[1.1] text-fg sm:text-5xl">
+    <h2 class="text-balance text-4xl leading-[1.1] text-fg sm:text-5xl">
         {{ $slot }}
         @if ($accent)
             <span class="text-primary-soft">{{ $accent }}</span>

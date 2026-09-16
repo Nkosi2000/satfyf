@@ -29,7 +29,7 @@
         data-lang-menu
         hidden
         role="menu"
-        class="absolute right-0 z-50 mt-2 w-40 origin-top-right rounded-xl border border-hairline-strong bg-surface p-1.5 shadow-[0_12px_32px_-12px_rgb(0_0_0/0.25)]"
+        class="glass absolute right-0 z-50 mt-2 w-40 origin-top-right rounded-xl border border-hairline-strong p-1.5 !shadow-[inset_0_1px_0_rgb(255_255_255/0.14),0_12px_32px_-12px_rgb(0_0_0/0.25)]"
     >
         @foreach ($locales as $code => $label)
             <a
