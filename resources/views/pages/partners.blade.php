@@ -1,5 +1,5 @@
 <x-layouts.app :title="__('Partners & Collaborative')">
-    <x-ui.page-hero eyebrow="{{ __('Partners & Collaborative') }}" subtext="{{ __('Schools, health organisations, government departments and community groups who share the venues, the credibility and the reach it takes to put tobacco-free choices in front of more young people.') }}">
+    <x-ui.page-hero :eyebrow="__('Partners & Collaborative')" :subtext="__('Schools, health organisations, government departments and community groups who share the venues, the credibility and the reach it takes to put tobacco-free choices in front of more young people.')">
         {{ __("We don't do this alone.") }}
     </x-ui.page-hero>
 

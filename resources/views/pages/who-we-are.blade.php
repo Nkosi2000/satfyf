@@ -1,10 +1,10 @@
 <x-layouts.app :title="__('Who We Are')">
-    <x-ui.page-hero eyebrow="{{ __('Who We Are') }}" :subtext="$mission['mission_statement'] ?? null">
+    <x-ui.page-hero :eyebrow="__('Who We Are')" :subtext="$mission['mission_statement'] ?? null">
         {{ __('Youth voices, not youth audiences.') }}
     </x-ui.page-hero>
 
     <x-ui.section class="hairline-t" width="wide">
-        <x-ui.section-header eyebrow="{{ __('Vision 2030') }}">{{ __('By 2030, we want to see.') }}</x-ui.section-header>
+        <x-ui.section-header :eyebrow="__('Vision 2030')">{{ __('By 2030, we want to see.') }}</x-ui.section-header>
         <div class="reveal-stagger mt-8 grid gap-4 sm:grid-cols-3">
             <x-ui.card>{{ $mission['vision_2030_1'] ?? '' }}</x-ui.card>
             <x-ui.card>{{ $mission['vision_2030_2'] ?? '' }}</x-ui.card>
@@ -14,7 +14,7 @@
 
     @if ($team->isNotEmpty())
         <x-ui.section class="hairline-t" width="wide">
-            <x-ui.section-header eyebrow="{{ __('The Team') }}">{{ __('People behind the forum.') }}</x-ui.section-header>
+            <x-ui.section-header :eyebrow="__('The Team')">{{ __('People behind the forum.') }}</x-ui.section-header>
             <p class="mt-4 max-w-2xl text-balance text-lg leading-relaxed text-muted sm:text-xl">{{ __('A small, youth-led core team coordinates chapters and campaigns across the country, backed by volunteers, mentors and partner organisations who help run every Think Session, Imbizo and demonstration on the ground.') }}</p>
             <div class="reveal-stagger mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($team as $member)
@@ -37,9 +37,5 @@
         </x-ui.section>
     @endif
 
-    <section class="relative hairline-t overflow-hidden py-24 text-center sm:py-32">
-        <div class="reveal relative">
-            <x-ui.button href="{{ route('get-involved') }}" size="lg">{{ __('Get Involved') }}</x-ui.button>
-        </div>
-    </section>
+    <x-ui.closing-cta />
 </x-layouts.app>

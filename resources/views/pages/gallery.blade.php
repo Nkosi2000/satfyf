@@ -1,5 +1,5 @@
 <x-layouts.app :title="__('Gallery')">
-    <x-ui.page-hero eyebrow="{{ __('Gallery') }}" subtext="{{ __('Think sessions, school visits, public demonstrations and Community Imbizos — a running record of where young people are showing up and speaking out.') }}">
+    <x-ui.page-hero :eyebrow="__('Gallery')" :subtext="__('Think sessions, school visits, public demonstrations and Community Imbizos — a running record of where young people are showing up and speaking out.')">
         {{ __('SATFYF, in the field.') }}
     </x-ui.page-hero>
 

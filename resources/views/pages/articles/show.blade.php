@@ -47,7 +47,7 @@
 
         @if ($related->isNotEmpty())
             <x-ui.section class="hairline-t mt-20" width="wide">
-                <x-ui.section-header eyebrow="{{ __('Keep Reading') }}">{{ __('More articles.') }}</x-ui.section-header>
+                <x-ui.section-header :eyebrow="__('Keep Reading')">{{ __('More articles.') }}</x-ui.section-header>
                 <div class="reveal-stagger mt-8 grid gap-8 sm:grid-cols-3">
                     @foreach ($related as $item)
                         <a href="{{ route('articles.show', $item) }}" class="group glass-row block py-3 hover:glass">

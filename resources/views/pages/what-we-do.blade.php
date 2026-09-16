@@ -1,5 +1,5 @@
 <x-layouts.app :title="__('What We Do')">
-    <x-ui.page-hero eyebrow="{{ __('What We Do') }}" subtext="{{ __('From think sessions to public demonstrations — each programme is built to meet young people where they are.') }}">
+    <x-ui.page-hero :eyebrow="__('What We Do')" :subtext="__('From think sessions to public demonstrations — each programme is built to meet young people where they are.')">
         {{ __('Every programme, grouped by purpose.') }}
     </x-ui.page-hero>
 
@@ -20,12 +20,5 @@
         </x-ui.section>
     @endforeach
 
-    <section class="relative hairline-t overflow-hidden py-24 text-center sm:py-32">
-        <div class="reveal relative">
-            <p class="text-balance text-3xl text-fg">{{ __('Want a programme running at your school?') }}</p>
-            <div class="mt-8">
-                <x-ui.button href="{{ route('get-involved') }}" size="lg">{{ __('Get Involved') }}</x-ui.button>
-            </div>
-        </div>
-    </section>
+    <x-ui.closing-cta />
 </x-layouts.app>

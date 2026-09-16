@@ -1,5 +1,5 @@
 <x-layouts.app :title="__('Resources')">
-    <x-ui.page-hero eyebrow="{{ __('Resources') }}" subtext="{{ __('Fact sheets, toolkits and reports — free to download and share.') }}">
+    <x-ui.page-hero :eyebrow="__('Resources')" :subtext="__('Fact sheets, toolkits and reports — free to download and share.')">
         {{ __('Facts you can hand someone.') }}
     </x-ui.page-hero>
 

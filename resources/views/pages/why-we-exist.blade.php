@@ -1,5 +1,5 @@
 <x-layouts.app :title="__('Why We Exist')">
-    <x-ui.page-hero eyebrow="{{ __('Why We Exist') }}" subtext="{{ __('Tobacco use carries real health harms, real economic costs, and it still starts young. In a country still building the policy and enforcement to protect its youth, silence isn\'t neutral — it\'s a gap the industry is glad to fill.') }}">
+    <x-ui.page-hero :eyebrow="__('Why We Exist')" :subtext="__('Tobacco use carries real health harms, real economic costs, and it still starts young. In a country still building the policy and enforcement to protect its youth, silence isn\'t neutral — it\'s a gap the industry is glad to fill.')">
         {{ __("Tobacco doesn't market itself to adults.") }}
     </x-ui.page-hero>
 
@@ -21,7 +21,7 @@
     </x-ui.section>
 
     <x-ui.section class="hairline-t" width="wide">
-        <x-ui.section-header eyebrow="{{ __('How We Respond') }}">
+        <x-ui.section-header :eyebrow="__('How We Respond')">
             {{ __("We don't just warn. We show up.") }}
         </x-ui.section-header>
         <p class="mt-6 text-balance text-lg leading-relaxed text-muted sm:text-xl">

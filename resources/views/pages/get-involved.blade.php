@@ -1,5 +1,5 @@
 <x-layouts.app :title="__('Get Involved')">
-    <x-ui.page-hero eyebrow="{{ __('Get Involved') }}" subtext="{{ __('There\'s no membership fee, and no single way in. Pick what fits.') }}">
+    <x-ui.page-hero :eyebrow="__('Get Involved')" :subtext="__('There\'s no membership fee, and no single way in. Pick what fits.')">
         {{ __('Help achieve a culture where young people reject tobacco.') }}
     </x-ui.page-hero>
 
@@ -25,7 +25,7 @@
     </x-ui.section>
 
     <x-ui.section class="hairline-t" width="wide">
-        <x-ui.section-header eyebrow="{{ __('Reach Out') }}">{{ __("Tell us what you'd like to do.") }}</x-ui.section-header>
+        <x-ui.section-header :eyebrow="__('Reach Out')">{{ __("Tell us what you'd like to do.") }}</x-ui.section-header>
         <x-contact-form subject="Getting involved" class="mt-8" />
     </x-ui.section>
 
