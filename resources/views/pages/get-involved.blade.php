@@ -6,19 +6,19 @@
     <x-ui.section class="hairline-t" width="wide">
         <div class="reveal-stagger grid gap-6 sm:grid-cols-2">
             <x-ui.card>
-                <p class="text-2xl text-fg">{{ __('Start a Think Session') }}</p>
+                <p class="text-2xl font-black text-fg">{{ __('Start a Think Session') }}</p>
                 <p class="mt-2 text-sm leading-relaxed text-muted">{{ __('Bring a facilitated conversation about tobacco and substance abuse to your school or youth group.') }}</p>
             </x-ui.card>
             <x-ui.card>
-                <p class="text-2xl text-fg">{{ __('Become a Youth Ambassador') }}</p>
+                <p class="text-2xl font-black text-fg">{{ __('Become a Youth Ambassador') }}</p>
                 <p class="mt-2 text-sm leading-relaxed text-muted">{{ __('Get trained to run campaigns, speak at events and lead in your own community.') }}</p>
             </x-ui.card>
             <x-ui.card>
-                <p class="text-2xl text-fg">{{ __('Host a Community Imbizo') }}</p>
+                <p class="text-2xl font-black text-fg">{{ __('Host a Community Imbizo') }}</p>
                 <p class="mt-2 text-sm leading-relaxed text-muted">{{ __('Bring parents, teachers and local leaders together for an honest conversation.') }}</p>
             </x-ui.card>
             <x-ui.card>
-                <p class="text-2xl text-fg">{{ __('Partner with SATFYF') }}</p>
+                <p class="text-2xl font-black text-fg">{{ __('Partner with SATFYF') }}</p>
                 <p class="mt-2 text-sm leading-relaxed text-muted">{{ __('Organisations and donors — see how a partnership could work.') }}</p>
             </x-ui.card>
         </div>

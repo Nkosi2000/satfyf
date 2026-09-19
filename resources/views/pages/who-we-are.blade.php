@@ -19,15 +19,15 @@
             <div class="reveal-stagger mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($team as $member)
                     <div>
-                        <div class="hover-zoom aspect-square overflow-hidden rounded-2xl border border-hairline bg-surface">
+                        <div class="hover-zoom aspect-square overflow-hidden rounded-2xl border-[3px] border-fg bg-surface shadow-[6px_6px_0_0_var(--shadow-hard-color)]">
                             @if ($member->photo_path)
                                 <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($member->photo_path) }}" alt="{{ $member->name }}" class="h-full w-full object-cover" />
                             @else
                                 <div class="flex h-full w-full items-center justify-center text-4xl text-faint">{{ Illuminate\Support\Str::of($member->name)->explode(' ')->map(fn ($n) => $n[0])->join('') }}</div>
                             @endif
                         </div>
-                        <p class="mt-4 font-medium text-fg">{{ $member->name }}</p>
-                        <p class="text-sm text-muted">{{ $member->role }}</p>
+                        <p class="mt-4 font-black text-fg">{{ $member->name }}</p>
+                        <p class="text-sm font-bold text-primary-soft uppercase">{{ $member->role }}</p>
                         @if ($member->bio)
                             <p class="mt-2 text-sm text-muted">{{ $member->bio }}</p>
                         @endif

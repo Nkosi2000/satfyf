@@ -24,7 +24,7 @@ class ProgramSeeder extends Seeder
 
         foreach ($programs as $order => $program) {
             Program::query()->updateOrCreate(
-                ['title' => $program['title']],
+                ['title->en' => $program['title']],
                 [...$program, 'category' => $program['category']->value, 'order' => $order, 'published' => true],
             );
         }

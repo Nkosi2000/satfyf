@@ -19,7 +19,7 @@
             required
             placeholder="you@example.com"
             value="{{ old('email') }}"
-            class="w-full rounded-full border border-hairline-strong bg-surface px-4 py-2.5 text-sm text-fg placeholder:text-faint focus:border-primary-soft"
+            class="w-full rounded-full border-[3px] border-fg bg-surface px-4 py-2.5 text-sm font-bold text-fg placeholder:text-faint placeholder:font-normal focus:border-primary-soft"
         />
         <x-ui.button type="submit" size="sm" class="shrink-0">{{ __('Subscribe') }}</x-ui.button>
     </form>

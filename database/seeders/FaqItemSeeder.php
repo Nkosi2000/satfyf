@@ -22,7 +22,7 @@ class FaqItemSeeder extends Seeder
 
         foreach ($faqs as $order => $faq) {
             FaqItem::query()->updateOrCreate(
-                ['question' => $faq['question']],
+                ['question->en' => $faq['question']],
                 [...$faq, 'order' => $order, 'published' => true],
             );
         }

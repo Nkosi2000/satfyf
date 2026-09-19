@@ -10,7 +10,7 @@ class PartnerController extends Controller
 {
     public function index(): View
     {
-        $partners = Partner::query()->published()->ordered()->get();
+        $partners = Partner::publishedOrdered();
 
         return view('pages.partners', [
             'partners' => $partners->groupBy(fn (Partner $partner) => $partner->type->value),

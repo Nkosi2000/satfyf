@@ -11,7 +11,7 @@
         role="dialog"
         aria-modal="false"
         aria-label="{{ __('SatfyfBot chat') }}"
-        class="glass pointer-events-none flex h-[32rem] max-h-[75vh] w-[22rem] max-w-[calc(100vw-2.5rem)] origin-bottom-right scale-95 flex-col overflow-hidden rounded-2xl border border-hairline-strong opacity-0 !shadow-[inset_0_1px_0_rgb(255_255_255/0.14),0_24px_64px_-16px_rgb(0_0_0/0.35)] transition-[transform,opacity] duration-200 ease-out-strong data-[open=true]:pointer-events-auto data-[open=true]:scale-100 data-[open=true]:opacity-100"
+        class="pointer-events-none flex h-[32rem] max-h-[75vh] w-[22rem] max-w-[calc(100vw-2.5rem)] origin-bottom-right scale-95 flex-col overflow-hidden rounded-2xl border-[3px] border-fg bg-surface opacity-0 shadow-[8px_8px_0_0_var(--shadow-hard-color)] transition-[transform,opacity] duration-200 ease-out-strong data-[open=true]:pointer-events-auto data-[open=true]:scale-100 data-[open=true]:opacity-100"
     >
         <div class="hairline-b flex items-center justify-between gap-3 px-4 py-3.5">
             <div class="flex items-center gap-2.5">
@@ -48,9 +48,9 @@
         <div data-chatbot-typing hidden class="px-4 pb-2">
             <div class="flex items-center gap-1 rounded-2xl rounded-bl-sm bg-surface-2 px-3.5 py-2.5" role="status">
                 <span class="sr-only">{{ __('SatfyfBot is typing…') }}</span>
-                <span class="h-1.5 w-1.5 animate-bounce rounded-full bg-muted" style="animation-delay: 0ms"></span>
-                <span class="h-1.5 w-1.5 animate-bounce rounded-full bg-muted" style="animation-delay: 150ms"></span>
-                <span class="h-1.5 w-1.5 animate-bounce rounded-full bg-muted" style="animation-delay: 300ms"></span>
+                <span class="typing-pulse h-1.5 w-1.5 rounded-full bg-muted" style="animation-delay: 0ms"></span>
+                <span class="typing-pulse h-1.5 w-1.5 rounded-full bg-muted" style="animation-delay: 150ms"></span>
+                <span class="typing-pulse h-1.5 w-1.5 rounded-full bg-muted" style="animation-delay: 300ms"></span>
             </div>
         </div>
 
@@ -63,7 +63,7 @@
                 maxlength="1000"
                 required
                 placeholder="{{ __('Type your message…') }}"
-                class="max-h-28 flex-1 resize-none rounded-xl border border-hairline-strong bg-surface px-3 py-2 text-sm text-fg placeholder:text-faint focus:border-primary-soft"
+                class="max-h-28 flex-1 resize-none rounded-xl border-[3px] border-fg bg-surface px-3 py-2 text-sm text-fg placeholder:text-faint focus:border-primary-soft"
             ></textarea>
             <button
                 type="submit"
@@ -87,7 +87,7 @@
             aria-haspopup="dialog"
             aria-expanded="false"
             aria-controls="chatbot-panel"
-            class="glass relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-hairline-strong text-fg !shadow-[inset_0_1px_0_rgb(255_255_255/0.14),0_12px_32px_-12px_rgb(0_0_0/0.35)] transition-colors hover:border-fg/30"
+            class="press relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-[3px] border-fg bg-primary text-on-accent shadow-[5px_5px_0_0_var(--color-fg)]"
         >
             <span class="sr-only">{{ __('Chat with SatfyfBot') }}</span>
             <svg data-chatbot-icon="open" viewBox="0 0 24 24" fill="none" class="h-6 w-6" aria-hidden="true">

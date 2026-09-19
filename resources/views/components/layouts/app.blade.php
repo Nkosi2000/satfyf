@@ -17,7 +17,7 @@
     <title>{{ $title ? "$title · SATFYF" : __('SATFYF | South African Tobacco-Free Youth Forum') }}</title>
     <meta name="description" content="{{ $description }}" />
 
-    <link rel="icon" href="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" />
+    <link rel="icon" href="{{ asset('images/48 x 48.png') }}" />
 
     <script>
         // Runs before first paint to avoid a flash of the wrong theme.
@@ -66,5 +66,7 @@
 
     <x-footer />
     <x-chatbot />
+    <x-back-to-top />
+    <x-cookie-banner />
 </body>
 </html>

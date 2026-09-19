@@ -12,7 +12,7 @@ class WhoWeAreController extends Controller
     {
         return view('pages.who-we-are', [
             'mission' => SiteSetting::group('mission'),
-            'team' => TeamMember::query()->published()->ordered()->get(),
+            'team' => TeamMember::publishedOrdered(),
         ]);
     }
 }

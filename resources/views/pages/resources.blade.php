@@ -8,7 +8,7 @@
             <x-ui.section-header :eyebrow="$category ?: __('General')">{{ trans_choice(':count file|:count files', $items->count(), ['count' => $items->count()]) }}</x-ui.section-header>
             <div class="reveal-stagger mt-8 hairline-t">
                 @foreach ($items as $resource)
-                    <div class="glass-row group flex items-center justify-between gap-6 py-5 hairline-b hover:glass">
+                    <div class="glass-row row-hover group flex items-center justify-between gap-6 py-5 pl-5 hairline-b">
                         <div class="max-w-2xl">
                             <p class="font-medium text-fg">{{ $resource->title }}</p>
                             @if ($resource->description)

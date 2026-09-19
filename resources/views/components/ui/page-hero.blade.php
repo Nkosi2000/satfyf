@@ -13,7 +13,7 @@
     <x-ui.section class="relative !py-0" width="wide">
         <div class="hero-enter">
             <x-ui.eyebrow>{{ $eyebrow }}</x-ui.eyebrow>
-            <h1 class="mt-5 text-balance text-5xl leading-[1.05] text-fg sm:text-6xl">
+            <h1 class="mt-5 text-balance text-5xl leading-[0.98] font-black tracking-tight text-fg sm:text-6xl">
                 {{ $slot }}
             </h1>
             @if ($subtext)

@@ -25,7 +25,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>{{ $title }} · SATFYF Admin</title>
-    <link rel="icon" href="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" />
+    <link rel="icon" href="{{ asset('images/48 x 48.png') }}" />
 
     <script>
         // Runs before first paint to avoid a flash of the wrong theme —
@@ -44,7 +44,7 @@
     <div class="flex min-h-screen">
         <aside class="hidden w-64 shrink-0 border-r border-hairline-strong bg-surface lg:block">
             <a href="{{ route('admin.dashboard') }}" class="flex h-16 items-center gap-2.5 border-b border-hairline-strong px-5">
-                <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" alt="SATFYF" class="brand-mark h-9 w-auto rounded-md" />
+                <img src="{{ asset('images/48 x 48.png') }}" alt="SATFYF" class="brand-mark h-9 w-9 rounded-full object-cover" />
                 <span class="text-sm font-semibold text-fg">Admin</span>
             </a>
             <nav class="flex flex-col gap-0.5 p-3">

@@ -18,12 +18,12 @@ class HomeController extends Controller
         return view('pages.home', [
             'hero' => SiteSetting::group('hero'),
             'mission' => SiteSetting::group('mission'),
-            'programs' => Program::query()->published()->ordered()->get()->groupBy(fn (Program $program) => $program->category->value),
+            'programs' => Program::publishedOrdered()->groupBy(fn (Program $program) => $program->category->value),
             'articles' => Article::query()->published()->latest('published_at')->take(3)->get(),
-            'events' => EventItem::query()->published()->upcoming()->take(3)->get(),
-            'partners' => Partner::query()->published()->ordered()->get(),
-            'faqs' => FaqItem::query()->published()->ordered()->get(),
-            'galleryImages' => GalleryImage::query()->ordered()->take(10)->get(),
+            'events' => EventItem::cachedUpcoming()->take(3),
+            'partners' => Partner::publishedOrdered(),
+            'faqs' => FaqItem::publishedOrdered(),
+            'galleryImages' => GalleryImage::allOrdered()->take(10),
         ]);
     }
 }

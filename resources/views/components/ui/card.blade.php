@@ -1,9 +1,8 @@
-@props(['padded' => true, 'lift' => true])
+@props(['padded' => true])
 
 <div {{ $attributes->class([
-    'glass rounded-2xl border border-hairline',
+    'card-hard',
     'p-6' => $padded,
-    'hover-lift' => $lift,
 ]) }}>
     {{ $slot }}
 </div>

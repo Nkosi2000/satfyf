@@ -21,17 +21,16 @@
 @endphp
 
 {{--
-    A floating glass pill, pinned to the top of the viewport as the page
-    scrolls (persistent navigation on every section, not just the hero).
-    See the glass/glass-float utilities in app.css for what the classes
-    below pull in.
+    A full-width banner bar, pinned to the top of the viewport — a flag
+    rather than a floating capsule, with a thick brand-gradient edge instead
+    of a soft blur, matching the poster surface language used everywhere
+    else (see .card-hard / hairline-t in app.css).
 --}}
-<header data-site-header class="sticky inset-x-0 top-0 z-50 px-3 pt-3">
-    <div class="glass glass-float mx-auto flex w-full max-w-[120rem] items-center justify-between gap-8 rounded-full border border-hairline px-8 py-3">
+<header data-site-header class="sticky inset-x-0 top-0 z-50 border-b-[3px] border-fg bg-surface">
+    <div class="mx-auto flex w-full max-w-[120rem] items-center justify-between gap-8 px-6 py-3 sm:px-8">
         <div class="flex items-center gap-10">
             <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-2">
-                <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" data-logo-variant="light" alt="SATFYF" class="brand-mark h-12 w-auto rounded-md sm:h-14" />
-                <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO-dark-mode.jpg') }}" data-logo-variant="dark" alt="SATFYF" class="brand-mark h-12 w-auto rounded-md sm:h-14" />
+                <img src="{{ asset('images/48 x 48.png') }}" alt="SATFYF" class="brand-mark h-12 w-12 rounded-full border-[3px] border-fg object-cover sm:h-14 sm:w-14" />
             </a>
 
             <nav class="hidden items-center gap-8 min-[1450px]:flex" aria-label="Primary">
@@ -58,11 +57,13 @@
                 </a>
             @endforeach
             <x-ui.button href="{{ route('get-involved') }}" size="sm">{{ __('Get Involved') }}</x-ui.button>
+            <x-search-trigger />
             <x-language-switcher />
             <x-theme-toggle />
         </div>
 
         <div class="flex items-center gap-3 min-[1450px]:hidden">
+            <x-search-trigger />
             <x-language-switcher />
             <x-theme-toggle />
 
@@ -71,7 +72,7 @@
                 data-nav-toggle
                 aria-expanded="false"
                 aria-controls="mobile-nav"
-                class="group flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-hairline-strong text-fg transition-colors hover:border-fg/30"
+                class="group flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[3px] border-fg text-fg transition-colors"
             >
                 <span class="sr-only">{{ __('Toggle menu') }}</span>
                 {{-- Height is 15px (not the nearer 14px step) so the three
@@ -95,7 +96,7 @@
         data-open="false"
         class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=true]:grid-rows-[1fr] min-[1450px]:hidden"
     >
-        <nav class="glass overflow-hidden border-t border-hairline" aria-label="Mobile">
+        <nav class="overflow-hidden border-t-[3px] border-fg bg-surface" aria-label="Mobile">
             <div class="flex flex-col gap-1 px-6 py-5">
                 @foreach ([...$links, ...$moreLinks] as $link)
                     <a

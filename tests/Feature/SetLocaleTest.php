@@ -1,13 +1,26 @@
 <?php
 
 use App\Models\Article;
+use App\Models\SiteSetting;
 use App\Models\User;
 
 it('renders the home page in English by default', function () {
-    $this->get('/')->assertOk()->assertSee('Speak up. Stand out.');
+    SiteSetting::factory()->create([
+        'group' => 'hero',
+        'key' => 'hero_heading',
+        'value' => json_encode(['en' => 'Speak up. Stand out.']),
+    ]);
+
+    $this->get('/')->assertOk()->assertSeeText('Speak up. Stand out.');
 });
 
 it('switches the rendered locale and persists it via cookie', function () {
+    SiteSetting::factory()->create([
+        'group' => 'hero',
+        'key' => 'hero_heading',
+        'value' => json_encode(['en' => 'Speak up. Stand out.', 'zu' => 'Khuluma. Vela.']),
+    ]);
+
     $response = $this->get('/language/zu');
 
     $response->assertRedirect('/');
@@ -15,7 +28,7 @@ it('switches the rendered locale and persists it via cookie', function () {
 
     $this->get('/', ['Cookie' => 'locale=zu'])
         ->assertOk()
-        ->assertSee('Khuluma. Vela.')
+        ->assertSeeText('Khuluma. Vela.')
         ->assertSee('lang="zu"', false);
 });
 

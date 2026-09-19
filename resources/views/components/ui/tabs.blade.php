@@ -1,17 +1,23 @@
 @props(['tabs'])
 
+{{--
+    A poster-style segmented control: a thick-bordered track with a solid
+    green, hard-shadowed "thumb" behind whichever tab is selected — the
+    active segment reads as a stamped, physical object rather than a soft
+    highlight.
+--}}
 <div {{ $attributes }} data-tabs>
-    <div class="hairline-b flex flex-wrap gap-x-8 gap-y-3" role="tablist">
+    <div class="inline-flex flex-wrap gap-1 rounded-full border-[3px] border-fg p-1" role="tablist">
         @foreach ($tabs as $i => $tab)
             <button
                 type="button"
                 data-tab-trigger="{{ $i }}"
                 role="tab"
                 aria-selected="{{ $i === 0 ? 'true' : 'false' }}"
-                class="group relative pb-4 text-sm font-medium text-muted transition-colors aria-selected:text-fg"
+                class="group relative rounded-full px-4 py-2 text-sm font-bold text-muted transition-colors duration-200 aria-selected:text-on-accent"
             >
-                {{ $tab['label'] }}
-                <span class="absolute inset-x-0 -bottom-px h-px scale-x-0 bg-primary-soft transition-transform duration-200 group-aria-selected:scale-x-100"></span>
+                <span class="absolute inset-0 scale-90 rounded-full bg-primary opacity-0 shadow-[2px_2px_0_0_var(--color-fg)] transition-[opacity,transform] duration-200 ease-out-strong group-aria-selected:scale-100 group-aria-selected:opacity-100"></span>
+                <span class="relative">{{ $tab['label'] }}</span>
             </button>
         @endforeach
     </div>

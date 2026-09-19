@@ -90,6 +90,23 @@
     /* Motion */
     --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
     --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+
+    /* Hard, offset shadows (no blur) — the signature "poster" surface
+       treatment: a solid brand-green cast rather than a soft ambient one,
+       so cards and buttons read as printed/cut-out objects. Kept as an
+       exact colour, not a role token, so it stays green in both themes
+       instead of inverting with fg/ink.
+
+       --shadow-hard-color-alt exists for the one case the green shadow
+       can't cover itself: an element using card-hard/press sitting on a
+       green or otherwise dark fill (e.g. inside .block-primary), where a
+       green-on-green shadow would disappear. It resolves to the page's
+       own ink colour, which is guaranteed to contrast against whatever
+       accent fill the element sits on. Swap the shadow var on any element
+       placed inside a coloured block — see the stats section for why none
+       currently need it (stat is text-only, nothing there casts a shadow). */
+    --shadow-hard-color: #007847;
+    --shadow-hard-color-alt: var(--color-ink);
 }
 
 .dark {
@@ -141,24 +158,6 @@
     --color-on-accent: #ffffff;
 }
 
-/* Swaps the nav logo for its dark-mode variant. Driven purely by the `.dark`
-   class (the same one the inline pre-paint script in the layout head sets
-   synchronously, before first paint) rather than JS run after the fact, so
-   there's no flash of the wrong logo — the theme-toggle icons already have
-   one, and a large, immediately-visible logo would make it far more
-   noticeable. */
-[data-logo-variant='dark'] {
-    display: none;
-}
-
-.dark [data-logo-variant='dark'] {
-    display: block;
-}
-
-.dark [data-logo-variant='light'] {
-    display: none;
-}
-
 @layer base {
     /* Smooth theme crossfade: every element's background, border, text and
        icon colour eases between light and dark together on toggle, not
@@ -196,6 +195,11 @@
    Firefox's `scrollbar-color` has no gradient support, so it falls back to
    a single brand green rather than trying to approximate the band. */
 html {
+    /* Scales every rem-based size on the site — type, spacing, radii — down
+       together, since Tailwind's whole scale here is rem-based. The type
+       and layout scale reads oversized at the stock 16px root; this is one
+       lever instead of re-tuning every text-* and spacing utility. */
+    font-size: 65%;
     scrollbar-color: #007847 transparent;
     scrollbar-width: thin;
 }
@@ -230,40 +234,143 @@ html {
     border-image: var(--gradient-brand) 1;
 }
 
-/* Glassmorphism, site-wide: a translucent, backdrop-blurred surface with a
-   saturation boost (the saturation is what keeps a blur from reading as
-   flat grey mud) and a hairline-thin inner highlight standing in for light
-   catching a glass edge. Reads off --color-ink directly, so it's a white
-   glass in light mode and a black glass in dark mode with no separate
-   override needed. Pair with glass-float on genuinely floating surfaces
-   (nav, chat panel, dropdowns) for an added lift shadow — left off here so
-   cards sitting flush in a grid don't compete with their neighbours. */
-@utility glass {
-    background-color: color-mix(in oklab, var(--color-ink) 55%, transparent);
-    backdrop-filter: blur(24px) saturate(1.5);
-    -webkit-backdrop-filter: blur(24px) saturate(1.5);
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 14%);
+/* Full-bleed colour-block sections — the poster rhythm that breaks up the
+   page instead of one continuous white scroll. block-primary is an exact
+   brand green, unaffected by theme, so it reads the same in light and dark.
+   block-ink is a true inversion (bg/text swap with the page itself), so it
+   becomes a black section on the light theme and a white section on dark —
+   never a fixed colour, since inverting relative to the current theme is
+   what keeps it reading as "the opposite of the page" in both. */
+.block-primary {
+    background-color: var(--color-primary);
+    color: var(--color-on-accent);
 }
 
-@utility glass-float {
-    box-shadow:
-        inset 0 1px 0 rgb(255 255 255 / 14%),
-        0 8px 30px -12px rgb(0 0 0 / 35%);
+.block-ink {
+    background-color: var(--color-fg);
+    color: var(--color-ink);
 }
 
 /* Shared spacing/transition for a row inside a hairline-divided list (the
-   programme, event and resource lists) that turns to glass on hover — see
-   hover:glass. Deliberately doesn't set `display`: rows are a mix of flex
-   and block layouts depending on their content, so each usage keeps its
-   own display/alignment classes alongside this one. The negative margin
-   lets the glass fill bleed slightly past the row's own text into the
-   section's existing side padding, rather than looking clipped to it. */
+   programme, event and resource lists) that gets a bold accent on hover —
+   see .row-hover below. Deliberately doesn't set `display`: rows are a mix
+   of flex and block layouts depending on their content, so each usage
+   keeps its own display/alignment classes alongside this one. The negative
+   margin lets the hover fill bleed slightly past the row's own text into
+   the section's existing side padding, rather than looking clipped to it. */
 @utility glass-row {
     border-radius: 0.75rem;
     padding-inline: 1rem;
     margin-inline: -1rem;
     transition-property: background-color, backdrop-filter, box-shadow;
     transition-duration: 200ms;
+}
+
+/* Poster surface — a solid card with a thick ink border and a hard, offset
+   brand-green shadow instead of blur. Reads as a cut-out object sitting on
+   the page rather than a pane of glass. Lifts further on hover; on
+   pointer-down it's meant to be paired with .press (see below) so the whole
+   thing physically pushes flat into its own shadow. */
+@utility card-hard {
+    background-color: var(--color-surface);
+    border: 3px solid var(--color-fg);
+    border-radius: 1.25rem;
+    box-shadow: 6px 6px 0 0 var(--shadow-hard-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .card-hard {
+        transition:
+            transform 200ms var(--ease-out-strong),
+            box-shadow 200ms var(--ease-out-strong),
+            background-color 400ms ease,
+            border-color 400ms ease;
+    }
+
+    .card-hard:hover {
+        transform: translate(-3px, -3px);
+        box-shadow: 9px 9px 0 0 var(--shadow-hard-color);
+    }
+}
+
+/* Physical press: the element shoves flat into its own hard shadow on
+   pointer-down and springs back on release — feedback on the press itself,
+   not just the eventual click (see the response principle: react on
+   pointer-down, not on release). Pair with an element that already sets
+   box-shadow: <n>px <n>px 0 0 ... so this has real distance to travel. */
+.press {
+    transition:
+        transform 120ms var(--ease-out-strong),
+        box-shadow 120ms var(--ease-out-strong);
+}
+
+.press:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 0 var(--shadow-hard-color) !important;
+}
+
+/* Bold list-row hover — a solid green tint plus a left accent bar that
+   grows in from nothing, replacing the old soft-glass hover for the same
+   rows (programme/article/event lists). Pairs with .glass-row for the
+   shared spacing/negative-margin bleed; this utility only owns colour. */
+@utility row-hover {
+    position: relative;
+    transition: background-color 200ms ease;
+}
+
+.row-hover::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background-color: var(--color-primary);
+    transform: scaleY(0);
+    transition: transform 200ms var(--ease-out-strong);
+}
+
+.row-hover:hover {
+    background-color: color-mix(in oklab, var(--color-primary) 8%, transparent);
+}
+
+.row-hover:hover::before {
+    transform: scaleY(1);
+}
+
+/* Spinning coin — two absolutely-stacked faces sharing one circle, each
+   turned to face opposite directions and hidden on their own back side, so
+   a continuous Y-axis spin on the shared parent shows first one face then
+   the other. The wrapper carries perspective so the spin reads as genuine
+   3D rotation instead of a flat squash. Faces are laid out with grid
+   (both in the same cell) rather than absolute positioning, since this
+   element's own size comes from its aspect-square parent, not fixed px —
+   absolute children would need that repeated on each face. */
+.coin-wrap {
+    perspective: 1400px;
+}
+
+.coin {
+    display: grid;
+    transform-style: preserve-3d;
+    animation: coin-spin 7s linear infinite;
+}
+
+.coin-face {
+    grid-area: 1 / 1;
+    backface-visibility: hidden;
+}
+
+.coin-face-back {
+    transform: rotateY(180deg);
+}
+
+@keyframes coin-spin {
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+.tab-hidden .coin {
+    animation-play-state: paused;
 }
 
 /* Browsers without backdrop-filter support would otherwise render .glass at
@@ -307,8 +414,9 @@ html {
    viewport (so they stay put rather than scrolling away) and drifting
    slowly and independently. Sits behind the edge accent and every section,
    giving the plain stretches between hero glows some quiet motion instead
-   of flat colour. Kept very low-opacity so it reads as ambient texture, not
-   decoration, in both themes. */
+   of flat colour. Raised enough that glass surfaces (nav, cards, rows) have
+   real colour to refract — a glass panel over a flat white page reads as a
+   grey tint, not a material; it needs something behind it to bend. */
 .ambient-backdrop {
     position: fixed;
     inset: 0;
@@ -321,12 +429,12 @@ html {
     position: absolute;
     border-radius: 9999px;
     filter: blur(90px);
-    opacity: 0.06;
+    opacity: 0.16;
     will-change: transform;
 }
 
 .dark .ambient-backdrop span {
-    opacity: 0.11;
+    opacity: 0.26;
 }
 
 .ambient-backdrop span:nth-child(1) {
@@ -698,6 +806,27 @@ img[data-loaded] {
     animation: soft-ping 2.4s ease-out infinite;
 }
 
+/* Chatbot typing indicator — replaces Tailwind's animate-bounce (dated,
+   springy) with a soft opacity/scale pulse on exponential easing, so three
+   dots read as "thinking" rather than bouncing balls. */
+@keyframes typing-pulse {
+    0%,
+    80%,
+    100% {
+        transform: scale(0.85);
+        opacity: 0.4;
+    }
+
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.typing-pulse {
+    animation: typing-pulse 1.2s var(--ease-out-strong) infinite;
+}
+
 /* Reading-progress bar spanning the very top of the viewport, filled in the
    brand gradient and scaled by scroll position (see scroll-progress.js). */
 .scroll-progress {
@@ -790,13 +919,44 @@ img[data-loaded] {
     .vision-ring-spin,
     .chatbot-ping,
     .empty-state-ping,
-    .ambient-backdrop span {
+    .ambient-backdrop span,
+    .coin {
         animation: none;
     }
 
     [data-nav-menu] nav a {
         opacity: 1;
         transform: none;
+        transition: none;
+    }
+
+    /* Poster-surface press physics: keep the feedback (still readable via
+       the opacity/shadow-size change) but drop the position shift itself —
+       these are small (2-9px) and non-vestibular, but the reflex for
+       anything transform-driven is to give reduced-motion a say too. */
+    .card-hard:hover,
+    .press:active {
+        transform: none;
+    }
+
+    .card-hard {
+        transition: box-shadow 200ms ease, opacity 200ms ease;
+    }
+
+    .card-hard:hover {
+        box-shadow: 6px 6px 0 0 var(--shadow-hard-color);
+        opacity: 0.85;
+    }
+
+    .press {
+        transition: opacity 120ms ease;
+    }
+
+    .press:active {
+        opacity: 0.7;
+    }
+
+    .row-hover::before {
         transition: none;
     }
 }

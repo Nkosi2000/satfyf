@@ -10,7 +10,7 @@ class EventController extends Controller
     public function index(): View
     {
         return view('pages.events.index', [
-            'upcoming' => EventItem::query()->published()->upcoming()->get(),
+            'upcoming' => EventItem::cachedUpcoming(),
             'past' => EventItem::query()->published()->past()->paginate(9, pageName: 'past_page'),
         ]);
     }

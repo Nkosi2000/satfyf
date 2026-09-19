@@ -12,6 +12,9 @@ import { initScrollProgress } from './modules/scroll-progress';
 import { initFluidSmoke } from './modules/fluid-smoke';
 import { initThermalHeatmap } from './modules/thermal-heatmap';
 import { initVisibility } from './modules/visibility';
+import { initBackToTop } from './modules/back-to-top';
+import { initCookieBanner } from './modules/cookie-banner';
+import { initSearchModal } from './modules/search-modal';
 
 initNav();
 initTabs();
@@ -27,3 +30,6 @@ initScrollProgress();
 initFluidSmoke();
 initThermalHeatmap();
 initVisibility();
+initBackToTop();
+initCookieBanner();
+initSearchModal();

@@ -11,7 +11,7 @@
 
             <div class="reveal-stagger mt-8 hairline-t">
                 @foreach ($group['programs'] as $program)
-                    <div class="glass-row grid gap-2 py-6 hairline-b hover:glass sm:grid-cols-[1fr_2fr] sm:gap-8">
+                    <div class="glass-row row-hover grid gap-2 py-6 pl-5 hairline-b sm:grid-cols-[1fr_2fr] sm:gap-8">
                         <p class="font-medium text-fg">{{ $program->title }}</p>
                         <p class="max-w-2xl text-sm leading-relaxed text-muted">{{ $program->description }}</p>
                     </div>

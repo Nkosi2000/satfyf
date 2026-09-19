@@ -6,7 +6,10 @@
     <x-ui.section class="hairline-t" width="wide">
         <div class="reveal-stagger columns-2 gap-4 sm:columns-3">
             @foreach ($images as $image)
-                <div class="hover-zoom mb-4 break-inside-avoid overflow-hidden rounded-xl border border-hairline">
+                {{-- Border only, no hard shadow — a whole masonry grid of
+                     offset shadows reads as noise rather than poster energy;
+                     the thick border alone is enough at this density. --}}
+                <div class="hover-zoom mb-4 break-inside-avoid overflow-hidden rounded-xl border-[3px] border-fg">
                     <img
                         src="{{ str_starts_with($image->image_path, 'http') ? $image->image_path : \Illuminate\Support\Facades\Storage::disk('public')->url($image->image_path) }}"
                         alt="{{ $image->caption }}"

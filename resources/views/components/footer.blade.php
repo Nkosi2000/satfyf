@@ -22,13 +22,12 @@
     ];
 @endphp
 
-<footer class="glass hairline-t">
+<footer class="border-t-[3px] border-fg bg-surface-2">
     <x-ui.section width="wide" class="!py-16">
         <div class="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
             <div>
                 <a href="{{ route('home') }}" class="inline-flex items-center">
-                    <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}" data-logo-variant="light" alt="SATFYF" class="brand-mark h-14 w-auto rounded-md" />
-                    <img src="{{ asset('images/250px-by-100px-SATFYF-LOGO-dark-mode.jpg') }}" data-logo-variant="dark" alt="SATFYF" class="brand-mark h-14 w-auto rounded-md" />
+                    <img src="{{ asset('images/48 x 48.png') }}" alt="SATFYF" class="brand-mark h-14 w-14 rounded-full border-[3px] border-fg object-cover" />
                 </a>
                 <p class="mt-4 max-w-xs text-sm text-muted">
                     {{ $settings['footer_tagline'] ?? __('A smoke free generation in our lifetime.') }}
@@ -37,7 +36,7 @@
             </div>
 
             <div>
-                <h3 class="text-sm font-medium text-fg">{{ __('Explore') }}</h3>
+                <h3 class="text-sm font-black tracking-wide text-fg uppercase">{{ __('Explore') }}</h3>
                 <ul class="mt-4 space-y-3">
                     @foreach ($explore as $link)
                         <li><a href="{{ route($link['route']) }}" class="text-sm text-muted hover:text-fg">{{ $link['label'] }}</a></li>
@@ -46,7 +45,7 @@
             </div>
 
             <div>
-                <h3 class="text-sm font-medium text-fg">{{ __('Resources') }}</h3>
+                <h3 class="text-sm font-black tracking-wide text-fg uppercase">{{ __('Resources') }}</h3>
                 <ul class="mt-4 space-y-3">
                     @foreach ($resourcesNav as $link)
                         <li><a href="{{ route($link['route']) }}" class="text-sm text-muted hover:text-fg">{{ $link['label'] }}</a></li>
@@ -55,7 +54,7 @@
             </div>
 
             <div>
-                <h3 class="text-sm font-medium text-fg">{{ __('Contact') }}</h3>
+                <h3 class="text-sm font-black tracking-wide text-fg uppercase">{{ __('Contact') }}</h3>
                 <ul class="mt-4 space-y-3 text-sm text-muted">
                     @if (! empty($settings['contact_address']))
                         <li>{{ $settings['contact_address'] }}</li>
@@ -76,7 +75,7 @@
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="{{ $social['label'] }}"
-                                class="flex h-9 w-9 items-center justify-center rounded-full border border-hairline-strong text-muted transition-colors hover:text-fg"
+                                class="press flex h-11 w-11 items-center justify-center rounded-full border-[3px] border-fg bg-surface text-fg shadow-[3px_3px_0_0_var(--shadow-hard-color)]"
                             >
                                 <x-icon.social :name="$social['icon']" class="h-4 w-4" />
                             </a>

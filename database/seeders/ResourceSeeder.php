@@ -21,7 +21,7 @@ class ResourceSeeder extends Seeder
 
         foreach ($resources as $resource) {
             Resource::query()->updateOrCreate(
-                ['title' => $resource['title']],
+                ['title->en' => $resource['title']],
                 [...$resource, 'file_path' => 'resources/placeholder.pdf', 'published' => true],
             );
         }

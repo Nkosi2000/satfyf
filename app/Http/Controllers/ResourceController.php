@@ -12,7 +12,7 @@ class ResourceController extends Controller
     public function index(): View
     {
         return view('pages.resources', [
-            'resources' => Resource::query()->published()->latest()->get()->groupBy('category'),
+            'resources' => Resource::publishedLatest()->groupBy('category'),
         ]);
     }
 

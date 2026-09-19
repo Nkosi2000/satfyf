@@ -9,13 +9,13 @@
                 <p class="text-balance text-lg leading-relaxed text-muted">{{ __("We're a small, youth-led team, so a real person reads every message — expect a reply within a few working days.") }}</p>
                 @if (! empty($contact['contact_address']))
                     <div>
-                        <p class="text-xs tracking-[0.14em] text-faint uppercase">{{ __('Address') }}</p>
+                        <p class="text-xs font-bold tracking-[0.14em] text-faint uppercase">{{ __('Address') }}</p>
                         <p class="mt-2 text-sm text-fg">{{ $contact['contact_address'] }}</p>
                     </div>
                 @endif
                 @if (! empty($contact['contact_phone_office']))
                     <div>
-                        <p class="text-xs tracking-[0.14em] text-faint uppercase">{{ __('Phone') }}</p>
+                        <p class="text-xs font-bold tracking-[0.14em] text-faint uppercase">{{ __('Phone') }}</p>
                         <p class="mt-2 text-sm text-fg">
                             <a href="tel:{{ $contact['contact_phone_office'] }}" class="hover:text-primary-soft">{{ $contact['contact_phone_office'] }}</a> ({{ __('office') }})
                             @if (! empty($contact['contact_phone_mobile']))
@@ -26,7 +26,7 @@
                 @endif
                 @if (! empty($contact['contact_email']))
                     <div>
-                        <p class="text-xs tracking-[0.14em] text-faint uppercase">{{ __('Email') }}</p>
+                        <p class="text-xs font-bold tracking-[0.14em] text-faint uppercase">{{ __('Email') }}</p>
                         <p class="mt-2 text-sm text-fg">
                             <a href="mailto:{{ $contact['contact_email'] }}" class="hover:text-primary-soft">{{ $contact['contact_email'] }}</a>
                         </p>

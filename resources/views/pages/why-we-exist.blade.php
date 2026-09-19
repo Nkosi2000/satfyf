@@ -6,15 +6,15 @@
     <x-ui.section class="hairline-t" width="wide">
         <div class="reveal-stagger grid gap-10 sm:grid-cols-3">
             <div>
-                <p class="text-3xl text-primary-soft">{{ __('Health') }}</p>
+                <p class="text-3xl font-black text-primary-soft">{{ __('Health') }}</p>
                 <p class="mt-3 text-sm leading-relaxed text-muted">{{ __("Nicotine takes hold fastest in adolescent brains, and the harms of smoking compound over a lifetime that's only just starting.") }}</p>
             </div>
             <div>
-                <p class="text-3xl text-primary-soft">{{ __('Economic') }}</p>
+                <p class="text-3xl font-black text-primary-soft">{{ __('Economic') }}</p>
                 <p class="mt-3 text-sm leading-relaxed text-muted">{{ __('Every rand spent on tobacco is a rand not spent on education, health or savings — a cost that falls hardest on households that can least afford it.') }}</p>
             </div>
             <div>
-                <p class="text-3xl text-primary-soft">{{ __('Policy') }}</p>
+                <p class="text-3xl font-black text-primary-soft">{{ __('Policy') }}</p>
                 <p class="mt-3 text-sm leading-relaxed text-muted">{{ __("South Africa's tobacco control policy is still catching up. Youth voices in that process are what keep it honest and enforced.") }}</p>
             </div>
         </div>

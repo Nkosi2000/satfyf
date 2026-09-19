@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SetLocaleController;
 use App\Http\Controllers\WhatWeDoController;
 use App\Http\Controllers\WhoWeAreController;
@@ -38,6 +39,8 @@ Route::middleware('locale')->group(function (): void {
 
     Route::get('/contact', [ContactController::class, 'show'])->name('contact');
     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+    Route::get('/search', [SearchController::class, 'index'])->name('search');
 
     Route::post('/newsletter', [NewsletterController::class, 'store'])->name('newsletter.store');
 

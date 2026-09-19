@@ -10,7 +10,7 @@ class GalleryController extends Controller
     public function index(): View
     {
         return view('pages.gallery', [
-            'images' => GalleryImage::query()->ordered()->get(),
+            'images' => GalleryImage::allOrdered(),
         ]);
     }
 }

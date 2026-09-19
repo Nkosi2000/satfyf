@@ -10,7 +10,7 @@ class WhatWeDoController extends Controller
 {
     public function index(): View
     {
-        $programs = Program::query()->published()->ordered()->get();
+        $programs = Program::publishedOrdered();
 
         return view('pages.what-we-do', [
             'grouped' => collect(ProgramCategory::cases())

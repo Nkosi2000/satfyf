@@ -13,10 +13,10 @@
                     @foreach ($partners[$type->value] as $partner)
                         <x-ui.card class="flex items-center gap-4">
                             @if ($partner->logo_path)
-                                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($partner->logo_path) }}" alt="{{ $partner->name }}" class="h-10 w-10 rounded-lg object-cover" />
+                                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($partner->logo_path) }}" alt="{{ $partner->name }}" class="h-10 w-10 rounded-lg border-[3px] border-fg object-cover" />
                             @endif
                             <div>
-                                <p class="font-medium text-fg">{{ $partner->name }}</p>
+                                <p class="font-black text-fg">{{ $partner->name }}</p>
                                 @if ($partner->url)
                                     <a href="{{ $partner->url }}" target="_blank" rel="noopener noreferrer" class="text-sm text-muted hover:text-primary-soft">{{ __('Visit site') }} &rarr;</a>
                                 @endif

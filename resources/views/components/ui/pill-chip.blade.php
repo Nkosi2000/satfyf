@@ -1,9 +1,9 @@
 @props(['active' => false])
 
 <span {{ $attributes->class([
-    'inline-flex items-center rounded-full px-3.5 py-1.5 text-xs font-medium transition',
+    'inline-flex items-center rounded-full border-[3px] border-fg px-3.5 py-1.5 text-xs font-bold transition',
     'bg-primary text-on-accent' => $active,
-    'border border-hairline-strong text-muted' => ! $active,
+    'bg-surface text-muted' => ! $active,
 ]) }}>
     {{ $slot }}
 </span>
