@@ -87,7 +87,10 @@
 
         <div class="hairline-t mt-12 flex flex-col gap-3 pt-8 text-xs text-faint sm:flex-row sm:items-center sm:justify-between">
             <p>&copy; {{ now()->year }} {{ __('South African Tobacco-Free Youth Forum. All rights reserved.') }}</p>
-            <p>{{ __('We speak and spread the truth about smoking.') }}</p>
+            <div class="flex items-center gap-4">
+                <a href="{{ route('privacy') }}" class="hover:text-fg">{{ __('Privacy & Cookies') }}</a>
+                <p>{{ __('We speak and spread the truth about smoking.') }}</p>
+            </div>
         </div>
     </x-ui.section>
 </footer>

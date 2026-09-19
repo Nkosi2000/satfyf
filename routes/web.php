@@ -3,12 +3,14 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CookieConsentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GetInvolvedController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SetLocaleController;
@@ -41,6 +43,9 @@ Route::middleware('locale')->group(function (): void {
     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
     Route::get('/search', [SearchController::class, 'index'])->name('search');
+
+    Route::get('/privacy', [PrivacyController::class, 'show'])->name('privacy');
+    Route::post('/cookie-consent', [CookieConsentController::class, 'store'])->name('cookie-consent.store');
 
     Route::post('/newsletter', [NewsletterController::class, 'store'])->name('newsletter.store');
 

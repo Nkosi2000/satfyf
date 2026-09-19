@@ -14,6 +14,7 @@ it('renders each simple public page successfully', function (string $uri, string
     'gallery' => ['/gallery', 'SATFYF, in the field.'],
     'get involved' => ['/get-involved', 'Help achieve a culture where young people reject tobacco.'],
     'contact' => ['/contact', "Let's talk."],
+    'privacy' => ['/privacy', 'What we store, and why.'],
 ]);
 
 it('renders the partners page grouped by type', function () {

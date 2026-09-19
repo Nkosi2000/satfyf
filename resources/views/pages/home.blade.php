@@ -259,5 +259,5 @@
     @endif
 
     {{-- Closing CTA --}}
-    <x-ui.closing-cta />
+    <x-ui.closing-cta side-image />
 </x-layouts.app>

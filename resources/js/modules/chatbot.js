@@ -1,3 +1,5 @@
+import { playClick } from './sound';
+
 const STORAGE_KEY = 'satfyfbot_conversation_id';
 
 export function initChatbot() {
@@ -86,7 +88,11 @@ export function initChatbot() {
         }
     };
 
-    toggle.addEventListener('click', () => setOpen(panel.dataset.open !== 'true'));
+    toggle.addEventListener('click', () => {
+        const willOpen = panel.dataset.open !== 'true';
+        if (willOpen) playClick();
+        setOpen(willOpen);
+    });
     closeButton?.addEventListener('click', () => setOpen(false));
 
     document.addEventListener('click', (event) => {
