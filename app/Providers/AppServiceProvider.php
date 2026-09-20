@@ -38,5 +38,10 @@ class AppServiceProvider extends ServiceProvider
             Limit::perMinute(15)->by($request->ip()),
             Limit::perHour(60)->by($request->ip()),
         ]);
+
+        // Public read-only API — no auth, so throttling by IP is the only
+        // available abuse guard. Generous enough for a real consumer paging
+        // through articles or gallery images.
+        RateLimiter::for('api', fn (Request $request) => Limit::perMinute(60)->by($request->ip()));
     }
 }

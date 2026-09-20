@@ -164,6 +164,15 @@ return [
             'backoff_algorithm' => env('REDIS_BACKOFF_ALGORITHM', 'decorrelated_jitter'),
             'backoff_base' => env('REDIS_BACKOFF_BASE', 100),
             'backoff_cap' => env('REDIS_BACKOFF_CAP', 1000),
+            // Predis has no read/write timeout by default — a stalled
+            // socket read blocks forever, and the only thing that ever
+            // stops it is PHP's own max_execution_time, which kills the
+            // request with an uncatchable fatal error instead of a
+            // graceful, catchable connection exception. Bounding both
+            // matters more now that Redis is a remote (Redis Cloud)
+            // connection instead of localhost.
+            'timeout' => env('REDIS_TIMEOUT', 5),
+            'read_write_timeout' => env('REDIS_READ_WRITE_TIMEOUT', 5),
         ],
 
         'cache' => [
@@ -177,6 +186,8 @@ return [
             'backoff_algorithm' => env('REDIS_BACKOFF_ALGORITHM', 'decorrelated_jitter'),
             'backoff_base' => env('REDIS_BACKOFF_BASE', 100),
             'backoff_cap' => env('REDIS_BACKOFF_CAP', 1000),
+            'timeout' => env('REDIS_TIMEOUT', 5),
+            'read_write_timeout' => env('REDIS_READ_WRITE_TIMEOUT', 5),
         ],
 
     ],

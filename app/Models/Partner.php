@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\PartnerType;
 use App\Models\Concerns\Cacheable;
+use App\Models\Concerns\HasTranslations;
 use Database\Factories\PartnerFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,11 +13,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-#[Fillable(['name', 'logo_path', 'url', 'type', 'order', 'published'])]
+#[Fillable(['name', 'logo_path', 'url', 'role', 'description', 'type', 'order', 'published'])]
 class Partner extends Model
 {
     /** @use HasFactory<PartnerFactory> */
-    use Cacheable, HasFactory, HasUuids;
+    use Cacheable, HasFactory, HasTranslations, HasUuids;
+
+    /**
+     * @var array<int, string>
+     */
+    protected array $translatable = ['role', 'description'];
 
     protected function casts(): array
     {

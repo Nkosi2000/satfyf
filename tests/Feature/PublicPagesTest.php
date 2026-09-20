@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Partner;
+use App\Models\Testimonial;
 
 it('renders each simple public page successfully', function (string $uri, string $expectedText) {
     $this->get($uri)
@@ -25,10 +26,49 @@ it('renders the partners page grouped by type', function () {
         ->assertSee('Test Partner Org');
 });
 
+it('shows a partner\'s role, description and website link on the partners page', function () {
+    Partner::factory()->create([
+        'name' => 'Test Partner Org',
+        'role' => 'Funds youth ambassador training',
+        'description' => 'A short blurb about what this partner does for SATFYF.',
+        'url' => 'https://example.com',
+        'published' => true,
+    ]);
+
+    $this->get('/partners')
+        ->assertOk()
+        ->assertSee('Funds youth ambassador training')
+        ->assertSee('A short blurb about what this partner does for SATFYF.')
+        ->assertSee('https://example.com', false);
+});
+
 it('does not show unpublished partners', function () {
     Partner::factory()->create(['name' => 'Hidden Org', 'published' => false]);
 
     $this->get('/partners')
         ->assertOk()
         ->assertDontSee('Hidden Org');
+});
+
+it('shows published testimonials on the home page', function () {
+    Testimonial::factory()->create(['name' => 'Zanele Test', 'quote' => 'This programme changed how I see tobacco.', 'published' => true]);
+
+    $this->get('/')
+        ->assertOk()
+        ->assertSee('Zanele Test')
+        ->assertSee('This programme changed how I see tobacco.');
+});
+
+it('does not show unpublished testimonials on the home page', function () {
+    Testimonial::factory()->create(['name' => 'Hidden Voice', 'published' => false]);
+
+    $this->get('/')
+        ->assertOk()
+        ->assertDontSee('Hidden Voice');
+});
+
+it('prefills the get-involved contact subject from the interest query parameter', function () {
+    $this->get('/get-involved?interest=Become a Youth Ambassador')
+        ->assertOk()
+        ->assertSee('value="Become a Youth Ambassador"', false);
 });

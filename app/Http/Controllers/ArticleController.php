@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ArticleController extends Controller
@@ -36,6 +35,6 @@ class ArticleController extends Controller
         abort_unless($article->published_at?->isPast(), 404);
         abort_unless($article->attachment_path, 404);
 
-        return redirect(Storage::disk('public')->url($article->attachment_path));
+        return redirect(storage_url($article->attachment_path));
     }
 }

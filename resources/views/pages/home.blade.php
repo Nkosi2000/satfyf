@@ -146,6 +146,37 @@
         </div>
     </section>
 
+    {{-- Testimonials --}}
+    @if ($testimonials->isNotEmpty())
+        <x-ui.section class="hairline-t" width="wide">
+            <x-ui.section-header :eyebrow="__('In Their Words')">{{ __('What people are saying.') }}</x-ui.section-header>
+
+            <div class="reveal-stagger mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach ($testimonials as $testimonial)
+                    <figure class="card-hard flex flex-col gap-5 p-6">
+                        <span class="text-5xl leading-none font-black text-primary-soft" aria-hidden="true">&ldquo;</span>
+                        <blockquote class="flex-1 text-balance text-fg">{{ $testimonial->quote }}</blockquote>
+                        <figcaption class="flex items-center gap-3 border-t-[3px] border-fg pt-4">
+                            @if ($testimonial->photo_path)
+                                <img src="{{ storage_url($testimonial->photo_path) }}" alt="" class="h-11 w-11 shrink-0 rounded-full border-[3px] border-fg object-cover" />
+                            @else
+                                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[3px] border-fg bg-surface-2 text-sm font-black text-fg">
+                                    {{ \Illuminate\Support\Str::of($testimonial->name)->explode(' ')->map(fn ($n) => $n[0])->join('') }}
+                                </span>
+                            @endif
+                            <div>
+                                <p class="font-black text-fg">{{ $testimonial->name }}</p>
+                                @if ($testimonial->role)
+                                    <p class="text-xs font-bold text-muted uppercase">{{ $testimonial->role }}</p>
+                                @endif
+                            </div>
+                        </figcaption>
+                    </figure>
+                @endforeach
+            </div>
+        </x-ui.section>
+    @endif
+
     {{-- Articles + Events --}}
     <x-ui.section class="hairline-t" width="wide">
         <div class="grid gap-16 lg:grid-cols-2">
@@ -197,7 +228,12 @@
                 <div class="marquee-track flex w-max items-center gap-12">
                     @for ($set = 0; $set < 2; $set++)
                         @foreach ($partners as $partner)
-                            <span class="shrink-0 text-lg font-black whitespace-nowrap text-fg uppercase">{{ $partner->name }}</span>
+                            <span class="flex shrink-0 items-center gap-3">
+                                @if ($partner->logo_path)
+                                    <img src="{{ storage_url($partner->logo_path) }}" alt="{{ $partner->name }}" class="h-9 w-9 shrink-0 rounded-lg border-[3px] border-fg object-cover" />
+                                @endif
+                                <span class="text-lg font-black whitespace-nowrap text-fg uppercase">{{ $partner->name }}</span>
+                            </span>
                             <span class="shrink-0 text-primary-soft">&#9670;</span>
                         @endforeach
                     @endfor
@@ -209,38 +245,40 @@
     {{-- Gallery --}}
     @if ($galleryImages->isNotEmpty())
         <x-ui.section class="hairline-t" width="wide">
-            <div class="flex flex-wrap items-end justify-between gap-6">
-                <x-ui.section-header :eyebrow="__('In The Field')">{{ __('SATFYF, in pictures.') }}</x-ui.section-header>
-                <div class="flex items-center gap-2">
-                    <button type="button" data-slider-prev aria-label="{{ __('Previous images') }}" class="press flex h-11 w-11 items-center justify-center rounded-full border-[3px] border-fg bg-surface text-fg shadow-[3px_3px_0_0_var(--shadow-hard-color)]">
-                        <svg viewBox="0 0 20 20" fill="none" class="h-4 w-4" aria-hidden="true"><path d="M12 5l-6 5 6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
-                    </button>
-                    <button type="button" data-slider-next aria-label="{{ __('Next images') }}" class="press flex h-11 w-11 items-center justify-center rounded-full border-[3px] border-fg bg-surface text-fg shadow-[3px_3px_0_0_var(--shadow-hard-color)]">
-                        <svg viewBox="0 0 20 20" fill="none" class="h-4 w-4" aria-hidden="true"><path d="M8 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
-                    </button>
+            <div data-slider>
+                <div class="flex flex-wrap items-end justify-between gap-6">
+                    <x-ui.section-header :eyebrow="__('In The Field')">{{ __('SATFYF, in pictures.') }}</x-ui.section-header>
+                    <div class="flex items-center gap-2">
+                        <button type="button" data-slider-prev aria-label="{{ __('Previous images') }}" class="press flex h-11 w-11 items-center justify-center rounded-full border-[3px] border-fg bg-surface text-fg shadow-[3px_3px_0_0_var(--shadow-hard-color)]">
+                            <svg viewBox="0 0 20 20" fill="none" class="h-4 w-4" aria-hidden="true"><path d="M12 5l-6 5 6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                        </button>
+                        <button type="button" data-slider-next aria-label="{{ __('Next images') }}" class="press flex h-11 w-11 items-center justify-center rounded-full border-[3px] border-fg bg-surface text-fg shadow-[3px_3px_0_0_var(--shadow-hard-color)]">
+                            <svg viewBox="0 0 20 20" fill="none" class="h-4 w-4" aria-hidden="true"><path d="M8 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <div data-slider class="mt-10">
-                <div data-slider-track class="reveal-stagger flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                    @foreach ($galleryImages as $image)
-                        <a
-                            href="{{ route('gallery') }}"
-                            class="hover-zoom group relative aspect-4/5 w-64 shrink-0 snap-start overflow-hidden rounded-2xl border-[3px] border-fg shadow-[6px_6px_0_0_var(--shadow-hard-color)] sm:w-72"
-                        >
-                            <img
-                                src="{{ str_starts_with($image->image_path, 'http') ? $image->image_path : \Illuminate\Support\Facades\Storage::disk('public')->url($image->image_path) }}"
-                                alt="{{ $image->caption }}"
-                                loading="lazy"
-                                class="h-full w-full object-cover"
-                            />
-                            @if ($image->caption)
-                                <span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 to-transparent px-4 py-4 text-sm text-fg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                                    {{ $image->caption }}
-                                </span>
-                            @endif
-                        </a>
-                    @endforeach
+                <div class="mt-10">
+                    <div data-slider-track class="reveal-stagger flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                        @foreach ($galleryImages as $image)
+                            <a
+                                href="{{ route('gallery') }}"
+                                class="hover-zoom group relative aspect-4/5 w-64 shrink-0 snap-start overflow-hidden rounded-2xl border-[3px] border-fg shadow-[6px_6px_0_0_var(--shadow-hard-color)] sm:w-72"
+                            >
+                                <img
+                                    src="{{ storage_url($image->image_path) }}"
+                                    alt="{{ $image->caption }}"
+                                    loading="lazy"
+                                    class="h-full w-full object-cover"
+                                />
+                                @if ($image->caption)
+                                    <span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 to-transparent px-4 py-4 text-sm text-fg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                                        {{ $image->caption }}
+                                    </span>
+                                @endif
+                            </a>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </x-ui.section>

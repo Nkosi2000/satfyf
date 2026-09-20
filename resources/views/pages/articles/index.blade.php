@@ -9,7 +9,7 @@
                 <a href="{{ route('articles.show', $article) }}" class="group block">
                     <div class="aspect-[16/10] overflow-hidden rounded-2xl border-[3px] border-fg bg-surface shadow-[6px_6px_0_0_var(--shadow-hard-color)] transition-transform duration-200 ease-out-strong group-hover:-translate-y-1">
                         @if ($article->cover_image_path)
-                            <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($article->cover_image_path) }}" alt="" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                            <img src="{{ storage_url($article->cover_image_path) }}" alt="" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
                         @endif
                     </div>
                     <p class="mt-4 text-xs font-bold text-faint uppercase">{{ $article->published_at->translatedFormat('d M Y') }}</p>

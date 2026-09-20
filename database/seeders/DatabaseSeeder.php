@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             SiteSettingSeeder::class,
             TeamMemberSeeder::class,
+            TestimonialSeeder::class,
             ProgramSeeder::class,
             ArticleSeeder::class,
             EventItemSeeder::class,

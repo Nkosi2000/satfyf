@@ -18,7 +18,7 @@
             <div class="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4">
                 @foreach ($images as $image)
                     <div class="group relative aspect-square overflow-hidden rounded-lg border border-hairline-strong">
-                        <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($image->image_path) }}" alt="" class="h-full w-full object-cover" />
+                        <img src="{{ storage_url($image->image_path) }}" alt="" class="h-full w-full object-cover" />
                         <form
                             method="POST"
                             action="{{ route('admin.articles.images.destroy', [$article, $image]) }}"

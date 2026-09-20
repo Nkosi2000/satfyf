@@ -27,7 +27,11 @@
     else (see .card-hard / hairline-t in app.css).
 --}}
 <header data-site-header class="sticky inset-x-0 top-0 z-50 border-b-[3px] border-fg bg-surface">
-    <div class="mx-auto flex w-full max-w-[120rem] items-center justify-between gap-8 px-6 py-3 sm:px-8">
+    {{-- max-width is a literal px value, not rem — the site's html { font-size:
+         65% } scales every rem-based size down (by design, for page content),
+         but that would also silently shrink this cap to ~1248px regardless of
+         viewport width, starving the nav of room and wrapping link labels. --}}
+    <div class="mx-auto flex w-full max-w-[1800px] items-center justify-between gap-8 px-6 py-3 sm:px-8">
         <div class="flex items-center gap-10">
             <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-2">
                 <img src="{{ asset('images/48 x 48.png') }}" alt="SATFYF" class="brand-mark h-12 w-12 rounded-full border-[3px] border-fg object-cover sm:h-14 sm:w-14" />

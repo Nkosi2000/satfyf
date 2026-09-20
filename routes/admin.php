@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\ResourceController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\TeamMemberController;
+use App\Http\Controllers\Admin\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->group(function (): void {
@@ -34,6 +35,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::delete('articles/{article}/images/{image}', [ArticleImageController::class, 'destroy'])->name('articles.images.destroy');
 
         Route::resource('team-members', TeamMemberController::class)->except('show');
+        Route::resource('testimonials', TestimonialController::class)->except('show');
         Route::resource('programs', ProgramController::class)->except('show');
         Route::resource('articles', ArticleController::class)->except('show');
         Route::resource('events', EventItemController::class)->except('show');

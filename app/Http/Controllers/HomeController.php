@@ -9,6 +9,7 @@ use App\Models\GalleryImage;
 use App\Models\Partner;
 use App\Models\Program;
 use App\Models\SiteSetting;
+use App\Models\Testimonial;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -24,6 +25,7 @@ class HomeController extends Controller
             'partners' => Partner::publishedOrdered(),
             'faqs' => FaqItem::publishedOrdered(),
             'galleryImages' => GalleryImage::allOrdered()->take(10),
+            'testimonials' => Testimonial::publishedOrdered(),
         ]);
     }
 }

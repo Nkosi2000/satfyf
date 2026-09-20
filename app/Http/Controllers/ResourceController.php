@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Resource;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ResourceController extends Controller
@@ -20,6 +19,6 @@ class ResourceController extends Controller
     {
         abort_unless($resource->published, 404);
 
-        return redirect(Storage::disk('public')->url($resource->file_path));
+        return redirect(storage_url($resource->file_path));
     }
 }

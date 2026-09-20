@@ -10,7 +10,7 @@
 
             @if ($article->cover_image_path)
                 <div class="mt-8 aspect-[16/9] overflow-hidden rounded-2xl border-[3px] border-fg shadow-[8px_8px_0_0_var(--shadow-hard-color)]">
-                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($article->cover_image_path) }}" alt="" class="h-full w-full object-cover" />
+                    <img src="{{ storage_url($article->cover_image_path) }}" alt="" class="h-full w-full object-cover" />
                 </div>
             @endif
 
@@ -34,7 +34,7 @@
                     @foreach ($article->images as $image)
                         <div class="hover-zoom aspect-square overflow-hidden rounded-xl border-[3px] border-fg">
                             <img
-                                src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($image->image_path) }}"
+                                src="{{ storage_url($image->image_path) }}"
                                 alt=""
                                 loading="lazy"
                                 class="h-full w-full object-cover"

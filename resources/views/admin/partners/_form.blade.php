@@ -16,6 +16,22 @@
     />
 </div>
 
+<x-admin.translatable-field
+    name="role"
+    label="Role / impact for SATFYF"
+    :translations="$partner?->translations('role') ?? []"
+    hint="A short phrase, e.g. 'Funds youth ambassador training'."
+    class="mt-5"
+/>
+
+<x-admin.translatable-field
+    name="description"
+    label="Description"
+    type="textarea"
+    :translations="$partner?->translations('description') ?? []"
+    class="mt-5"
+/>
+
 <div class="mt-5 grid gap-5 sm:grid-cols-2">
     <x-admin.field name="order" label="Order" type="number" :value="$partner?->order ?? 0" />
     <x-admin.field name="published" label="Published" type="checkbox" :value="$partner?->published ?? true" />

@@ -22,6 +22,8 @@ class PartnerFactory extends Factory
             'name' => fake()->company(),
             'logo_path' => null,
             'url' => fake()->url(),
+            'role' => fake()->sentence(6),
+            'description' => fake()->paragraph(),
             'type' => fake()->randomElement(PartnerType::cases())->value,
             'order' => fake()->numberBetween(0, 20),
             'published' => true,

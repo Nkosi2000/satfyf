@@ -20,6 +20,7 @@ it('does not list unpublished resources', function () {
 
 it('redirects to the file for a published resource download', function () {
     Storage::fake('public');
+    Storage::disk('public')->buildTemporaryUrlsUsing(fn ($path, $expiration) => Storage::disk('public')->url($path));
     Storage::disk('public')->put('resources/handout.pdf', 'contents');
 
     $resource = Resource::factory()->create(['file_path' => 'resources/handout.pdf']);

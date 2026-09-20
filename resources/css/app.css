@@ -10,12 +10,27 @@
     --font-sans: 'Zalando Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 
-    /* Slightly larger than Tailwind's stock xs/sm steps — eyebrows, dates,
-       captions and body copy set in these sizes were reading too small. */
-    --text-xs: 0.8125rem;
-    --text-xs--line-height: 1.125rem;
-    --text-sm: 0.9375rem;
-    --text-sm--line-height: 1.375rem;
+    /* Noticeably larger than Tailwind's stock xs–2xl steps. The site runs
+       html { font-size: 65% } (see below) so headings read at the right
+       scale, but that same 65% multiplier crushed every smaller step —
+       badges, meta text, card copy and nav links (the vast majority of the
+       site's text) were landing under 10px on screen even after an earlier,
+       smaller bump. These values are chosen to land back around 12–22px on
+       screen once the 65% root multiplier is applied, independent of the
+       heading sizes (text-3xl and up), which were already reading correctly
+       and are left untouched. */
+    --text-xs: 1.15rem;
+    --text-xs--line-height: 1.5rem;
+    --text-sm: 1.35rem;
+    --text-sm--line-height: 1.75rem;
+    --text-base: 1.5rem;
+    --text-base--line-height: 2rem;
+    --text-lg: 1.65rem;
+    --text-lg--line-height: 2.25rem;
+    --text-xl: 1.85rem;
+    --text-xl--line-height: 2.375rem;
+    --text-2xl: 2.15rem;
+    --text-2xl--line-height: 2.625rem;
 
     /*
      * The organisation's own seven-colour brand palette (replaces the
@@ -621,10 +636,6 @@ img[data-loaded] {
 
 @media (prefers-reduced-motion: reduce) {
     img:not([data-loaded]) {
-        animation: none;
-    }
-
-    [data-chatbot-typing] .animate-bounce {
         animation: none;
     }
 }

@@ -1,6 +1,22 @@
 <x-layouts.app :title="__('Who We Are')">
     <x-ui.page-hero :eyebrow="__('Who We Are')" :subtext="$mission['mission_statement'] ?? null">
         {{ __('Youth voices, not youth audiences.') }}
+
+        {{-- Same light/dark logo lockup as the homepage's "Why It Matters"
+             section — see the comment there for why it's two <img> tags
+             swapped by CSS rather than one image with a dark filter. --}}
+        <x-slot:image>
+            <img
+                src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}"
+                alt="SATFYF"
+                class="w-full rounded-2xl border-[3px] border-fg shadow-[10px_10px_0_0_var(--shadow-hard-color)] [.dark_&]:hidden"
+            />
+            <img
+                src="{{ asset('images/250px-by-100px-SATFYF-LOGO-dark-mode.jpg') }}"
+                alt="SATFYF"
+                class="hidden w-full rounded-2xl border-[3px] border-fg shadow-[10px_10px_0_0_var(--shadow-hard-color)] [.dark_&]:block"
+            />
+        </x-slot:image>
     </x-ui.page-hero>
 
     <x-ui.section class="hairline-t" width="wide">
@@ -21,7 +37,7 @@
                     <div>
                         <div class="hover-zoom aspect-square overflow-hidden rounded-2xl border-[3px] border-fg bg-surface shadow-[6px_6px_0_0_var(--shadow-hard-color)]">
                             @if ($member->photo_path)
-                                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($member->photo_path) }}" alt="{{ $member->name }}" class="h-full w-full object-cover" />
+                                <img src="{{ storage_url($member->photo_path) }}" alt="{{ $member->name }}" class="h-full w-full object-cover" />
                             @else
                                 <div class="flex h-full w-full items-center justify-center text-4xl text-faint">{{ Illuminate\Support\Str::of($member->name)->explode(' ')->map(fn ($n) => $n[0])->join('') }}</div>
                             @endif

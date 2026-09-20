@@ -53,7 +53,7 @@
             class="{{ $inputClasses }} file:mr-3 file:rounded-md file:border-0 file:bg-surface-2 file:px-3 file:py-1.5 file:text-sm file:text-fg"
         />
         @if ($value)
-            <img data-image-preview="{{ $name }}" src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($value) }}" class="mt-2 h-20 w-20 rounded-lg object-cover" alt="" />
+            <img data-image-preview="{{ $name }}" src="{{ storage_url($value) }}" class="mt-2 h-20 w-20 rounded-lg object-cover" alt="" />
         @else
             <img data-image-preview="{{ $name }}" hidden class="mt-2 h-20 w-20 rounded-lg object-cover" alt="" />
         @endif

@@ -38,16 +38,16 @@ return [
             'report' => false,
         ],
 
+        // Every upload site-wide (gallery photos, resource PDFs, article
+        // covers, team/partner/testimonial photos) lives here — an
+        // S3-compatible bucket (Neon Storage), not local disk, since the
+        // app now runs against production data from any machine and local
+        // disk storage doesn't travel with the database. The bucket is
+        // private and this provider doesn't support per-object ACLs
+        // (setting 'visibility' => 'public' makes every write 501), so
+        // every read goes through storage_url() (app/helpers.php), which
+        // signs a time-limited temporaryUrl() instead of a plain url().
         'public' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
-            'visibility' => 'public',
-            'throw' => false,
-            'report' => false,
-        ],
-
-        's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
             'secret' => env('AWS_SECRET_ACCESS_KEY'),

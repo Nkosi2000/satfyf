@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "layout-transition",
+        "value": "*",
+        "files": [
+          "resources/css/app.css"
+        ],
+        "createdAt": "2026-09-20T07:49:48.385Z",
+        "reason": "border-width transition is on ::-webkit-scrollbar-thumb, a browser-chrome pseudo-element outside document flow — no page content reflows from it"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "resources/css/app.css"
+        ],
+        "createdAt": "2026-09-20T07:49:58.206Z",
+        "reason": "row-hover::before is a 4px hover-triggered accent bar (scaleY 0→1) on list rows, not a static always-visible border on cards; deliberate part of the neo-brutalist system built this session per user's explicit creative-freedom direction"
+      }
+    ]
+  }
+}

@@ -11,7 +11,7 @@
                      the thick border alone is enough at this density. --}}
                 <div class="hover-zoom mb-4 break-inside-avoid overflow-hidden rounded-xl border-[3px] border-fg">
                     <img
-                        src="{{ str_starts_with($image->image_path, 'http') ? $image->image_path : \Illuminate\Support\Facades\Storage::disk('public')->url($image->image_path) }}"
+                        src="{{ storage_url($image->image_path) }}"
                         alt="{{ $image->caption }}"
                         loading="lazy"
                         class="w-full"

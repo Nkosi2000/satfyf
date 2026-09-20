@@ -7,6 +7,7 @@
         ['label' => 'Events', 'route' => 'admin.events.index'],
         ['label' => 'Programmes', 'route' => 'admin.programs.index'],
         ['label' => 'Team', 'route' => 'admin.team-members.index'],
+        ['label' => 'Testimonials', 'route' => 'admin.testimonials.index'],
         ['label' => 'Resources', 'route' => 'admin.resources.index'],
         ['label' => 'Gallery', 'route' => 'admin.gallery-images.index'],
         ['label' => 'Partners', 'route' => 'admin.partners.index'],

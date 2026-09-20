@@ -8,7 +8,7 @@
         @foreach ($images as $image)
             <div class="overflow-hidden rounded-xl border border-hairline-strong bg-surface">
                 <img
-                    src="{{ str_starts_with($image->image_path, 'http') ? $image->image_path : \Illuminate\Support\Facades\Storage::disk('public')->url($image->image_path) }}"
+                    src="{{ storage_url($image->image_path) }}"
                     alt="{{ $image->caption }}"
                     class="h-32 w-full object-cover"
                 />

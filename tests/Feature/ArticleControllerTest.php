@@ -73,6 +73,10 @@ describe('show', function () {
 
     it('shows body images in order', function () {
         Storage::fake('public');
+        // storage_url() calls temporaryUrl(), which the local fake disk
+        // doesn't support without an explicit callback — fall back to a
+        // plain url() so it still returns something with the path in it.
+        Storage::disk('public')->buildTemporaryUrlsUsing(fn ($path, $expiration) => Storage::disk('public')->url($path));
         Storage::disk('public')->put('articles/images/second.jpg', 'contents');
         Storage::disk('public')->put('articles/images/first.jpg', 'contents');
         $article = Article::factory()->create();
@@ -99,6 +103,7 @@ describe('show', function () {
 describe('attachment', function () {
     it('redirects to the stored file for a published article', function () {
         Storage::fake('public');
+        Storage::disk('public')->buildTemporaryUrlsUsing(fn ($path, $expiration) => Storage::disk('public')->url($path));
         Storage::disk('public')->put('articles/attachments/report.pdf', 'contents');
         $article = Article::factory()->create([
             'attachment_path' => 'articles/attachments/report.pdf',
