@@ -9,14 +9,17 @@
                 <x-ui.section-header :eyebrow="$type->label()">
                     {{ trans_choice(':count organisation|:count organisations', $partners[$type->value]->count(), ['count' => $partners[$type->value]->count()]) }}
                 </x-ui.section-header>
+                @if ($type === App\Enums\PartnerType::AdvisoryCouncil && ! empty($partnerSettings['advisory_council_intro']))
+                    <p class="mt-4 max-w-2xl text-balance text-lg leading-relaxed text-muted">{{ $partnerSettings['advisory_council_intro'] }}</p>
+                @endif
                 <div class="reveal-stagger mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach ($partners[$type->value] as $partner)
                         <x-ui.card class="flex flex-col gap-4">
                             <div class="flex items-center gap-4">
                                 @if ($partner->logo_path)
-                                    <img src="{{ storage_url($partner->logo_path) }}" alt="{{ $partner->name }}" class="h-12 w-12 shrink-0 rounded-lg border-[3px] border-fg object-cover" />
+                                    <img src="{{ storage_url($partner->logo_path) }}" alt="{{ $partner->name }}" loading="lazy" class="h-12 w-12 shrink-0 rounded-lg object-cover" />
                                 @else
-                                    <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border-[3px] border-fg bg-surface-2 text-sm font-black text-fg">
+                                    <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-surface-2 text-sm font-black text-fg">
                                         {{ \Illuminate\Support\Str::of($partner->name)->explode(' ')->take(2)->map(fn ($word) => \Illuminate\Support\Str::upper($word[0]))->join('') }}
                                     </span>
                                 @endif

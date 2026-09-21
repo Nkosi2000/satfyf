@@ -61,6 +61,16 @@ describe('store', function () {
         $response->assertJsonValidationErrors('message');
     });
 
+    it('strips HTML tags out of the message before storing it', function () {
+        fakeAnthropicReply();
+
+        $response = $this->postJson(route('chat.messages.store'), ['message' => '<script>alert(1)</script>What is SATFYF?']);
+
+        $response->assertOk();
+        $conversation = ChatConversation::query()->findOrFail($response->json('conversation_id'));
+        expect($conversation->messages->first()->content)->toBe('alert(1)What is SATFYF?');
+    });
+
     it('returns a graceful fallback when the Anthropic API call fails', function () {
         Http::fake(['api.anthropic.com/*' => Http::response('Server error', 500)]);
 

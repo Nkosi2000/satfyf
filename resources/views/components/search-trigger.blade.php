@@ -5,7 +5,7 @@
         aria-haspopup="dialog"
         aria-expanded="false"
         aria-controls="search-modal"
-        {{ $attributes->class(['flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[3px] border-fg text-fg transition-transform duration-150 ease-out hover:-translate-y-0.5 active:translate-y-0']) }}
+        {{ $attributes->class(['flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-2 text-fg transition-transform duration-150 ease-out hover:-translate-y-0.5 active:translate-y-0']) }}
     >
         <span class="sr-only">{{ __('Search the site') }}</span>
         <svg viewBox="0 0 20 20" fill="none" class="h-4.5 w-4.5" aria-hidden="true">
@@ -23,7 +23,7 @@
         aria-label="{{ __('Search') }}"
         class="fixed inset-0 z-[70] flex items-start justify-center bg-fg/40 px-6 pt-24 sm:pt-32"
     >
-        <div data-search-panel class="w-full max-w-xl rounded-2xl border-[3px] border-fg bg-surface p-2 shadow-[10px_10px_0_0_var(--shadow-hard-color)]">
+        <div data-search-panel class="w-full max-w-xl rounded-2xl border border-hairline bg-surface p-2" style="box-shadow: var(--shadow-soft)">
             <form action="{{ route('search') }}" method="GET" class="flex items-center gap-2">
                 <svg viewBox="0 0 20 20" fill="none" class="ml-3 h-5 w-5 shrink-0 text-muted" aria-hidden="true">
                     <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5" />

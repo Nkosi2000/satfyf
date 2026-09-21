@@ -20,7 +20,7 @@ class HomeController extends Controller
             'hero' => SiteSetting::group('hero'),
             'mission' => SiteSetting::group('mission'),
             'programs' => Program::publishedOrdered()->groupBy(fn (Program $program) => $program->category->value),
-            'articles' => Article::query()->published()->latest('published_at')->take(3)->get(),
+            'articles' => Article::cachedRecent(),
             'events' => EventItem::cachedUpcoming()->take(3),
             'partners' => Partner::publishedOrdered(),
             'faqs' => FaqItem::publishedOrdered(),

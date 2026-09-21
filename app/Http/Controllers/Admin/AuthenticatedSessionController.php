@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\PreventSessionHijacking;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +41,11 @@ class AuthenticatedSessionController extends Controller
                 'email' => 'This account does not have admin access.',
             ]);
         }
+
+        // Bind this session to the browser/network it was created from —
+        // see PreventSessionHijacking, which invalidates the session if a
+        // later request's fingerprint doesn't match this one.
+        $request->session()->put('auth_fingerprint', PreventSessionHijacking::fingerprint($request));
 
         return redirect()->intended(route('admin.dashboard'));
     }

@@ -9,7 +9,7 @@
                 {{-- Border only, no hard shadow — a whole masonry grid of
                      offset shadows reads as noise rather than poster energy;
                      the thick border alone is enough at this density. --}}
-                <div class="hover-zoom mb-4 break-inside-avoid overflow-hidden rounded-xl border-[3px] border-fg">
+                <div class="hover-zoom mb-4 break-inside-avoid overflow-hidden rounded-xl border border-hairline">
                     <img
                         src="{{ storage_url($image->image_path) }}"
                         alt="{{ $image->caption }}"

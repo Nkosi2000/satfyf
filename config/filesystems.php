@@ -58,6 +58,16 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
             'report' => false,
+            // Same class of bug as the Redis/Postgres timeouts fixed
+            // earlier: this array is passed straight into the AWS SDK's
+            // S3Client constructor, which has no request timeout by
+            // default — an unreachable/slow Neon Storage hangs the whole
+            // request until PHP's 30s max_execution_time kills it with a
+            // FatalError instead of a catchable exception.
+            'http' => [
+                'connect_timeout' => env('AWS_CONNECT_TIMEOUT', 5),
+                'timeout' => env('AWS_REQUEST_TIMEOUT', 10),
+            ],
         ],
 
     ],

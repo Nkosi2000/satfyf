@@ -9,12 +9,12 @@
             </div>
 
             @if ($article->cover_image_path)
-                <div class="mt-8 aspect-[16/9] overflow-hidden rounded-2xl border-[3px] border-fg shadow-[8px_8px_0_0_var(--shadow-hard-color)]">
+                <div class="mt-8 aspect-[16/9] overflow-hidden rounded-2xl border border-hairline" style="box-shadow: var(--shadow-soft)">
                     <img src="{{ storage_url($article->cover_image_path) }}" alt="" class="h-full w-full object-cover" />
                 </div>
             @endif
 
-            <div class="mt-10 max-w-2xl space-y-5 text-base leading-relaxed text-muted [&_a]:text-primary-soft [&_a]:underline [&_h2]:mt-8 [&_h2]:text-2xl [&_h2]:font-black [&_h2]:text-fg [&_img]:w-full [&_img]:rounded-2xl [&_img]:border-[3px] [&_img]:border-fg [&_strong]:text-fg">
+            <div class="mt-10 max-w-2xl space-y-5 text-base leading-relaxed text-muted [&_a]:text-primary-soft [&_a]:underline [&_h2]:mt-8 [&_h2]:text-2xl [&_h2]:font-black [&_h2]:text-fg [&_img]:w-full [&_img]:rounded-2xl [&_img]:border [&_img]:border-hairline [&_strong]:text-fg">
                 {!! $article->renderedBody() !!}
             </div>
 
@@ -32,7 +32,7 @@
             @if ($article->images->isNotEmpty())
                 <div class="reveal-stagger mt-10 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-3">
                     @foreach ($article->images as $image)
-                        <div class="hover-zoom aspect-square overflow-hidden rounded-xl border-[3px] border-fg">
+                        <div class="hover-zoom aspect-square overflow-hidden rounded-xl border border-hairline">
                             <img
                                 src="{{ storage_url($image->image_path) }}"
                                 alt=""

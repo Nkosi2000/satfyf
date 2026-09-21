@@ -4,7 +4,7 @@
     </x-ui.page-hero>
 
     <x-ui.section class="hairline-t" width="wide">
-        <form action="{{ route('search') }}" method="GET" class="flex max-w-xl items-center gap-2 rounded-full border-[3px] border-fg bg-surface p-2 shadow-[6px_6px_0_0_var(--shadow-hard-color)]">
+        <form action="{{ route('search') }}" method="GET" class="flex max-w-xl items-center gap-2 rounded-full border border-hairline bg-surface p-2" style="box-shadow: var(--shadow-soft)">
             <svg viewBox="0 0 20 20" fill="none" class="ml-2 h-5 w-5 shrink-0 text-muted" aria-hidden="true">
                 <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5" />
                 <path d="m17 17-4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />

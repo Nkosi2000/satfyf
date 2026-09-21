@@ -15,12 +15,17 @@
     layout untouched.
 --}}
 <section class="relative overflow-hidden pt-24 pb-20 sm:pt-32">
+    {{-- Sweep variant — the subtlest of the three light-ray treatments:
+         wide, very soft, slow-drifting bands rather than distinct beams,
+         since this sits behind real page content on every inner page and
+         can never compete with heading legibility. --}}
+    <x-ui.light-rays variant="sweep" />
     <x-ui.section class="relative !py-0" width="wide">
         @isset($image)
             <div class="grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
                 <div class="hero-enter">
                     <x-ui.eyebrow>{{ $eyebrow }}</x-ui.eyebrow>
-                    <h1 class="mt-5 text-balance text-5xl leading-[0.98] font-black tracking-tight text-fg sm:text-6xl">
+                    <h1 class="mt-5 text-balance text-6xl leading-[1] font-black tracking-tight text-fg sm:text-7xl">
                         {{ $slot }}
                     </h1>
                     @if ($subtext)
@@ -46,7 +51,7 @@
         @else
             <div class="hero-enter">
                 <x-ui.eyebrow>{{ $eyebrow }}</x-ui.eyebrow>
-                <h1 class="mt-5 text-balance text-5xl leading-[0.98] font-black tracking-tight text-fg sm:text-6xl">
+                <h1 class="mt-5 text-balance text-6xl leading-[1] font-black tracking-tight text-fg sm:text-7xl">
                     {{ $slot }}
                 </h1>
                 @if ($subtext)

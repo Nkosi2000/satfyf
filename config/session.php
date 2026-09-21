@@ -169,7 +169,15 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE'),
+    // Defaults to true outside local/testing so the session cookie is never
+    // sent over plain HTTP once this is actually deployed, without having
+    // to remember to set SESSION_SECURE_COOKIE manually — but stays false
+    // here (APP_ENV=local over http://) so local dev keeps working. Reads
+    // the raw env var directly rather than app()->environment(): config
+    // files load before the container is fully bootstrapped, and app()
+    // in a config file can throw a "Target class [env] does not exist"
+    // during that early boot phase.
+    'secure' => env('SESSION_SECURE_COOKIE', ! in_array(env('APP_ENV', 'production'), ['local', 'testing'], true)),
 
     /*
     |--------------------------------------------------------------------------

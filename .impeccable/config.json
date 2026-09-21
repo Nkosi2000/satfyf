@@ -20,6 +20,15 @@
         ],
         "createdAt": "2026-09-20T07:49:58.206Z",
         "reason": "row-hover::before is a 4px hover-triggered accent bar (scaleY 0→1) on list rows, not a static always-visible border on cards; deliberate part of the neo-brutalist system built this session per user's explicit creative-freedom direction"
+      },
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "resources/css/app.css"
+        ],
+        "createdAt": "2026-09-21T13:34:28.365Z",
+        "reason": "Agent: single deliberate on-brand accent (green-to-yellow, SATFYF palette) on one hero headline phrase in the new minimalist home redesign, not a blanket gradient-text default"
       }
     ]
   }

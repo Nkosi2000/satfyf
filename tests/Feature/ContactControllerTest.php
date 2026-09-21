@@ -34,3 +34,29 @@ it('rejects a submission with an invalid email', function () {
 
     $response->assertSessionHasErrors('email');
 });
+
+it('rejects a disposable email domain', function () {
+    $response = $this->from('/contact')->post('/contact', [
+        'name' => 'Jane Learner',
+        'email' => 'jane@guerrillamail.com',
+        'message' => 'Hello there.',
+    ]);
+
+    $response->assertSessionHasErrors('email');
+    expect(ContactSubmission::query()->count())->toBe(0);
+});
+
+it('strips HTML tags out of the name, subject and message before storing', function () {
+    $this->from('/contact')->post('/contact', [
+        'name' => '<b>Jane</b> Learner',
+        'email' => 'jane@example.com',
+        'subject' => '<script>alert(1)</script>Volunteering',
+        'message' => 'I would like to <i>help</i> run a Think Session.',
+    ]);
+
+    $submission = ContactSubmission::query()->where('email', 'jane@example.com')->first();
+
+    expect($submission->name)->toBe('Jane Learner')
+        ->and($submission->subject)->toBe('alert(1)Volunteering')
+        ->and($submission->message)->toBe('I would like to help run a Think Session.');
+});

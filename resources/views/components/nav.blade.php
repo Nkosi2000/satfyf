@@ -1,32 +1,30 @@
 @php
-    // Each link's hover underline cycles through the brand's seven
-    // colours (green, red, yellow, blue, orange, brown) in a fixed
-    // rotation, continuing across both link groups so the sequence reads
-    // as one continuous nav.
+    // Every link shares one quiet accent underline now — the old per-link
+    // rainbow rotation was a poster-system flourish that reads as noisy
+    // chrome against the site's restrained soft palette.
     $links = [
-        ['label' => __('Home'), 'route' => 'home', 'accent' => 'bg-primary-soft'],
-        ['label' => __('Who We Are'), 'route' => 'who-we-are', 'accent' => 'bg-danger-soft'],
-        ['label' => __('Why We Exist'), 'route' => 'why-we-exist', 'accent' => 'bg-secondary-soft'],
-        ['label' => __('What We Do'), 'route' => 'what-we-do', 'accent' => 'bg-tertiary'],
-        ['label' => __('Articles'), 'route' => 'articles.index', 'accent' => 'bg-orange-soft'],
-        ['label' => __('Events'), 'route' => 'events.index', 'accent' => 'bg-brown'],
+        ['label' => __('Home'), 'route' => 'home'],
+        ['label' => __('Who We Are'), 'route' => 'who-we-are'],
+        ['label' => __('Why We Exist'), 'route' => 'why-we-exist'],
+        ['label' => __('What We Do'), 'route' => 'what-we-do'],
+        ['label' => __('Articles'), 'route' => 'articles.index'],
+        ['label' => __('Events'), 'route' => 'events.index'],
     ];
 
     $moreLinks = [
-        ['label' => __('Resources'), 'route' => 'resources.index', 'accent' => 'bg-primary-soft'],
-        ['label' => __('Gallery'), 'route' => 'gallery', 'accent' => 'bg-danger-soft'],
-        ['label' => __('Partners'), 'route' => 'partners', 'accent' => 'bg-secondary-soft'],
-        ['label' => __('Contact Us'), 'route' => 'contact', 'accent' => 'bg-tertiary'],
+        ['label' => __('Resources'), 'route' => 'resources.index'],
+        ['label' => __('Gallery'), 'route' => 'gallery'],
+        ['label' => __('Partners'), 'route' => 'partners'],
+        ['label' => __('Contact Us'), 'route' => 'contact'],
     ];
 @endphp
 
 {{--
-    A full-width banner bar, pinned to the top of the viewport — a flag
-    rather than a floating capsule, with a thick brand-gradient edge instead
-    of a soft blur, matching the poster surface language used everywhere
-    else (see .card-hard / hairline-t in app.css).
+    A full-width banner bar, pinned to the top of the viewport, with a
+    quiet hairline edge and a translucent backdrop-blur ground instead of
+    the old poster system's thick flag border.
 --}}
-<header data-site-header class="sticky inset-x-0 top-0 z-50 border-b-[3px] border-fg bg-surface">
+<header data-site-header class="sticky inset-x-0 top-0 z-50 border-b border-hairline bg-cream/85 backdrop-blur">
     {{-- max-width is a literal px value, not rem — the site's html { font-size:
          65% } scales every rem-based size down (by design, for page content),
          but that would also silently shrink this cap to ~1248px regardless of
@@ -34,7 +32,7 @@
     <div class="mx-auto flex w-full max-w-[1800px] items-center justify-between gap-8 px-6 py-3 sm:px-8">
         <div class="flex items-center gap-10">
             <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-2">
-                <img src="{{ asset('images/48 x 48.png') }}" alt="SATFYF" class="brand-mark h-12 w-12 rounded-full border-[3px] border-fg object-cover sm:h-14 sm:w-14" />
+                <img src="{{ asset('images/48 x 48.png') }}" alt="SATFYF" class="brand-mark h-12 w-12 rounded-full object-cover sm:h-14 sm:w-14" style="box-shadow: var(--shadow-soft-sm)" />
             </a>
 
             <nav class="hidden items-center gap-8 min-[1450px]:flex" aria-label="Primary">
@@ -44,7 +42,7 @@
                         class="group relative py-1 text-base font-bold text-muted transition-colors hover:text-fg {{ request()->routeIs($link['route']) ? 'text-fg' : '' }}"
                     >
                         {{ $link['label'] }}
-                        <span class="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 {{ $link['accent'] }} transition-[transform,background-color] duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
+                        <span class="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-primary-soft transition-transform duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
                     </a>
                 @endforeach
             </nav>
@@ -57,7 +55,7 @@
                     class="group relative py-1 text-base font-bold text-muted transition-colors hover:text-fg {{ request()->routeIs($link['route']) ? 'text-fg' : '' }}"
                 >
                     {{ $link['label'] }}
-                    <span class="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 {{ $link['accent'] }} transition-[transform,background-color] duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
+                    <span class="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-primary-soft transition-transform duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
                 </a>
             @endforeach
             <x-ui.button href="{{ route('get-involved') }}" size="sm">{{ __('Get Involved') }}</x-ui.button>
@@ -76,7 +74,7 @@
                 data-nav-toggle
                 aria-expanded="false"
                 aria-controls="mobile-nav"
-                class="group flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[3px] border-fg text-fg transition-colors"
+                class="group flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-2 text-fg transition-colors"
             >
                 <span class="sr-only">{{ __('Toggle menu') }}</span>
                 {{-- Height is 15px (not the nearer 14px step) so the three
@@ -100,7 +98,7 @@
         data-open="false"
         class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open=true]:grid-rows-[1fr] min-[1450px]:hidden"
     >
-        <nav class="overflow-hidden border-t-[3px] border-fg bg-surface" aria-label="Mobile">
+        <nav class="overflow-hidden border-t border-hairline bg-cream" aria-label="Mobile">
             <div class="flex flex-col gap-1 px-6 py-5">
                 @foreach ([...$links, ...$moreLinks] as $link)
                     <a

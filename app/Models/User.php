@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\AdminResetPassword;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -30,5 +31,15 @@ class User extends Authenticatable
             'password' => 'hashed',
             'is_admin' => 'boolean',
         ];
+    }
+
+    /**
+     * Every user in this app is an admin account (there's no public
+     * registration), so the reset link always points at the admin-prefixed
+     * route rather than Laravel's default "password.reset".
+     */
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new AdminResetPassword($token));
     }
 }

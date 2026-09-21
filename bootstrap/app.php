@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\EnsureUserIsAdmin;
+use App\Http\Middleware\PreventSessionHijacking;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => EnsureUserIsAdmin::class,
             'locale' => SetLocale::class,
+            'session.fingerprint' => PreventSessionHijacking::class,
         ]);
 
         $middleware->redirectGuestsTo(fn (Request $request) => route('admin.login'));

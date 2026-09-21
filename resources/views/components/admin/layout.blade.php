@@ -41,7 +41,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-ink font-sans text-fg antialiased">
+<body class="min-h-screen bg-cream font-sans text-fg antialiased">
     <div class="flex min-h-screen">
         <aside class="hidden w-64 shrink-0 border-r border-hairline-strong bg-surface lg:block">
             <a href="{{ route('admin.dashboard') }}" class="flex h-16 items-center gap-2.5 border-b border-hairline-strong px-5">

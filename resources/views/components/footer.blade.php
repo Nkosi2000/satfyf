@@ -22,12 +22,12 @@
     ];
 @endphp
 
-<footer class="border-t-[3px] border-fg bg-surface-2">
+<footer class="border-t border-hairline bg-cream-raised">
     <x-ui.section width="wide" class="!py-16">
         <div class="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
             <div>
                 <a href="{{ route('home') }}" class="inline-flex items-center">
-                    <img src="{{ asset('images/48 x 48.png') }}" alt="SATFYF" class="brand-mark h-14 w-14 rounded-full border-[3px] border-fg object-cover" />
+                    <img src="{{ asset('images/48 x 48.png') }}" alt="SATFYF" class="brand-mark h-14 w-14 rounded-full object-cover" style="box-shadow: var(--shadow-soft-sm)" />
                 </a>
                 <p class="mt-4 max-w-xs text-sm text-muted">
                     {{ $settings['footer_tagline'] ?? __('A smoke free generation in our lifetime.') }}
@@ -75,7 +75,8 @@
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="{{ $social['label'] }}"
-                                class="press flex h-11 w-11 items-center justify-center rounded-full border-[3px] border-fg bg-surface text-fg shadow-[3px_3px_0_0_var(--shadow-hard-color)]"
+                                class="press flex h-11 w-11 items-center justify-center rounded-full bg-surface text-fg"
+                                style="box-shadow: var(--shadow-soft-sm)"
                             >
                                 <x-icon.social :name="$social['icon']" class="h-4 w-4" />
                             </a>

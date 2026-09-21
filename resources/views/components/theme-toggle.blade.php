@@ -1,7 +1,7 @@
 <button
     type="button"
     data-theme-toggle
-    {{ $attributes->class(['flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[3px] border-fg text-fg transition-transform duration-150 ease-out hover:-translate-y-0.5 active:translate-y-0']) }}
+    {{ $attributes->class(['flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-2 text-fg transition-transform duration-150 ease-out hover:-translate-y-0.5 active:translate-y-0']) }}
 >
     <span class="sr-only">{{ __('Toggle dark mode') }}</span>
 

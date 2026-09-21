@@ -45,6 +45,18 @@ describe('show', function () {
         $this->get(route('articles.show', $article))->assertNotFound();
     });
 
+    it('strips raw HTML out of the rendered markdown body', function () {
+        $article = Article::factory()->create(['body' => "<script>alert('xss')</script>\n\nSome **safe** text."]);
+
+        $this->get(route('articles.show', $article))
+            ->assertOk()
+            // The page's own bundled JS still legitimately contains a
+            // <script> tag — check for the specific injected payload, not
+            // the bare tag.
+            ->assertDontSee("<script>alert('xss')", false)
+            ->assertSee('Some <strong>safe</strong> text.', false);
+    });
+
     it('returns 404 for an article scheduled in the future', function () {
         $article = Article::factory()->create(['published_at' => now()->addWeek()]);
 

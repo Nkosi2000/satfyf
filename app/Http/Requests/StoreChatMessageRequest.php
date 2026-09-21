@@ -16,6 +16,17 @@ class StoreChatMessageRequest extends FormRequest
     }
 
     /**
+     * Strip HTML before the message ever reaches the Claude API or gets
+     * stored — plain conversational text has no legitimate use for markup.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'message' => strip_tags((string) $this->input('message')),
+        ]);
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, ValidationRule|array<mixed>|string>

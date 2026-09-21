@@ -17,13 +17,19 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="relative flex min-h-screen items-center justify-center bg-ink px-4 font-sans text-fg antialiased">
+<body class="relative flex min-h-screen items-center justify-center bg-cream px-4 font-sans text-fg antialiased">
     <x-theme-toggle class="absolute right-4 top-4 sm:right-6 sm:top-6" />
 
-    <div class="w-full max-w-sm rounded-2xl border border-hairline-strong bg-surface p-8 shadow-sm">
-        <img src="{{ asset('images/48 x 48.png') }}" alt="SATFYF" class="brand-mark h-12 w-12 rounded-full object-cover" />
-        <h1 class="mt-6 text-xl font-semibold text-fg">Admin sign in</h1>
-        <p class="mt-1 text-sm text-muted">Manage the SATFYF website.</p>
+    <div class="w-full max-w-2xl rounded-2xl border border-hairline bg-surface p-10" style="box-shadow: var(--shadow-soft)">
+        <img src="{{ asset('images/48 x 48.png') }}" alt="SATFYF" class="brand-mark h-14 w-14 rounded-full object-cover" />
+        <h1 class="mt-6 text-2xl font-semibold text-fg">Admin sign in</h1>
+        <p class="mt-1 text-base text-muted">Manage the SATFYF website.</p>
+
+        @if (session('status'))
+            <div class="mt-4 rounded-lg border border-primary-soft/30 bg-primary-soft/10 px-4 py-3 text-sm text-primary">
+                {{ session('status') }}
+            </div>
+        @endif
 
         @if ($errors->any())
             <div class="mt-4 rounded-lg border border-danger-soft/30 bg-danger-soft/10 px-4 py-3 text-sm text-danger">
@@ -36,10 +42,13 @@
             <x-admin.field name="email" label="Email" type="email" />
             <x-admin.field name="password" label="Password" type="password" />
 
-            <label class="flex items-center gap-2 text-sm text-muted">
-                <input type="checkbox" name="remember" value="1" class="h-4 w-4 rounded border-hairline-strong accent-primary" />
-                Remember me
-            </label>
+            <div class="flex items-center justify-between">
+                <label class="flex items-center gap-2 text-sm text-muted">
+                    <input type="checkbox" name="remember" value="1" class="h-4 w-4 rounded border-hairline-strong accent-primary" />
+                    Remember me
+                </label>
+                <a href="{{ route('admin.password.request') }}" class="text-sm text-muted hover:text-fg">Forgot password?</a>
+            </div>
 
             <x-ui.button type="submit" class="mt-2 w-full">Sign in</x-ui.button>
         </form>

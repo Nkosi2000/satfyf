@@ -33,17 +33,17 @@
     --text-2xl--line-height: 2.625rem;
 
     /*
-     * The organisation's own seven-colour brand palette (replaces the
-     * earlier South African-flag reference): green #007847, yellow
-     * #FCB618, blue #212E7B, red #ED2442, orange #F89E41, brown #AD5726
-     * and dark brown #311218. Every token below is either one of these
-     * seven exactly (the fill/"-soft" role) or a WCAG-checked tint/shade of
-     * one, introduced only where the exact hex would fail text-contrast in
-     * that specific role (documented inline below, ratios computed against
-     * white in light mode / black in dark mode). Light values live here
-     * (the default); .dark overrides every one of these same custom
-     * properties. Structural tokens (ink/surface/hairline/fg/muted/faint)
-     * keep generic, role-based names since they're roles, not hues.
+     * Red / white / black / brown theme (replaces the earlier seven-colour
+     * brand palette). Red carries the dominant accent role (buttons, links,
+     * hover states, gradient text); brown is the deliberately minor
+     * supporting accent (badges, ambient glow, gradient partner); white/
+     * black live in the structural ink/surface/fg tokens below, not as a
+     * hue token of their own. Every colour token is a WCAG-checked
+     * tint/shade for its specific role (ratios computed against white in
+     * light mode / black in dark mode). Light values live here (the
+     * default); .dark overrides every one of these same custom properties.
+     * Structural tokens (ink/surface/hairline/fg/muted/faint) keep generic,
+     * role-based names since they're roles, not hues.
      */
     --color-ink: #ffffff;
     --color-ink-raised: #f4f4f2;
@@ -56,37 +56,41 @@
     --color-muted: #45484c;
     --color-faint: #797c80;
 
-    /* Green #007847 — ~5.6:1 on white, used as-is for text too. -soft is a
-       brighter tint (kept close to the exact hex's own button-gradient
-       contrast) for fills/gradients; -deep is a darker shade. */
-    --color-primary: #007847;
-    --color-primary-soft: #009c5c;
-    --color-primary-deep: #004a2c;
-    --color-primary-rgb: 0 120 71;
+    /* Red #B91C1C — ~5.9:1 on white, used as-is for text too. -soft is a
+       brighter fill red (#DC2626, ~4.8:1 for white-on-fill) for
+       buttons/gradients; -deep is a darker shade for decorative use. */
+    --color-primary: #b91c1c;
+    --color-primary-soft: #dc2626;
+    --color-primary-deep: #7f1d1d;
+    --color-primary-rgb: 185 28 28;
 
-    /* Yellow #FCB618 — ~1.8:1 on white, unusable as light-mode text; shaded
-       down for text/labels, kept exact for fills where text sits on top. */
-    --color-secondary: #906402;
-    --color-secondary-soft: #fcb618;
-    --color-secondary-deep: #634501;
+    /* Brown #AD5726 — ~5:1 on white, used as-is for text. -soft is a
+       lighter warm tan for fills, -deep a near-black brown for decorative
+       depth — the "bit of brown" supporting accent (badges, ambient glow,
+       gradient partner), deliberately never the dominant colour. */
+    --color-secondary: #ad5726;
+    --color-secondary-soft: #c97a3e;
+    --color-secondary-deep: #6b3510;
 
-    /* Blue #212E7B — ~12:1 on white, used as-is. */
-    --color-tertiary: #212e7b;
-    --color-tertiary-deep: #161f53;
+    /* Kept as a minor decorative-only shade (ambient glow variation) —
+       not part of the red/white/black/brown palette's three named hues. */
+    --color-tertiary: #7f1d1d;
+    --color-tertiary-deep: #4a1010;
 
-    /* Red #ED2442 — ~4.3:1 on white, borderline for small text; shaded
-       down for text, kept exact for fills/borders. */
+    /* Red #ED2442 — a distinctly brighter, pinker red than the brand's
+       brick-red primary above, so error states stay visually distinct
+       from ordinary accents even though both read as "red". ~4.3:1 on
+       white, borderline for small text; shaded down for text, kept exact
+       for fills/borders. */
     --color-danger: #d7122f;
     --color-danger-soft: #ed2442;
 
-    /* Orange #F89E41 — ~2.1:1 on white, unusable as light-mode text; shaded
-       down for text, kept exact for fills. */
+    /* Unused decorative-only token, kept for any future need — not part
+       of the red/white/black/brown palette. */
     --color-orange: #a45606;
     --color-orange-soft: #f89e41;
     --color-orange-deep: #783f04;
 
-    /* Brown #AD5726 — ~5:1 on white, used as-is. Dark brown #311218 is used
-       only as a decorative deep/fill shade, never as text. */
     --color-brown: #ad5726;
     --color-brown-deep: #311218;
 
@@ -95,33 +99,33 @@
     --shadow-ring: 0 0 0 1px var(--color-hairline);
 
     /* Brand-band gradient used for the hairline that separates one page
-       section from the next — the exact brand hexes ordered dark to light,
-       not the contrast-adjusted text/fill tokens above, since this is a
-       decorative fill rather than text. Black/white are left out: either
-       would disappear into the page background in one of the two themes. */
-    --gradient-brand: linear-gradient(90deg, #311218, #212e7b, #ad5726, #007847, #ed2442, #f89e41, #fcb618);
-    --gradient-brand-vertical: linear-gradient(180deg, #311218, #212e7b, #ad5726, #007847, #ed2442, #f89e41, #fcb618);
+       section from the next — a red-to-brown blend matching the new
+       theme, not the contrast-adjusted text/fill tokens above, since this
+       is a decorative fill rather than text. */
+    --gradient-brand: linear-gradient(90deg, #7f1d1d, #b91c1c, #dc2626, #ad5726);
+    --gradient-brand-vertical: linear-gradient(180deg, #7f1d1d, #b91c1c, #dc2626, #ad5726);
 
     /* Motion */
     --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
     --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
 
-    /* Hard, offset shadows (no blur) — the signature "poster" surface
-       treatment: a solid brand-green cast rather than a soft ambient one,
-       so cards and buttons read as printed/cut-out objects. Kept as an
-       exact colour, not a role token, so it stays green in both themes
-       instead of inverting with fg/ink.
-
-       --shadow-hard-color-alt exists for the one case the green shadow
-       can't cover itself: an element using card-hard/press sitting on a
-       green or otherwise dark fill (e.g. inside .block-primary), where a
-       green-on-green shadow would disappear. It resolves to the page's
-       own ink colour, which is guaranteed to contrast against whatever
-       accent fill the element sits on. Swap the shadow var on any element
-       placed inside a coloured block — see the stats section for why none
-       currently need it (stat is text-only, nothing there casts a shadow). */
-    --shadow-hard-color: #007847;
+    /* Legacy hard-shadow colour — the poster surface system these fed is
+       retired (card-hard is now an alias for card-soft), but .press:active
+       still references this to collapse a resting shadow to zero size on
+       pointer-down, so the token stays defined and on-theme. */
+    --shadow-hard-color: #b91c1c;
     --shadow-hard-color-alt: var(--color-ink);
+
+    /* Soft-style tokens — the site-wide page-background and shadow system
+       (see the .card-soft/.badge-soft/.text-gradient-accent utilities
+       below, and card-hard's alias to card-soft above). Blurred ambient
+       shadows tinted with the brand red, and a warm off-white page
+       background instead of pure white. */
+    --color-cream: #fbf7f1;
+    --color-cream-raised: #f3ecdf;
+    --shadow-soft: 0 32px 64px -18px rgb(185 28 28 / 38%);
+    --shadow-soft-sm: 0 16px 32px -12px rgb(185 28 28 / 30%);
+    --gradient-accent: linear-gradient(90deg, #b91c1c, #ad5726);
 }
 
 .dark {
@@ -136,41 +140,48 @@
     --color-muted: #a6a6a6;
     --color-faint: #707070;
 
-    /* Green #007847 reads fine as text on black too; -soft is brightened
-       further so it still pops as a button-gradient fill against black. */
-    --color-primary: #007847;
-    --color-primary-soft: #00b56a;
-    --color-primary-deep: #004a2c;
-    --color-primary-rgb: 0 120 71;
+    /* Red #B91C1C is too dark for headroom on black; brightened for text,
+       -soft brightened further so it still pops as a button/gradient fill
+       against black. */
+    --color-primary: #ef4444;
+    --color-primary-soft: #f87171;
+    --color-primary-deep: #7f1d1d;
+    --color-primary-rgb: 239 68 68;
 
-    /* Yellow #FCB618 has excellent contrast on black — a paler tint carries
-       the text role so it still reads distinctly from the exact fill. */
-    --color-secondary: #f7ba31;
-    --color-secondary-soft: #fcb618;
-    --color-secondary-deep: #ac7802;
+    /* Brown #AD5726 is borderline on black; brightened for text and fills —
+       the "bit of brown" supporting accent, same restrained role as light
+       mode. */
+    --color-secondary: #d9915a;
+    --color-secondary-soft: #e6a870;
+    --color-secondary-deep: #6b3510;
 
-    /* Blue #212E7B is too dark for text on black; brightened for text,
-       fills keep the exact brand blue. */
-    --color-tertiary: #6273d5;
-    --color-tertiary-deep: #212e7b;
+    /* Minor decorative-only shade (ambient glow variation), brightened to
+       match the primary red's dark-mode treatment. */
+    --color-tertiary: #b91c1c;
+    --color-tertiary-deep: #7f1d1d;
 
     /* Red #ED2442 already reads clearly on black; brightened slightly for
-       a touch more headroom, fills keep the exact brand red. */
+       a touch more headroom, fills keep the exact brand red — stays
+       distinctly pinker than the brightened brand red above. */
     --color-danger: #ef3e59;
     --color-danger-soft: #ed2442;
 
-    /* Orange #F89E41 reads clearly on black already; a paler tint carries
-       the text role, fills keep the exact brand orange. */
+    /* Unused decorative-only token, kept for any future need — not part
+       of the red/white/black/brown palette. */
     --color-orange: #f4a859;
     --color-orange-soft: #f89e41;
     --color-orange-deep: #783f04;
 
-    /* Brown #AD5726 is borderline on black; brightened for text. Dark
-       brown stays a decorative-only shade, unchanged. */
     --color-brown: #c1612a;
     --color-brown-deep: #311218;
 
     --color-on-accent: #ffffff;
+
+    --color-cream: #151512;
+    --color-cream-raised: #1c1c18;
+    --shadow-soft: 0 32px 64px -18px rgb(239 68 68 / 45%);
+    --shadow-soft-sm: 0 16px 32px -12px rgb(239 68 68 / 36%);
+    --gradient-accent: linear-gradient(90deg, #ef4444, #d9915a);
 }
 
 @layer base {
@@ -195,6 +206,14 @@
         -webkit-font-smoothing: antialiased;
     }
 
+    /* Tailwind's preflight resets native <button> cursor to `default` in
+       modern browsers (only <a> gets `pointer` for free) — restore the
+       hand cursor everywhere something is actually clickable, site-wide. */
+    button:not(:disabled),
+    [role='button']:not([aria-disabled='true']) {
+        cursor: pointer;
+    }
+
     ::selection {
         background-color: var(--color-primary-soft);
         color: var(--color-on-accent);
@@ -208,14 +227,14 @@
 
 /* Scrollbar in the brand's colours, echoing the section-divider gradient.
    Firefox's `scrollbar-color` has no gradient support, so it falls back to
-   a single brand green rather than trying to approximate the band. */
+   a single brand red rather than trying to approximate the band. */
 html {
     /* Scales every rem-based size on the site — type, spacing, radii — down
        together, since Tailwind's whole scale here is rem-based. The type
        and layout scale reads oversized at the stock 16px root; this is one
        lever instead of re-tuning every text-* and spacing utility. */
     font-size: 65%;
-    scrollbar-color: #007847 transparent;
+    scrollbar-color: #b91c1c transparent;
     scrollbar-width: thin;
 }
 
@@ -245,8 +264,7 @@ html {
 }
 
 @utility hairline-t {
-    border-top: 3px solid transparent;
-    border-image: var(--gradient-brand) 1;
+    border-top: 1px solid var(--color-hairline);
 }
 
 /* Full-bleed colour-block sections — the poster rhythm that breaks up the
@@ -281,31 +299,85 @@ html {
     transition-duration: 200ms;
 }
 
-/* Poster surface — a solid card with a thick ink border and a hard, offset
-   brand-green shadow instead of blur. Reads as a cut-out object sitting on
-   the page rather than a pane of glass. Lifts further on hover; on
-   pointer-down it's meant to be paired with .press (see below) so the whole
-   thing physically pushes flat into its own shadow. */
+/* card-hard is now an alias for the soft treatment below — the site-wide
+   revamp retired the poster/hard-shadow system everywhere, and this name
+   is kept only so every existing `card-hard`/x-ui.card/no-smoking-sign
+   usage across the codebase inherits the new look without touching each
+   call site individually. New code should reach for .card-soft directly;
+   this alias exists for the migration, not as a second system. */
 @utility card-hard {
     background-color: var(--color-surface);
-    border: 3px solid var(--color-fg);
-    border-radius: 1.25rem;
-    box-shadow: 6px 6px 0 0 var(--shadow-hard-color);
+    border: 1px solid var(--color-hairline);
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-soft-sm);
 }
 
 @media (hover: hover) and (pointer: fine) {
     .card-hard {
         transition:
-            transform 200ms var(--ease-out-strong),
-            box-shadow 200ms var(--ease-out-strong),
+            transform 250ms var(--ease-out-strong),
+            box-shadow 250ms var(--ease-out-strong),
             background-color 400ms ease,
             border-color 400ms ease;
     }
 
     .card-hard:hover {
-        transform: translate(-3px, -3px);
-        box-shadow: 9px 9px 0 0 var(--shadow-hard-color);
+        transform: translateY(-8px) scale(1.015);
+        box-shadow: var(--shadow-soft);
     }
+}
+
+/* Soft surface — a blurred ambient shadow and a barely-there border
+   instead of a thick ink outline, for the site's warmer, quieter
+   aesthetic (used everywhere now — see card-hard above). */
+@utility card-soft {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-hairline);
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-soft-sm);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .card-soft {
+        transition:
+            transform 250ms var(--ease-out-strong),
+            box-shadow 250ms var(--ease-out-strong);
+    }
+
+    .card-soft:hover {
+        transform: translateY(-8px) scale(1.015);
+        box-shadow: var(--shadow-soft);
+    }
+}
+
+/* Soft pill eyebrow badge — quieter than .card-hard's stamped-badge
+   treatment: a tinted fill and no border instead of a thick ink outline. */
+@utility badge-soft {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    /* Tinted with the brown supporting accent rather than the primary red
+       — every eyebrow/badge across the site would otherwise compete with
+       red buttons and links for attention, and this is where the theme's
+       "bit of brown" is meant to live. */
+    background-color: color-mix(in oklab, var(--color-secondary) 12%, transparent);
+    color: var(--color-secondary);
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* Gradient accent text — the green→yellow equivalent of the reference
+   site's orange→pink headline treatment, using this brand's own colours. */
+@utility text-gradient-accent {
+    background-image: var(--gradient-accent);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
 }
 
 /* Physical press: the element shoves flat into its own hard shadow on
@@ -444,12 +516,12 @@ html {
     position: absolute;
     border-radius: 9999px;
     filter: blur(90px);
-    opacity: 0.16;
+    opacity: 0.28;
     will-change: transform;
 }
 
 .dark .ambient-backdrop span {
-    opacity: 0.26;
+    opacity: 0.4;
 }
 
 .ambient-backdrop span:nth-child(1) {
@@ -503,7 +575,7 @@ html {
     width: 26vw;
     max-height: 20rem;
     max-width: 20rem;
-    background: var(--color-orange-soft);
+    background: var(--color-secondary-soft);
     animation: ambient-drift-b 28s ease-in-out infinite reverse;
 }
 
@@ -565,6 +637,218 @@ html {
 
     50% {
         transform: translate(5%, -5%) scale(1.1);
+    }
+}
+
+/* Light rays — slow-drifting beams of glowing colour, in three variants.
+   Replaces the earlier floating-particle "embers" effect, which read as
+   bubbles rather than the intended spark look: no discrete round shapes in
+   any variant, just long, blurred gradient beams, so there's nothing left
+   to misread. Pure CSS (no canvas/JS) — the shared .light-rays container
+   plus a modifier class (light-rays--diagonal, the default and unprefixed
+   for backward compat; light-rays--vertical; light-rays--sweep) that
+   decides span count, angle, width and colour. */
+.light-rays {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.light-rays span {
+    position: absolute;
+    top: -30%;
+    height: 170%;
+    will-change: transform, opacity;
+}
+
+/* Diagonal (default) — four thin beams crossing at a moderate angle, the
+   most "eye-catching" variant. Used behind hero-scale content: the home
+   hero and every closing-CTA red block. */
+.light-rays:not(.light-rays--vertical, .light-rays--sweep) span,
+.light-rays--diagonal span {
+    width: 3px;
+    filter: blur(6px);
+}
+
+.light-rays:not(.light-rays--vertical, .light-rays--sweep) span:nth-child(1),
+.light-rays--diagonal span:nth-child(1) {
+    left: 8%;
+    background: linear-gradient(180deg, transparent, var(--color-primary-soft) 40%, transparent 80%);
+    animation: ray-drift-a 22s ease-in-out infinite;
+}
+
+.light-rays:not(.light-rays--vertical, .light-rays--sweep) span:nth-child(2),
+.light-rays--diagonal span:nth-child(2) {
+    left: 30%;
+    background: linear-gradient(180deg, transparent, var(--color-secondary-soft) 45%, transparent 85%);
+    animation: ray-drift-b 28s ease-in-out infinite;
+}
+
+.light-rays:not(.light-rays--vertical, .light-rays--sweep) span:nth-child(3),
+.light-rays--diagonal span:nth-child(3) {
+    left: 58%;
+    background: linear-gradient(180deg, transparent, var(--color-primary) 40%, transparent 80%);
+    animation: ray-drift-a 26s ease-in-out infinite reverse;
+}
+
+.light-rays:not(.light-rays--vertical, .light-rays--sweep) span:nth-child(4),
+.light-rays--diagonal span:nth-child(4) {
+    left: 80%;
+    background: linear-gradient(180deg, transparent, var(--color-secondary) 45%, transparent 85%);
+    animation: ray-drift-b 24s ease-in-out infinite reverse;
+}
+
+@keyframes ray-drift-a {
+    0%,
+    100% {
+        transform: rotate(18deg) translateX(0) scaleY(1);
+        opacity: 0.45;
+    }
+
+    50% {
+        transform: rotate(23deg) translateX(3%) scaleY(1.08);
+        opacity: 0.75;
+    }
+}
+
+@keyframes ray-drift-b {
+    0%,
+    100% {
+        transform: rotate(-15deg) translateX(0) scaleY(1);
+        opacity: 0.4;
+    }
+
+    50% {
+        transform: rotate(-20deg) translateX(-3%) scaleY(1.05);
+        opacity: 0.7;
+    }
+}
+
+/* Vertical (spotlight) — six near-vertical beams that mostly pulse in
+   place rather than sweep, reading as spotlights from directly above.
+   Built for a dark section (the home Stats block): brighter, more
+   saturated colours than the other two variants need, since they're
+   sitting on near-black rather than cream. */
+.light-rays--vertical span {
+    width: 4px;
+    filter: blur(10px);
+}
+
+.light-rays--vertical span:nth-child(1) {
+    left: 4%;
+    background: linear-gradient(180deg, transparent, var(--color-primary-soft) 35%, transparent 75%);
+    animation: ray-spotlight-a 9s ease-in-out infinite;
+}
+
+.light-rays--vertical span:nth-child(2) {
+    left: 20%;
+    background: linear-gradient(180deg, transparent, var(--color-secondary-soft) 40%, transparent 78%);
+    animation: ray-spotlight-b 11s ease-in-out infinite;
+}
+
+.light-rays--vertical span:nth-child(3) {
+    left: 38%;
+    background: linear-gradient(180deg, transparent, var(--color-primary) 35%, transparent 75%);
+    animation: ray-spotlight-a 8s ease-in-out infinite reverse;
+}
+
+.light-rays--vertical span:nth-child(4) {
+    left: 55%;
+    background: linear-gradient(180deg, transparent, var(--color-secondary) 40%, transparent 78%);
+    animation: ray-spotlight-b 10s ease-in-out infinite reverse;
+}
+
+.light-rays--vertical span:nth-child(5) {
+    left: 74%;
+    background: linear-gradient(180deg, transparent, var(--color-primary-soft) 35%, transparent 75%);
+    animation: ray-spotlight-a 12s ease-in-out infinite;
+}
+
+.light-rays--vertical span:nth-child(6) {
+    left: 91%;
+    background: linear-gradient(180deg, transparent, var(--color-secondary-soft) 40%, transparent 78%);
+    animation: ray-spotlight-b 9.5s ease-in-out infinite reverse;
+}
+
+@keyframes ray-spotlight-a {
+    0%,
+    100% {
+        transform: rotate(-4deg) scaleY(1);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: rotate(2deg) scaleY(1.15);
+        opacity: 0.65;
+    }
+}
+
+@keyframes ray-spotlight-b {
+    0%,
+    100% {
+        transform: rotate(3deg) scaleY(1);
+        opacity: 0.25;
+    }
+
+    50% {
+        transform: rotate(-3deg) scaleY(1.1);
+        opacity: 0.55;
+    }
+}
+
+/* Sweep — two or three very wide, very soft bands that drift sideways
+   rather than rotate, reading as an atmospheric light wash rather than
+   distinct beams. Deliberately the subtlest variant: it sits behind real
+   page content (the shared page-hero on every inner page), so it can
+   never compete with heading legibility. */
+.light-rays--sweep span {
+    width: 22vw;
+    max-width: 20rem;
+    filter: blur(50px);
+}
+
+.light-rays--sweep span:nth-child(1) {
+    left: -5%;
+    background: linear-gradient(180deg, transparent, var(--color-primary-soft) 45%, transparent 85%);
+    animation: ray-sweep-a 34s ease-in-out infinite;
+}
+
+.light-rays--sweep span:nth-child(2) {
+    left: 40%;
+    background: linear-gradient(180deg, transparent, var(--color-secondary-soft) 45%, transparent 85%);
+    animation: ray-sweep-b 40s ease-in-out infinite reverse;
+}
+
+.light-rays--sweep span:nth-child(3) {
+    left: 78%;
+    background: linear-gradient(180deg, transparent, var(--color-primary) 45%, transparent 85%);
+    animation: ray-sweep-a 36s ease-in-out infinite reverse;
+}
+
+@keyframes ray-sweep-a {
+    0%,
+    100% {
+        transform: rotate(6deg) translateX(0);
+        opacity: 0.18;
+    }
+
+    50% {
+        transform: rotate(9deg) translateX(6%);
+        opacity: 0.32;
+    }
+}
+
+@keyframes ray-sweep-b {
+    0%,
+    100% {
+        transform: rotate(-5deg) translateX(0);
+        opacity: 0.16;
+    }
+
+    50% {
+        transform: rotate(-8deg) translateX(-6%);
+        opacity: 0.3;
     }
 }
 
@@ -896,6 +1180,11 @@ img[data-loaded] {
         animation: none;
     }
 
+    .light-rays span,
+    .ambient-backdrop span {
+        animation: none;
+    }
+
     .reveal,
     .reveal-stagger > * {
         transform: none;
@@ -955,7 +1244,7 @@ img[data-loaded] {
     }
 
     .card-hard:hover {
-        box-shadow: 6px 6px 0 0 var(--shadow-hard-color);
+        box-shadow: var(--shadow-soft);
         opacity: 0.85;
     }
 

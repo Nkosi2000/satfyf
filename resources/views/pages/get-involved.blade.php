@@ -3,6 +3,25 @@
         {{ __('Help achieve a culture where young people reject tobacco.') }}
     </x-ui.page-hero>
 
+    @if (! empty($getInvolved['get_involved_statement']))
+        <x-ui.section class="hairline-t" width="wide">
+            <p class="max-w-3xl text-balance text-lg leading-relaxed text-muted sm:text-xl">
+                {{ $getInvolved['get_involved_statement'] }}
+            </p>
+            @if (! empty($getInvolved['get_involved_join_form_url']))
+                <x-ui.button
+                    href="{{ $getInvolved['get_involved_join_form_url'] }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    size="lg"
+                    class="mt-6"
+                >
+                    {{ __('Join the Forum') }}
+                </x-ui.button>
+            @endif
+        </x-ui.section>
+    @endif
+
     <x-ui.section class="hairline-t" width="wide">
         <x-ui.section-header :eyebrow="__('Ways In')">{{ __('Four ways to get involved.') }}</x-ui.section-header>
 

@@ -14,6 +14,7 @@ import { initThermalHeatmap } from './modules/thermal-heatmap';
 import { initVisibility } from './modules/visibility';
 import { initBackToTop } from './modules/back-to-top';
 import { initSearchModal } from './modules/search-modal';
+import { initMagnetic } from './modules/magnetic';
 
 initNav();
 initTabs();
@@ -31,3 +32,4 @@ initThermalHeatmap();
 initVisibility();
 initBackToTop();
 initSearchModal();
+initMagnetic();

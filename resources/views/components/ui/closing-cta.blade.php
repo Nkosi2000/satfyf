@@ -4,41 +4,44 @@
     $hero = \App\Models\SiteSetting::group('hero');
 @endphp
 
-{{-- Shared closing CTA: same heading, button and subtext on every page that has one. --}}
-{{--
-    Deliberately stays on the page's normal surface rather than an inverted
-    block: rainbow-heading's per-word colours are calibrated for contrast
-    against the page background specifically (see its own comment), so
-    flipping this section to a dark block would leave several of those
-    words unreadable against their own now-inverted background.
+{{-- Shared closing CTA: the boldest, most saturated moment on every page
+     that has one — a full-bleed brand-red block with a glowing radial
+     backdrop, mirroring the homepage Stats section's one deliberate dark
+     beat but built from the primary red instead of near-black. Fixed
+     colours regardless of site theme (not theme-relative), since the
+     point is a consistent, committed colour block, not "whichever shade
+     opposes the current toggle". sideImage is opt-in (no page currently
+     passes it) for the one page that might want the no-smoking-sign motif
+     alongside the block rather than every closing CTA repeating it. --}}
+<section class="relative overflow-hidden px-6 py-20 sm:px-8 sm:py-28" style="background-color: var(--color-primary-deep)">
+    <div
+        class="pointer-events-none absolute inset-0"
+        style="background-image: radial-gradient(ellipse 65% 55% at 25% 20%, color-mix(in oklab, var(--color-primary) 55%, transparent), transparent), radial-gradient(ellipse 55% 55% at 80% 85%, color-mix(in oklab, var(--color-secondary) 45%, transparent), transparent)"
+        aria-hidden="true"
+    ></div>
+    <x-ui.light-rays class="opacity-70" />
 
-    sideImage is opt-in (only the homepage passes it) rather than applied
-    everywhere this component renders — this same block appears on several
-    pages, and a literal no-smoking sign next to every one of them would
-    read as repetition rather than reinforcement. See conversation context:
-    one high-impact placement beats the icon showing up on every CTA.
---}}
-<section class="relative overflow-hidden border-t-[3px] border-b-[3px] border-fg py-24">
-    <div class="mx-auto w-full max-w-[120rem] px-6 sm:px-8">
-        <div @class(['reveal mx-auto grid max-w-xl items-center gap-12 text-center' => ! $sideImage, 'reveal-stagger grid items-center gap-12 lg:grid-cols-[0.4fr_0.6fr]' => $sideImage])>
-            @if ($sideImage)
-                <div class="mx-auto w-full max-w-[14rem]">
-                    <x-ui.no-smoking-sign />
-                </div>
-            @endif
-
-            <div @class(['text-center' => ! $sideImage, 'text-center lg:text-left' => $sideImage])>
-                <h2 class="text-balance text-4xl font-black tracking-tight sm:text-6xl">
-                    <x-ui.rainbow-heading
-                        :line1="$hero['hero_heading'] ?? __('Speak up. Stand out.')"
-                        :line2="$hero['hero_heading_accent'] ?? __('A smoke-free generation.')"
-                    />
-                </h2>
-                <div @class(['mt-8 flex justify-center' => ! $sideImage, 'mt-8 flex justify-center lg:justify-start' => $sideImage])>
-                    <x-ui.button href="{{ route('get-involved') }}" size="lg">{{ __('Get Involved') }}</x-ui.button>
-                </div>
-                <p class="mt-4 text-sm font-bold text-faint">{{ __('No membership fee. Open to every school and community.') }}</p>
+    <div @class([
+        'relative mx-auto w-full max-w-[110rem] text-center' => ! $sideImage,
+        'relative mx-auto grid w-full max-w-[110rem] items-center gap-12 lg:grid-cols-[0.4fr_0.6fr]' => $sideImage,
+    ])>
+        @if ($sideImage)
+            <div class="mx-auto w-full max-w-[14rem]">
+                <x-ui.no-smoking-sign />
             </div>
+        @endif
+
+        <div @class([
+            'flex flex-col items-center gap-6 text-center' => true,
+        ])>
+            <h2 class="text-balance text-5xl leading-[1] font-black tracking-tight text-on-accent sm:text-6xl lg:text-7xl">
+                {{ $hero['hero_heading'] ?? __('Speak up. Stand out.') }}
+                <span style="color: var(--color-secondary-soft)">{{ $hero['hero_heading_accent'] ?? __('A smoke-free generation.') }}</span>
+            </h2>
+            <p class="max-w-xl text-balance text-lg leading-relaxed" style="color: color-mix(in oklab, var(--color-on-accent) 78%, transparent)">
+                {{ __('No membership fee. Open to every school and community.') }}
+            </p>
+            <x-ui.button href="{{ route('get-involved') }}" variant="invert" size="lg" class="mt-2" magnetic>{{ __('Get Involved') }}</x-ui.button>
         </div>
     </div>
 </section>

@@ -70,3 +70,32 @@ it('logs out an authenticated admin', function () {
     $response->assertRedirect(route('admin.login'));
     $this->assertGuest();
 });
+
+describe('session hijacking protection', function () {
+    it('signs a real login session out when the request fingerprint changes', function () {
+        $user = User::factory()->admin()->create(['password' => 'correct-password']);
+
+        $this->withServerVariables(['HTTP_USER_AGENT' => 'Original Browser'])
+            ->post(route('admin.login.store'), ['email' => $user->email, 'password' => 'correct-password'])
+            ->assertRedirect(route('admin.dashboard'));
+
+        $this->assertAuthenticatedAs($user);
+
+        // Same session cookie, a different User-Agent — the signature of a
+        // stolen session cookie being replayed from another browser/device.
+        $response = $this->withServerVariables(['HTTP_USER_AGENT' => 'Different Browser'])
+            ->get(route('admin.dashboard'));
+
+        $response->assertRedirect(route('admin.login'));
+        $this->assertGuest();
+    });
+
+    it('does not affect a session established via actingAs (no fingerprint set)', function () {
+        // actingAs() bypasses the real login flow, so no auth_fingerprint
+        // is ever stored — the middleware must not treat "no fingerprint
+        // yet" the same as "fingerprint mismatch".
+        $user = User::factory()->admin()->create();
+
+        $this->actingAs($user)->get(route('admin.dashboard'))->assertOk();
+    });
+});

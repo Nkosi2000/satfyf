@@ -11,11 +11,12 @@
         role="dialog"
         aria-modal="false"
         aria-label="{{ __('SatfyfBot chat') }}"
-        class="pointer-events-none flex h-[32rem] max-h-[75vh] w-[22rem] max-w-[calc(100vw-2.5rem)] origin-bottom-right scale-95 flex-col overflow-hidden rounded-2xl border-[3px] border-fg bg-surface opacity-0 shadow-[8px_8px_0_0_var(--shadow-hard-color)] transition-[transform,opacity] duration-200 ease-out-strong data-[open=true]:pointer-events-auto data-[open=true]:scale-100 data-[open=true]:opacity-100"
+        class="pointer-events-none flex h-[32rem] max-h-[75vh] w-[22rem] max-w-[calc(100vw-2.5rem)] origin-bottom-right scale-95 flex-col overflow-hidden rounded-2xl border border-hairline bg-surface opacity-0 transition-[transform,opacity] duration-200 ease-out-strong data-[open=true]:pointer-events-auto data-[open=true]:scale-100 data-[open=true]:opacity-100"
+        style="box-shadow: var(--shadow-soft)"
     >
         <div class="hairline-b flex items-center justify-between gap-3 px-4 py-3.5">
             <div class="flex items-center gap-2.5">
-                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white" style="background-image: var(--gradient-brand)">
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white" style="background-image: var(--gradient-accent)">
                     <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" aria-hidden="true">
                         <path d="M4 5.5c0-.83.67-1.5 1.5-1.5h13c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5H9l-4 3.5v-3.5H5.5A1.5 1.5 0 0 1 4 14.5v-9Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
                     </svg>
@@ -63,7 +64,7 @@
                 maxlength="1000"
                 required
                 placeholder="{{ __('Type your message…') }}"
-                class="max-h-28 flex-1 resize-none rounded-xl border-[3px] border-fg bg-surface px-3 py-2 text-sm text-fg placeholder:text-faint focus:border-primary-soft"
+                class="max-h-28 flex-1 resize-none rounded-xl border border-hairline-strong bg-surface px-3 py-2 text-sm text-fg placeholder:text-faint focus:border-primary-soft"
             ></textarea>
             <button
                 type="submit"
@@ -87,7 +88,8 @@
             aria-haspopup="dialog"
             aria-expanded="false"
             aria-controls="chatbot-panel"
-            class="press relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-[3px] border-fg bg-primary text-on-accent shadow-[5px_5px_0_0_var(--color-fg)]"
+            class="press relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary text-on-accent"
+            style="box-shadow: var(--shadow-soft)"
         >
             <span class="sr-only">{{ __('Chat with SatfyfBot') }}</span>
             <svg data-chatbot-icon="open" viewBox="0 0 24 24" fill="none" class="h-6 w-6" aria-hidden="true">

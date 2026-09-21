@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\NotDisposableEmail;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,7 +24,7 @@ class StoreNewsletterSubscriberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email', 'max:255', 'unique:newsletter_subscribers,email'],
+            'email' => ['required', 'email', 'max:255', 'unique:newsletter_subscribers,email', new NotDisposableEmail],
         ];
     }
 }

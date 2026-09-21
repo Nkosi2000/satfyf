@@ -25,3 +25,10 @@ it('rejects an invalid email', function () {
 
     $response->assertSessionHasErrors('email');
 });
+
+it('rejects a disposable email domain', function () {
+    $response = $this->from('/')->post('/newsletter', ['email' => 'reader@mailinator.com']);
+
+    $response->assertSessionHasErrors('email');
+    expect(NewsletterSubscriber::query()->where('email', 'reader@mailinator.com')->exists())->toBeFalse();
+});

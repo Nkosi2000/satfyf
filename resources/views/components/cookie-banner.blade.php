@@ -13,7 +13,7 @@
     <div
         role="region"
         aria-label="{{ __('Cookie notice') }}"
-        class="fixed inset-x-0 bottom-0 z-[60] border-t-[3px] border-fg bg-surface"
+        class="fixed inset-x-0 bottom-0 z-[60] border-t border-hairline bg-cream"
     >
         <div class="mx-auto flex w-full max-w-[120rem] flex-col items-center gap-4 px-6 py-5 sm:flex-row sm:justify-between sm:px-8">
             <p class="text-sm text-fg">

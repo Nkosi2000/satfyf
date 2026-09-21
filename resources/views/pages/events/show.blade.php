@@ -22,7 +22,7 @@
             </div>
 
             @if ($event->cover_image_path)
-                <div class="mt-8 aspect-[16/9] overflow-hidden rounded-2xl border-[3px] border-fg shadow-[8px_8px_0_0_var(--shadow-hard-color)]">
+                <div class="mt-8 aspect-[16/9] overflow-hidden rounded-2xl border border-hairline" style="box-shadow: var(--shadow-soft)">
                     <img src="{{ storage_url($event->cover_image_path) }}" alt="" class="h-full w-full object-cover" />
                 </div>
             @endif

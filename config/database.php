@@ -97,6 +97,16 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => env('DB_SSLMODE', 'prefer'),
+            // PostgresConnector's DSN builder has no connect-timeout
+            // passthrough, so without this a stalled TCP handshake to a
+            // remote host (Neon) blocks until PHP's own max_execution_time
+            // kills the whole request with an uncatchable fatal error —
+            // same class of bug fixed for Redis just above. Verified this
+            // PHP/pgsql build actually honours ATTR_TIMEOUT as a connect
+            // timeout (not just a query timeout) before relying on it.
+            'options' => [
+                PDO::ATTR_TIMEOUT => env('DB_CONNECT_TIMEOUT', 5),
+            ],
         ],
 
         'sqlsrv' => [
@@ -160,7 +170,18 @@ return [
             'password' => env('REDIS_PASSWORD'),
             'port' => env('REDIS_PORT', '6379'),
             'database' => env('REDIS_DB', '0'),
-            'max_retries' => env('REDIS_MAX_RETRIES', 3),
+            // A session read AND a session write both hit Redis in every
+            // single request (SESSION_DRIVER=redis) — with the previous
+            // max_retries=3 and a 5s timeout, one degraded Redis operation
+            // could legitimately retry for ~15-20s on its own. Two of those
+            // in one request blew straight through PHP's 30s execution
+            // limit, which is exactly what happened here (Predis correctly
+            // threw a catchable TimeoutException on the first stall, but
+            // Laravel's own error-page rendering then triggered a second
+            // Redis round-trip that ran out the clock). 1 retry / 3s keeps
+            // the worst case per operation under ~6s, so two of them still
+            // leave headroom under the 30s ceiling.
+            'max_retries' => env('REDIS_MAX_RETRIES', 1),
             'backoff_algorithm' => env('REDIS_BACKOFF_ALGORITHM', 'decorrelated_jitter'),
             'backoff_base' => env('REDIS_BACKOFF_BASE', 100),
             'backoff_cap' => env('REDIS_BACKOFF_CAP', 1000),
@@ -171,8 +192,8 @@ return [
             // graceful, catchable connection exception. Bounding both
             // matters more now that Redis is a remote (Redis Cloud)
             // connection instead of localhost.
-            'timeout' => env('REDIS_TIMEOUT', 5),
-            'read_write_timeout' => env('REDIS_READ_WRITE_TIMEOUT', 5),
+            'timeout' => env('REDIS_TIMEOUT', 3),
+            'read_write_timeout' => env('REDIS_READ_WRITE_TIMEOUT', 3),
         ],
 
         'cache' => [
@@ -182,12 +203,12 @@ return [
             'password' => env('REDIS_PASSWORD'),
             'port' => env('REDIS_PORT', '6379'),
             'database' => env('REDIS_CACHE_DB', '1'),
-            'max_retries' => env('REDIS_MAX_RETRIES', 3),
+            'max_retries' => env('REDIS_MAX_RETRIES', 1),
             'backoff_algorithm' => env('REDIS_BACKOFF_ALGORITHM', 'decorrelated_jitter'),
             'backoff_base' => env('REDIS_BACKOFF_BASE', 100),
             'backoff_cap' => env('REDIS_BACKOFF_CAP', 1000),
-            'timeout' => env('REDIS_TIMEOUT', 5),
-            'read_write_timeout' => env('REDIS_READ_WRITE_TIMEOUT', 5),
+            'timeout' => env('REDIS_TIMEOUT', 3),
+            'read_write_timeout' => env('REDIS_READ_WRITE_TIMEOUT', 3),
         ],
 
     ],

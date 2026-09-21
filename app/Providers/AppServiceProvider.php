@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -43,5 +44,14 @@ class AppServiceProvider extends ServiceProvider
         // available abuse guard. Generous enough for a real consumer paging
         // through articles or gallery images.
         RateLimiter::for('api', fn (Request $request) => Limit::perMinute(60)->by($request->ip()));
+
+        // Admin login/forgot-password — keyed by IP *and* the submitted
+        // email so one attacker can't lock out a real admin by spraying
+        // their address from elsewhere, while still bounding brute-force
+        // and credential-stuffing attempts from a single IP.
+        RateLimiter::for('admin-login', fn (Request $request) => [
+            Limit::perMinute(5)->by($request->ip()),
+            Limit::perMinute(5)->by(Str::lower((string) $request->input('email')).'|'.$request->ip()),
+        ]);
     }
 }
