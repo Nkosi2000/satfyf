@@ -1,6 +1,19 @@
 <x-layouts.app :title="__('Gallery')">
     <x-ui.page-hero :eyebrow="__('Gallery')" :subtext="__('Think sessions, school visits, public demonstrations and Community Imbizos — a running record of where young people are showing up and speaking out.')">
         {{ __('SATFYF, in the field.') }}
+
+        <x-slot:image>
+            @if ($images->isNotEmpty())
+                <img
+                    src="{{ storage_url($images->first()->image_path) }}"
+                    alt="{{ $images->first()->caption }}"
+                    class="aspect-4/5 w-full rounded-2xl object-cover"
+                    style="box-shadow: var(--shadow-soft)"
+                />
+            @else
+                <x-ui.brand-hero-image />
+            @endif
+        </x-slot:image>
     </x-ui.page-hero>
 
     <x-ui.section class="hairline-t" width="wide">

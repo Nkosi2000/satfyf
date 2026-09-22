@@ -1,6 +1,10 @@
 <x-layouts.app :title="__('What We Do')">
     <x-ui.page-hero :eyebrow="__('What We Do')" :subtext="__('From think sessions to public demonstrations — each programme is built to meet young people where they are.')">
         {{ __('Every programme, grouped by purpose.') }}
+
+        <x-slot:image>
+            <x-ui.brand-hero-image />
+        </x-slot:image>
     </x-ui.page-hero>
 
     @foreach ($grouped as $group)

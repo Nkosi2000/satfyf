@@ -1,6 +1,23 @@
 <x-layouts.app :title="__('Articles')">
+    @php
+        $featuredArticle = $articles->first(fn ($article) => $article->cover_image_path);
+    @endphp
+
     <x-ui.page-hero :eyebrow="__('Articles')" :subtext="__('Fact-checked coverage of tobacco harm, industry tactics and policy — plus the campaigns, chapters and young people driving the response.')">
         {{ __('Reporting, explainers and stories.') }}
+
+        <x-slot:image>
+            @if ($featuredArticle)
+                <img
+                    src="{{ storage_url($featuredArticle->cover_image_path) }}"
+                    alt=""
+                    class="aspect-4/5 w-full rounded-2xl object-cover"
+                    style="box-shadow: var(--shadow-soft)"
+                />
+            @else
+                <x-ui.brand-hero-image />
+            @endif
+        </x-slot:image>
     </x-ui.page-hero>
 
     <x-ui.section class="hairline-t" width="wide">

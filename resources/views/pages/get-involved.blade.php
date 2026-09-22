@@ -1,6 +1,10 @@
 <x-layouts.app :title="__('Get Involved')">
     <x-ui.page-hero :eyebrow="__('Get Involved')" :subtext="__('There\'s no membership fee, and no single way in. Pick what fits.')">
         {{ __('Help achieve a culture where young people reject tobacco.') }}
+
+        <x-slot:image>
+            <x-ui.brand-hero-image />
+        </x-slot:image>
     </x-ui.page-hero>
 
     @if (! empty($getInvolved['get_involved_statement']))

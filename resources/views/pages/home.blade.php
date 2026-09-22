@@ -7,54 +7,13 @@
         .text-gradient-accent in app.css for the tokens this introduces.
     --}}
     <div class="bg-cream">
-        {{-- Hero — slow-drifting light rays behind the content (see
-             ui/light-rays.blade.php); low in the z-order so it reads as
-             ambient texture, never competing with the headline. --}}
-        <section class="relative overflow-hidden pt-16 pb-20 sm:pt-20 sm:pb-28">
-            <x-ui.light-rays class="opacity-80" />
-
-            <div class="hero-enter relative mx-auto grid w-full max-w-[110rem] items-center gap-14 px-6 sm:px-8 lg:grid-cols-[1.1fr_0.9fr]">
-                <div>
-                    <x-ui.eyebrow soft icon>{{ $hero['hero_eyebrow'] ?? __('South African Tobacco-Free Youth Forum') }}</x-ui.eyebrow>
-
-                    <h1 class="mt-6 text-balance text-5xl leading-[1.05] font-black tracking-tight text-fg sm:text-6xl lg:text-7xl">
-                        {{ $hero['hero_heading'] ?? __('Speak up. Stand out.') }}
-                        <span class="text-gradient-accent">{{ $hero['hero_heading_accent'] ?? __('A smoke-free generation.') }}</span>
-                    </h1>
-
-                    <p class="mt-7 max-w-xl text-balance text-lg leading-relaxed text-muted">
-                        {{ $hero['hero_subtext'] ?? '' }}
-                    </p>
-
-                    <div class="mt-9 flex flex-wrap items-center gap-4">
-                        <x-ui.button href="{{ route('get-involved') }}" size="lg" magnetic>{{ __('Get Involved') }}</x-ui.button>
-                        <x-ui.button href="{{ route('who-we-are') }}" variant="secondary" size="lg">{{ __('Who We Are') }}</x-ui.button>
-                    </div>
-
-                    <p class="mt-7 text-sm font-medium text-faint">{{ __('Youth-led') }} &middot; {{ __('No membership fee') }} &middot; {{ __('Open to every school and community') }}</p>
-                </div>
-
-                {{-- A real photo in a soft rounded frame with a floating stat
-                     chip, rather than the site's usual hard-shadow poster
-                     treatment — falls back to the brand mark if no gallery
-                     photo exists yet. --}}
-                <div class="relative mx-auto w-full max-w-md">
-                    @if ($galleryImages->isNotEmpty())
-                        <div class="aspect-4/5 overflow-hidden rounded-[2rem]" style="box-shadow: var(--shadow-soft)">
-                            <img src="{{ storage_url($galleryImages->first()->image_path) }}" alt="{{ $galleryImages->first()->caption }}" class="h-full w-full object-cover" />
-                        </div>
-                    @else
-                        <div class="card-soft flex aspect-4/5 items-center justify-center">
-                            <img src="{{ asset('images/48 x 48.png') }}" alt="SATFYF" class="brand-mark h-28 w-28 rounded-full object-cover" />
-                        </div>
-                    @endif
-
-                    <div class="card-soft absolute -bottom-6 -left-6 flex items-center gap-3 px-5 py-4 sm:-left-10">
-                        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-lg font-black text-primary">2030</span>
-                        <span class="text-xs font-bold tracking-wide text-muted uppercase">{{ __('Our Vision') }}</span>
-                    </div>
-                </div>
-            </div>
+        {{-- Hero — full-bleed brand cover image, no overlaid content. --}}
+        <section class="relative overflow-hidden">
+            <img
+                src="{{ asset('images/SATFYF-Facebook-Cover-1280x474.jpeg') }}"
+                alt="SATFYF"
+                class="aspect-[1280/474] w-full object-cover"
+            />
         </section>
 
         {{-- Why we exist — a subtly raised tint (not pure cream) breaks the

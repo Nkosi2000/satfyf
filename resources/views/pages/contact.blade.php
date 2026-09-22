@@ -1,6 +1,10 @@
 <x-layouts.app :title="__('Contact Us')">
     <x-ui.page-hero :eyebrow="__('Contact Us')" :subtext="__('Questions about starting a chapter, media enquiries, partnership ideas, or just something on your mind — reach us directly, or send a message below.')">
         {{ __("Let's talk.") }}
+
+        <x-slot:image>
+            <x-ui.brand-hero-image />
+        </x-slot:image>
     </x-ui.page-hero>
 
     <x-ui.section class="hairline-t" width="wide">

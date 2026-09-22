@@ -1,6 +1,10 @@
 <x-layouts.app :title="__('Privacy & Cookies')">
     <x-ui.page-hero :eyebrow="__('Privacy & Cookies')" :subtext="__('A plain-language account of what this site stores in your browser and why — nothing more than what\'s listed here.')">
         {{ __('What we store, and why.') }}
+
+        <x-slot:image>
+            <x-ui.brand-hero-image />
+        </x-slot:image>
     </x-ui.page-hero>
 
     <x-ui.section class="hairline-t" width="wide">

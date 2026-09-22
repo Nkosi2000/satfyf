@@ -2,22 +2,8 @@
     <x-ui.page-hero :eyebrow="__('Who We Are')" :subtext="$mission['mission_statement'] ?? null">
         {{ __('Youth voices, not youth audiences.') }}
 
-        {{-- Same light/dark logo lockup as the homepage's "Why It Matters"
-             section — see the comment there for why it's two <img> tags
-             swapped by CSS rather than one image with a dark filter. --}}
         <x-slot:image>
-            <img
-                src="{{ asset('images/250px-by-100px-SATFYF-LOGO.jpg') }}"
-                alt="SATFYF"
-                class="w-full rounded-2xl [.dark_&]:hidden"
-                style="box-shadow: var(--shadow-soft)"
-            />
-            <img
-                src="{{ asset('images/250px-by-100px-SATFYF-LOGO-dark-mode.jpg') }}"
-                alt="SATFYF"
-                class="hidden w-full rounded-2xl [.dark_&]:block"
-                style="box-shadow: var(--shadow-soft)"
-            />
+            <x-ui.brand-hero-image />
         </x-slot:image>
     </x-ui.page-hero>
 

@@ -1,6 +1,23 @@
 <x-layouts.app :title="__('Events')">
+    @php
+        $featuredEvent = $upcoming->first(fn ($event) => $event->cover_image_path);
+    @endphp
+
     <x-ui.page-hero :eyebrow="__('Events')" :subtext="__('Think sessions, school visits, public demonstrations and Community Imbizos happening across the country — open to any young person, school or community group who wants to take part.')">
         {{ __('Where to find us next.') }}
+
+        <x-slot:image>
+            @if ($featuredEvent)
+                <img
+                    src="{{ storage_url($featuredEvent->cover_image_path) }}"
+                    alt=""
+                    class="aspect-4/5 w-full rounded-2xl object-cover"
+                    style="box-shadow: var(--shadow-soft)"
+                />
+            @else
+                <x-ui.brand-hero-image />
+            @endif
+        </x-slot:image>
     </x-ui.page-hero>
 
     <x-ui.section class="hairline-t" width="wide">

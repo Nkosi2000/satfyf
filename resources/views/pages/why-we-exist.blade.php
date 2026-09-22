@@ -1,6 +1,10 @@
 <x-layouts.app :title="__('Why We Exist')">
     <x-ui.page-hero :eyebrow="__('Why We Exist')" :subtext="__('Tobacco use carries real health harms, real economic costs, and it still starts young. In a country still building the policy and enforcement to protect its youth, silence isn\'t neutral — it\'s a gap the industry is glad to fill.')">
         {{ __("Tobacco doesn't market itself to adults.") }}
+
+        <x-slot:image>
+            <x-ui.brand-hero-image />
+        </x-slot:image>
     </x-ui.page-hero>
 
     <x-ui.section class="hairline-t" width="wide">
