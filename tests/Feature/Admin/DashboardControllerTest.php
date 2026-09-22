@@ -1,0 +1,26 @@
+<?php
+
+use App\Console\Commands\WarmStorageUrls;
+use App\Models\User;
+use Illuminate\Support\Facades\Cache;
+
+it('warns on the dashboard when the storage-url warm heartbeat is stale', function () {
+    $admin = User::factory()->admin()->create();
+
+    $this->actingAs($admin)
+        ->get(route('admin.dashboard'))
+        ->assertOk()
+        ->assertSee("hasn't refreshed recently", false);
+});
+
+it('does not warn once the storage-url warm command has run recently', function () {
+    $admin = User::factory()->admin()->create();
+    Cache::forever('scheduler:warm-storage-urls:last-success', now()->toIso8601String());
+
+    expect(WarmStorageUrls::isStale())->toBeFalse();
+
+    $this->actingAs($admin)
+        ->get(route('admin.dashboard'))
+        ->assertOk()
+        ->assertDontSee("hasn't refreshed recently", false);
+});

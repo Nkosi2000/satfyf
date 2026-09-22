@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Console\Commands\WarmStorageUrls;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\ContactSubmission;
@@ -31,6 +32,8 @@ class DashboardController extends Controller
             'recentSubmissions' => ContactSubmission::query()->latest()->take(5)->get(),
             'recentSubscribers' => NewsletterSubscriber::query()->latest('subscribed_at')->take(5)->get(),
             'unreadCount' => ContactSubmission::query()->where('is_read', false)->count(),
+            'storageUrlWarmStale' => WarmStorageUrls::isStale(),
+            'storageUrlWarmLastRun' => WarmStorageUrls::lastSucceededAt(),
         ]);
     }
 }

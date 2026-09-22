@@ -1,4 +1,20 @@
 <x-admin.layout title="Dashboard">
+    @if ($storageUrlWarmStale)
+        <div class="mb-6 rounded-lg border border-hairline-strong bg-primary/10 px-4 py-3 text-sm text-primary">
+            <p class="font-medium">Storage URL cache hasn't refreshed recently.</p>
+            <p class="mt-1 text-primary/80">
+                @if ($storageUrlWarmLastRun)
+                    Last successful run was {{ $storageUrlWarmLastRun->diffForHumans() }} ({{ $storageUrlWarmLastRun->format('d M Y, H:i') }}).
+                @else
+                    <code>php artisan app:warm-storage-urls</code> has never completed successfully in this environment.
+                @endif
+                It's scheduled hourly — if the scheduler (cron calling <code>schedule:run</code> every minute, or the
+                Laravel Cloud scheduler) has stopped running, public pages with many images risk timing out the way
+                the home page did on 22 September 2026.
+            </p>
+        </div>
+    @endif
+
     <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         @foreach ($counts as $label => $count)
             <div class="rounded-xl border border-hairline-strong bg-surface p-5">
