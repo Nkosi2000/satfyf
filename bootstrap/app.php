@@ -23,6 +23,15 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('app:warm-storage-urls')->hourly();
     })
     ->withMiddleware(function (Middleware $middleware): void {
+        // Railway (and every other PaaS this could run on) terminates TLS at
+        // its edge and forwards plain HTTP to the container — the container
+        // is never reachable directly, so trusting the immediate proxy is
+        // safe. Without this, url()/route() generate http:// links even on
+        // an https:// site (Laravel only trusts X-Forwarded-Proto from a
+        // trusted proxy), which is why the cookie-consent form and other
+        // generated URLs came back as http:// on the deployed site.
+        $middleware->trustProxies(at: '*');
+
         $middleware->alias([
             'admin' => EnsureUserIsAdmin::class,
             'locale' => SetLocale::class,
