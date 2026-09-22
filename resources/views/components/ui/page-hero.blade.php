@@ -25,7 +25,7 @@
             <div class="grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
                 <div class="hero-enter">
                     <x-ui.eyebrow>{{ $eyebrow }}</x-ui.eyebrow>
-                    <h1 class="mt-5 text-balance text-6xl leading-[1] font-black tracking-tight text-fg sm:text-7xl">
+                    <h1 class="font-display mt-5 text-balance text-6xl leading-[1] tracking-tight text-fg sm:text-7xl">
                         {{ $slot }}
                     </h1>
                     @if ($subtext)
@@ -51,7 +51,7 @@
         @else
             <div class="hero-enter">
                 <x-ui.eyebrow>{{ $eyebrow }}</x-ui.eyebrow>
-                <h1 class="mt-5 text-balance text-6xl leading-[1] font-black tracking-tight text-fg sm:text-7xl">
+                <h1 class="font-display mt-5 text-balance text-6xl leading-[1] tracking-tight text-fg sm:text-7xl">
                     {{ $slot }}
                 </h1>
                 @if ($subtext)

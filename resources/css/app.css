@@ -4,11 +4,20 @@
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    /* One typeface for the whole site — headings, subheadings, nav and body
-       copy all inherit this from <body>'s font-sans class, so none of them
-       need their own font-family override any more. */
-    --font-sans: 'Zalando Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    /* Two typefaces, matched to the brand cover photo
+       (public/images/SATFYF-Facebook-Cover-1280x474.jpeg): Fredoka (a
+       rounded, friendly geometric sans) is what the photo's own body copy
+       uses, and is now the whole site's default via <body>'s font-sans
+       class — headings, subheadings, nav and body copy all inherit it
+       without their own override. font-display is the tall, condensed,
+       pointed-apex caps font the photo's headline and the logo wordmark
+       itself both use (Bebas Neue) — opt in per element with the
+       `font-display` utility where that same poster-headline treatment is
+       wanted, rather than applying it everywhere (it has no lowercase
+       forms worth using at body-copy size). */
+    --font-sans: 'Fredoka', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-display: 'Bebas Neue', ui-sans-serif, system-ui, sans-serif;
 
     /* Noticeably larger than Tailwind's stock xs–2xl steps. The site runs
        html { font-size: 65% } (see below) so headings read at the right
@@ -33,17 +42,20 @@
     --text-2xl--line-height: 2.625rem;
 
     /*
-     * Red / white / black / brown theme (replaces the earlier seven-colour
-     * brand palette). Red carries the dominant accent role (buttons, links,
-     * hover states, gradient text); brown is the deliberately minor
-     * supporting accent (badges, ambient glow, gradient partner); white/
-     * black live in the structural ink/surface/fg tokens below, not as a
-     * hue token of their own. Every colour token is a WCAG-checked
-     * tint/shade for its specific role (ratios computed against white in
-     * light mode / black in dark mode). Light values live here (the
-     * default); .dark overrides every one of these same custom properties.
-     * Structural tokens (ink/surface/hairline/fg/muted/faint) keep generic,
-     * role-based names since they're roles, not hues.
+     * Indigo / gold / white / black theme (replaces the earlier red/brown
+     * palette), matched directly to the brand cover photo
+     * (public/images/SATFYF-Facebook-Cover-1280x474.jpeg): the deep indigo
+     * background (#2b317b, sampled) carries the dominant accent role
+     * (buttons, links, hover states, gradient text); gold (#f9b413,
+     * sampled — the circle behind the heading) is the supporting accent
+     * (badges, ambient glow, gradient partner); white/black live in the
+     * structural ink/surface/fg tokens below, not as a hue token of their
+     * own. Every colour token is a WCAG-checked tint/shade for its specific
+     * role (ratios computed against white in light mode / black in dark
+     * mode) — ratios noted per token are exact, not estimated. Light values
+     * live here (the default); .dark overrides every one of these same
+     * custom properties. Structural tokens (ink/surface/hairline/fg/muted/
+     * faint) keep generic, role-based names since they're roles, not hues.
      */
     --color-ink: #ffffff;
     --color-ink-raised: #f4f4f2;
@@ -56,54 +68,56 @@
     --color-muted: #45484c;
     --color-faint: #797c80;
 
-    /* Red #B91C1C — ~5.9:1 on white, used as-is for text too. -soft is a
-       brighter fill red (#DC2626, ~4.8:1 for white-on-fill) for
-       buttons/gradients; -deep is a darker shade for decorative use. */
-    --color-primary: #b91c1c;
-    --color-primary-soft: #dc2626;
-    --color-primary-deep: #7f1d1d;
-    --color-primary-rgb: 185 28 28;
+    /* Indigo #2B317B — the cover photo's own background colour, 11.5:1 on
+       white, used as-is for text too. -soft is a brighter, more vivid
+       indigo (#3E47B2, 7.6:1) for buttons/gradients/fills; -deep is a
+       near-black indigo (#191D48, 16:1) for decorative use. */
+    --color-primary: #2b317b;
+    --color-primary-soft: #3e47b2;
+    --color-primary-deep: #191d48;
+    --color-primary-rgb: 43 49 123;
 
-    /* Brown #AD5726 — ~5:1 on white, used as-is for text. -soft is a
-       lighter warm tan for fills, -deep a near-black brown for decorative
-       depth — the "bit of brown" supporting accent (badges, ambient glow,
-       gradient partner), deliberately never the dominant colour. */
-    --color-secondary: #ad5726;
-    --color-secondary-soft: #c97a3e;
-    --color-secondary-deep: #6b3510;
+    /* Gold #8B6304 — a darkened, text-safe shade of the cover photo's
+       bright circle (#F9B413, which is only 1.8:1 on white and unusable as
+       text); 5.4:1 on white. -soft (#D19405) is a vivid amber for
+       decorative fills/gradients; -deep (#634603) a near-black bronze-gold
+       for decorative depth — the "bit of gold" supporting accent (badges,
+       ambient glow, gradient partner), deliberately never the dominant
+       colour. */
+    --color-secondary: #8b6304;
+    --color-secondary-soft: #d19405;
+    --color-secondary-deep: #634603;
 
-    /* Kept as a minor decorative-only shade (ambient glow variation) —
-       not part of the red/white/black/brown palette's three named hues. */
-    --color-tertiary: #7f1d1d;
-    --color-tertiary-deep: #4a1010;
+    /* Kept as a minor decorative-only shade (ambient glow variation),
+       mirroring --color-primary-deep — not part of the palette's two named
+       hues. */
+    --color-tertiary: #191d48;
+    --color-tertiary-deep: #0d0f28;
 
-    /* Red #ED2442 — a distinctly brighter, pinker red than the brand's
-       brick-red primary above, so error states stay visually distinct
-       from ordinary accents even though both read as "red". ~4.3:1 on
-       white, borderline for small text; shaded down for text, kept exact
-       for fills/borders. */
+    /* Red #ED2442 — kept exactly as before. Now that primary is indigo
+       rather than red, this reads as the conventional, unambiguous
+       "error/danger" red without competing with the brand accent at all.
+       ~4.3:1 on white, borderline for small text; shaded down for text,
+       kept exact for fills/borders. */
     --color-danger: #d7122f;
     --color-danger-soft: #ed2442;
 
     /* Unused decorative-only token, kept for any future need — not part
-       of the red/white/black/brown palette. */
+       of the indigo/gold/white/black palette. */
     --color-orange: #a45606;
     --color-orange-soft: #f89e41;
     --color-orange-deep: #783f04;
-
-    --color-brown: #ad5726;
-    --color-brown-deep: #311218;
 
     --color-on-accent: #ffffff;
 
     --shadow-ring: 0 0 0 1px var(--color-hairline);
 
     /* Brand-band gradient used for the hairline that separates one page
-       section from the next — a red-to-brown blend matching the new
-       theme, not the contrast-adjusted text/fill tokens above, since this
-       is a decorative fill rather than text. */
-    --gradient-brand: linear-gradient(90deg, #7f1d1d, #b91c1c, #dc2626, #ad5726);
-    --gradient-brand-vertical: linear-gradient(180deg, #7f1d1d, #b91c1c, #dc2626, #ad5726);
+       section from the next — a deep-indigo-to-gold sweep matching the
+       cover photo, not the contrast-adjusted text/fill tokens above, since
+       this is a decorative fill rather than text. */
+    --gradient-brand: linear-gradient(90deg, #191d48, #2b317b, #3e47b2, #8b6304);
+    --gradient-brand-vertical: linear-gradient(180deg, #191d48, #2b317b, #3e47b2, #8b6304);
 
     /* Motion */
     --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
@@ -113,19 +127,19 @@
        retired (card-hard is now an alias for card-soft), but .press:active
        still references this to collapse a resting shadow to zero size on
        pointer-down, so the token stays defined and on-theme. */
-    --shadow-hard-color: #b91c1c;
+    --shadow-hard-color: #2b317b;
     --shadow-hard-color-alt: var(--color-ink);
 
     /* Soft-style tokens — the site-wide page-background and shadow system
        (see the .card-soft/.badge-soft/.text-gradient-accent utilities
        below, and card-hard's alias to card-soft above). Blurred ambient
-       shadows tinted with the brand red, and a warm off-white page
+       shadows tinted with the brand indigo, and a warm off-white page
        background instead of pure white. */
     --color-cream: #fbf7f1;
     --color-cream-raised: #f3ecdf;
-    --shadow-soft: 0 32px 64px -18px rgb(185 28 28 / 38%);
-    --shadow-soft-sm: 0 16px 32px -12px rgb(185 28 28 / 30%);
-    --gradient-accent: linear-gradient(90deg, #b91c1c, #ad5726);
+    --shadow-soft: 0 32px 64px -18px rgb(43 49 123 / 38%);
+    --shadow-soft-sm: 0 16px 32px -12px rgb(43 49 123 / 30%);
+    --gradient-accent: linear-gradient(90deg, #2b317b, #8b6304);
 }
 
 .dark {
@@ -140,48 +154,49 @@
     --color-muted: #a6a6a6;
     --color-faint: #707070;
 
-    /* Red #B91C1C is too dark for headroom on black; brightened for text,
-       -soft brightened further so it still pops as a button/gradient fill
-       against black. */
-    --color-primary: #ef4444;
-    --color-primary-soft: #f87171;
-    --color-primary-deep: #7f1d1d;
-    --color-primary-rgb: 239 68 68;
+    /* Indigo #2B317B is too dark for headroom on black; brightened for
+       text (#686FCA, 4.7:1), -soft brightened further (#7F85D2, 6.2:1) so
+       it still pops as a button/gradient fill against black. -deep is kept
+       identical to light mode — it's decorative-only, not text, so it
+       doesn't need re-checking against a different background. */
+    --color-primary: #686fca;
+    --color-primary-soft: #7f85d2;
+    --color-primary-deep: #191d48;
+    --color-primary-rgb: 104 111 202;
 
-    /* Brown #AD5726 is borderline on black; brightened for text and fills —
-       the "bit of brown" supporting accent, same restrained role as light
-       mode. */
-    --color-secondary: #d9915a;
-    --color-secondary-soft: #e6a870;
-    --color-secondary-deep: #6b3510;
+    /* Gold #8B6304 is far too dark for black; brightened for text/fills
+       (#DB9B06, 8.7:1). -soft is the cover photo's own bright gold
+       (#F9B413, 11.6:1 on black — used exactly as sampled, no adjustment
+       needed) — the "bit of gold" supporting accent, same restrained role
+       as light mode. -deep kept identical to light mode. */
+    --color-secondary: #db9b06;
+    --color-secondary-soft: #f9b413;
+    --color-secondary-deep: #634603;
 
-    /* Minor decorative-only shade (ambient glow variation), brightened to
-       match the primary red's dark-mode treatment. */
-    --color-tertiary: #b91c1c;
-    --color-tertiary-deep: #7f1d1d;
+    /* Minor decorative-only shade (ambient glow variation) — reuses light
+       mode's primary/primary-deep values, mirroring how this token related
+       to primary before. */
+    --color-tertiary: #2b317b;
+    --color-tertiary-deep: #191d48;
 
     /* Red #ED2442 already reads clearly on black; brightened slightly for
-       a touch more headroom, fills keep the exact brand red — stays
-       distinctly pinker than the brightened brand red above. */
+       a touch more headroom, fills keep the exact brand red. */
     --color-danger: #ef3e59;
     --color-danger-soft: #ed2442;
 
     /* Unused decorative-only token, kept for any future need — not part
-       of the red/white/black/brown palette. */
+       of the indigo/gold/white/black palette. */
     --color-orange: #f4a859;
     --color-orange-soft: #f89e41;
     --color-orange-deep: #783f04;
-
-    --color-brown: #c1612a;
-    --color-brown-deep: #311218;
 
     --color-on-accent: #ffffff;
 
     --color-cream: #151512;
     --color-cream-raised: #1c1c18;
-    --shadow-soft: 0 32px 64px -18px rgb(239 68 68 / 45%);
-    --shadow-soft-sm: 0 16px 32px -12px rgb(239 68 68 / 36%);
-    --gradient-accent: linear-gradient(90deg, #ef4444, #d9915a);
+    --shadow-soft: 0 32px 64px -18px rgb(104 111 202 / 45%);
+    --shadow-soft-sm: 0 16px 32px -12px rgb(104 111 202 / 36%);
+    --gradient-accent: linear-gradient(90deg, #686fca, #db9b06);
 }
 
 @layer base {
@@ -227,14 +242,14 @@
 
 /* Scrollbar in the brand's colours, echoing the section-divider gradient.
    Firefox's `scrollbar-color` has no gradient support, so it falls back to
-   a single brand red rather than trying to approximate the band. */
+   a single brand indigo rather than trying to approximate the band. */
 html {
     /* Scales every rem-based size on the site — type, spacing, radii — down
        together, since Tailwind's whole scale here is rem-based. The type
        and layout scale reads oversized at the stock 16px root; this is one
        lever instead of re-tuning every text-* and spacing utility. */
     font-size: 65%;
-    scrollbar-color: #b91c1c transparent;
+    scrollbar-color: #2b317b transparent;
     scrollbar-width: thin;
 }
 
@@ -586,7 +601,7 @@ html {
     width: 24vw;
     max-height: 18rem;
     max-width: 18rem;
-    background: var(--color-brown);
+    background: var(--color-secondary-deep);
     animation: ambient-drift-c 34s ease-in-out infinite reverse;
 }
 

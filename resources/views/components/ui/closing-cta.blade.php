@@ -34,7 +34,7 @@
         <div @class([
             'flex flex-col items-center gap-6 text-center' => true,
         ])>
-            <h2 class="text-balance text-5xl leading-[1] font-black tracking-tight text-on-accent sm:text-6xl lg:text-7xl">
+            <h2 class="font-display text-balance text-5xl leading-[1] tracking-tight text-on-accent sm:text-6xl lg:text-7xl">
                 {{ $hero['hero_heading'] ?? __('Speak up. Stand out.') }}
                 <span style="color: var(--color-secondary-soft)">{{ $hero['hero_heading_accent'] ?? __('A smoke-free generation.') }}</span>
             </h2>

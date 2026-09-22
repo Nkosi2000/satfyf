@@ -370,7 +370,7 @@
             ></div>
             <x-ui.light-rays class="opacity-70" />
             <div class="relative mx-auto flex w-full max-w-[110rem] flex-col items-center gap-6 text-center">
-                <h2 class="text-balance text-5xl leading-[1] font-black tracking-tight text-on-accent sm:text-6xl lg:text-7xl">
+                <h2 class="font-display text-balance text-5xl leading-[1] tracking-tight text-on-accent sm:text-6xl lg:text-7xl">
                     {{ __('Ready to speak up?') }}
                 </h2>
                 <p class="max-w-xl text-balance text-lg leading-relaxed" style="color: color-mix(in oklab, var(--color-on-accent) 78%, transparent)">
