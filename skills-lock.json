@@ -1009,6 +1009,12 @@
       "skillPath": "design-research/skills/interview-script/SKILL.md",
       "computedHash": "c59c0a9c245d57ad2e4a741ecc3448d16f5f2449ce64ba2cccaf9f4f75e816c8"
     },
+    "iris-development": {
+      "source": "redis/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/iris-development/SKILL.md",
+      "computedHash": "fae14fda1582fcfd3243fd0c927e9e192770658f00b61548c3b29027a0df3701"
+    },
     "iterate-until-verified": {
       "source": "MengTo/Skills",
       "sourceType": "github",
@@ -1362,6 +1368,48 @@
       "sourceType": "github",
       "skillPath": "skills/redesign-skill/SKILL.md",
       "computedHash": "47eced3e960a2c961d3cbee11fa1216264f589344b586a5cbd03967cd6b9c54b"
+    },
+    "redis-clustering": {
+      "source": "redis/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/redis-clustering/SKILL.md",
+      "computedHash": "112d67bc6f29b3aeb69bf66c6eaa2aafbf79d952a55b2e6a218c21045ea2792a"
+    },
+    "redis-connections": {
+      "source": "redis/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/redis-connections/SKILL.md",
+      "computedHash": "76dfa303eb4872e6fef13ca7d248dec6bfe6cafe3d8fb6d22f692cd2bb65bbea"
+    },
+    "redis-core": {
+      "source": "redis/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/redis-core/SKILL.md",
+      "computedHash": "7805229f286490b074aa105bc9650060202e247764f09102b928421789380b63"
+    },
+    "redis-observability": {
+      "source": "redis/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/redis-observability/SKILL.md",
+      "computedHash": "7cb1ae455d4de8a51d5b819811a562140327af71690d3ba965431b056a452bdc"
+    },
+    "redis-search": {
+      "source": "redis/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/redis-search/SKILL.md",
+      "computedHash": "28679562d5d2f2d95beca58ffdf6c65b6def918e16268f8a006bc12361cc8358"
+    },
+    "redis-security": {
+      "source": "redis/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/redis-security/SKILL.md",
+      "computedHash": "77817a4ed95a8e9a5952a2c8ce12f1966f1290161ac7e588e1ec054b6424e316"
+    },
+    "redis-semantic-cache": {
+      "source": "redis/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/redis-semantic-cache/SKILL.md",
+      "computedHash": "992f555623118b93f2c7ff951830962cb64424b53611f89b8a44ff0904e477fd"
     },
     "research-repository": {
       "source": "Owl-Listener/designer-skills",
