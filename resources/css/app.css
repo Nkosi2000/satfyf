@@ -282,6 +282,61 @@ html {
     border-top: 1px solid var(--color-hairline);
 }
 
+/* Editorial index grid for the articles listing — a single stacked column
+   with a hairline rule between each story on small screens, opening into a
+   3-column grid at lg where the rules become a lattice (vertical between
+   columns, horizontal between rows) instead of every story sitting in its
+   own bordered/shadowed card. */
+@utility magazine-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.magazine-grid > * {
+    padding-block: 2.5rem;
+}
+
+.magazine-grid > *:first-child {
+    padding-top: 0;
+}
+
+.magazine-grid > *:not(:first-child) {
+    border-top: 1px solid var(--color-hairline);
+}
+
+@media (min-width: 64rem) {
+    .magazine-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        column-gap: 3.5rem;
+    }
+
+    .magazine-grid > * {
+        border-top: 0;
+        padding-inline: 3.5rem;
+    }
+
+    .magazine-grid > *:nth-child(3n+1) {
+        padding-inline-start: 0;
+    }
+
+    .magazine-grid > *:nth-child(3n) {
+        padding-inline-end: 0;
+    }
+
+    .magazine-grid > *:not(:nth-child(3n+1)) {
+        border-left: 1px solid var(--color-hairline);
+    }
+
+    .magazine-grid > *:nth-child(n+4) {
+        border-top: 1px solid var(--color-hairline);
+        padding-top: 2.5rem;
+    }
+
+    .magazine-grid > *:nth-child(-n+3) {
+        padding-top: 0;
+    }
+}
+
 /* Full-bleed colour-block sections — the poster rhythm that breaks up the
    page instead of one continuous white scroll. block-primary is an exact
    brand green, unaffected by theme, so it reads the same in light and dark.

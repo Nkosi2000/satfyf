@@ -21,17 +21,17 @@
     </x-ui.page-hero>
 
     <x-ui.section class="hairline-t" width="wide">
-        <div class="reveal-stagger grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="magazine-grid reveal-stagger">
             @foreach ($articles as $article)
                 <a href="{{ route('articles.show', $article) }}" class="group block">
-                    <div class="aspect-[16/10] overflow-hidden rounded-2xl border border-hairline bg-surface transition-transform duration-200 ease-out-strong group-hover:-translate-y-1" style="box-shadow: var(--shadow-soft-sm)">
+                    <div class="aspect-[16/10] overflow-hidden rounded-xl bg-surface-2">
                         @if ($article->cover_image_path)
                             <img src="{{ storage_url($article->cover_image_path) }}" alt="" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
                         @endif
                     </div>
-                    <p class="mt-4 text-xs font-bold text-faint uppercase">{{ $article->published_at->translatedFormat('d M Y') }}</p>
-                    <p class="mt-2 font-black text-fg group-hover:text-primary-soft">{{ $article->title }}</p>
-                    <p class="mt-1 text-sm text-muted">{{ $article->excerpt }}</p>
+                    <p class="mt-5 text-xs font-bold text-faint uppercase">{{ $article->published_at->translatedFormat('d M Y') }}</p>
+                    <p class="mt-2 text-xl leading-snug font-black text-fg group-hover:text-primary-soft">{{ $article->title }}</p>
+                    <p class="mt-2 text-sm leading-relaxed text-muted">{{ $article->excerpt }}</p>
                 </a>
             @endforeach
         </div>
