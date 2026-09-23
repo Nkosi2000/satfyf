@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ResourceRequest;
 use App\Models\Resource;
+use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -14,6 +15,7 @@ class ResourceController extends Controller
     public function index(): View
     {
         return view('admin.resources.index', [
+            'pageSettings' => SiteSetting::query()->where('group', 'resources_page')->orderBy('key')->get(),
             'resources' => Resource::query()->latest()->paginate(20),
         ]);
     }

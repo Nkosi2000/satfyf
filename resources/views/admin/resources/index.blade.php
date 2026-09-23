@@ -1,4 +1,6 @@
 <x-admin.layout title="Resources">
+    <x-admin.page-header-panel page="resources-page" :settings="$pageSettings" />
+
     <div class="flex items-center justify-between">
         <p class="text-sm text-muted">{{ $resources->total() }} resources</p>
         <x-ui.button href="{{ route('admin.resources.create') }}" size="sm">Upload resource</x-ui.button>

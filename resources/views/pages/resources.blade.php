@@ -1,6 +1,6 @@
-<x-layouts.app :title="__('Resources')">
-    <x-ui.page-hero :eyebrow="__('Resources')" :subtext="__('Fact sheets, toolkits and reports — free to download and share.')">
-        {{ __('Facts you can hand someone.') }}
+<x-layouts.app :title="$content['resources_page_hero_eyebrow'] ?? __('Resources')">
+    <x-ui.page-hero :eyebrow="$content['resources_page_hero_eyebrow'] ?? __('Resources')" :subtext="$content['resources_page_hero_subtext'] ?? __('Fact sheets, toolkits and reports — free to download and share.')">
+        {{ $content['resources_page_hero_heading'] ?? __('Facts you can hand someone.') }}
 
         <x-slot:image>
             <x-ui.brand-hero-image />

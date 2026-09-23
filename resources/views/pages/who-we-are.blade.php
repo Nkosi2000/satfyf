@@ -1,6 +1,6 @@
-<x-layouts.app :title="__('Who We Are')">
-    <x-ui.page-hero :eyebrow="__('Who We Are')" :subtext="$mission['mission_statement'] ?? null">
-        {{ __('Youth voices, not youth audiences.') }}
+<x-layouts.app :title="$content['who_we_are_hero_eyebrow'] ?? __('Who We Are')">
+    <x-ui.page-hero :eyebrow="$content['who_we_are_hero_eyebrow'] ?? __('Who We Are')" :subtext="$mission['mission_statement'] ?? null">
+        {{ $content['who_we_are_hero_heading'] ?? __('Youth voices, not youth audiences.') }}
 
         <x-slot:image>
             <img
@@ -21,7 +21,7 @@
     @endif
 
     <x-ui.section class="hairline-t" width="wide">
-        <x-ui.section-header :eyebrow="__('Vision 2030')">{{ __('By 2030, we want to see.') }}</x-ui.section-header>
+        <x-ui.section-header :eyebrow="$content['who_we_are_vision_eyebrow'] ?? __('Vision 2030')">{{ $content['who_we_are_vision_heading'] ?? __('By 2030, we want to see.') }}</x-ui.section-header>
         <div class="reveal-stagger mt-8 grid gap-4 sm:grid-cols-3">
             <x-ui.card>{{ $mission['vision_2030_1'] ?? '' }}</x-ui.card>
             <x-ui.card>{{ $mission['vision_2030_2'] ?? '' }}</x-ui.card>
@@ -29,13 +29,15 @@
         </div>
     </x-ui.section>
 
-    @if ($chaptersIntro)
+    @if (! empty($youthChapters['youth_chapters_intro']))
         <x-ui.section class="hairline-t" width="wide">
-            <x-ui.section-header :eyebrow="__('Youth Chapters')">{{ __('Active across the country.') }}</x-ui.section-header>
-            <p class="mt-4 max-w-2xl text-balance text-lg leading-relaxed text-muted">{{ $chaptersIntro }}</p>
+            <x-ui.section-header :eyebrow="$youthChapters['youth_chapters_eyebrow'] ?? __('Youth Chapters')">{{ $youthChapters['youth_chapters_heading'] ?? __('Active across the country.') }}</x-ui.section-header>
+            <p class="mt-4 max-w-2xl text-balance text-lg leading-relaxed text-muted">{{ $youthChapters['youth_chapters_intro'] }}</p>
             <div class="reveal-stagger mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                @foreach ([__('KwaZulu-Natal'), __('Western Cape'), __('Gauteng'), __('Limpopo')] as $province)
-                    <x-ui.card class="text-center font-black text-fg">{{ $province }}</x-ui.card>
+                @foreach ([1, 2, 3, 4] as $i)
+                    @if (! empty($youthChapters['youth_chapters_province_'.$i]))
+                        <x-ui.card class="text-center font-black text-fg">{{ $youthChapters['youth_chapters_province_'.$i] }}</x-ui.card>
+                    @endif
                 @endforeach
             </div>
         </x-ui.section>
@@ -43,8 +45,8 @@
 
     @if ($team->isNotEmpty())
         <x-ui.section class="hairline-t" width="wide">
-            <x-ui.section-header :eyebrow="__('The Team')">{{ __('People behind the forum.') }}</x-ui.section-header>
-            <p class="mt-4 max-w-2xl text-balance text-lg leading-relaxed text-muted sm:text-xl">{{ __('A small, youth-led core team coordinates chapters and campaigns across the country, backed by volunteers, mentors and partner organisations who help run every Think Session, Imbizo and demonstration on the ground.') }}</p>
+            <x-ui.section-header :eyebrow="$content['who_we_are_team_eyebrow'] ?? __('The Team')">{{ $content['who_we_are_team_heading'] ?? __('People behind the forum.') }}</x-ui.section-header>
+            <p class="mt-4 max-w-2xl text-balance text-lg leading-relaxed text-muted sm:text-xl">{{ $content['who_we_are_team_body'] ?? __('A small, youth-led core team coordinates chapters and campaigns across the country, backed by volunteers, mentors and partner organisations who help run every Think Session, Imbizo and demonstration on the ground.') }}</p>
             <div class="reveal-stagger mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($team as $member)
                     <div>

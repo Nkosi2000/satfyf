@@ -12,9 +12,10 @@ class WhoWeAreController extends Controller
     {
         return view('pages.who-we-are', [
             'mission' => SiteSetting::group('mission'),
+            'content' => SiteSetting::group('who_we_are'),
             'team' => TeamMember::publishedOrdered(),
             'championsNetwork' => SiteSetting::group('champions_network'),
-            'chaptersIntro' => SiteSetting::get('chapters_intro'),
+            'youthChapters' => SiteSetting::group('youth_chapters'),
         ]);
     }
 }

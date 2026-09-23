@@ -1,4 +1,6 @@
 <x-admin.layout title="Partners">
+    <x-admin.page-header-panel page="partners-page" :settings="$pageSettings" />
+
     <div class="flex items-center justify-between">
         <p class="text-sm text-muted">{{ $partners->total() }} partners</p>
         <x-ui.button href="{{ route('admin.partners.create') }}" size="sm">Add partner</x-ui.button>

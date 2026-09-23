@@ -1,63 +1,40 @@
 <?php
 
-namespace Database\Seeders;
-
 use App\Models\SiteSetting;
-use Illuminate\Database\Seeder;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
-class SiteSettingSeeder extends Seeder
+return new class extends Migration
 {
     /**
-     * Run the database seeds.
+     * firstOrCreate() wraps its insert in a SAVEPOINT (Laravel's
+     * race-safe createOrFirst()). Neon's pooled (PgBouncer
+     * transaction-mode) connection doesn't reliably support a SAVEPOINT
+     * nested inside the migration runner's own transaction — see
+     * .ai/rules/general.md and 2026_09_11_172613_make_site_settings_translatable.
+     * Disabling the wrapping transaction here makes each firstOrCreate()
+     * call its own top-level (real) transaction instead of a nested one.
      */
-    public function run(): void
+    public $withinTransaction = false;
+
+    /**
+     * Run the migrations.
+     *
+     * Finishes converting every remaining hardcoded page (Why We Exist,
+     * Get Involved, Who We Are's team/vision blocks, Contact, What We Do,
+     * Privacy, plus the Articles/Events/Gallery/Partners/Resources page
+     * heroes) into admin-editable SiteSetting rows, and moves
+     * `trusted_by_heading` out of the `partners` group into its own
+     * `trusted_by` group so `partners` belongs solely to the Partners page.
+     *
+     * Every key is prefixed with its page/group name even where a bare
+     * name (e.g. "hero_eyebrow") would otherwise read fine — `key` carries
+     * a *global* unique constraint (not scoped per group), so two groups
+     * can never share a bare key name without colliding.
+     */
+    public function up(): void
     {
         $settings = [
-            'hero' => [
-                'hero_eyebrow' => 'South African Tobacco-Free Youth Forum',
-                'hero_heading' => 'Speak up. Stand out.',
-                'hero_heading_accent' => 'A smoke-free generation.',
-                'hero_subtext' => 'We are the youth voices championing and fighting against the harsh and dangerous realities of tobacco, substance and drug abuse amongst young people.',
-                'hero_closing_subtext' => 'No membership fee. Open to every school and community.',
-            ],
-            'mission' => [
-                'mission_tagline' => 'We speak and spread the truth about smoking.',
-                'mission_statement' => 'Youth voices championing & fighting against the harsh and dangerous realities of tobacco, as well as substance & drug abuse amongst young people.',
-                'org_motto' => '',
-                'vision_2030_1' => 'Young people reject smoking in social settings.',
-                'vision_2030_1_icon' => 'users',
-                'vision_2030_2' => 'Every educational institution is smoke-free.',
-                'vision_2030_2_icon' => 'book',
-                'vision_2030_3' => 'Youth confidently decline every tobacco offer.',
-                'vision_2030_3_icon' => 'shield',
-            ],
-            'contact' => [
-                'contact_hero_eyebrow' => 'Contact Us',
-                'contact_hero_heading' => "Let's talk.",
-                'contact_hero_subtext' => 'Questions about starting a chapter, media enquiries, partnership ideas, or just something on your mind — reach us directly, or send a message below.',
-                'contact_intro_body' => "We're a small, youth-led team, so a real person reads every message — expect a reply within a few working days.",
-                'contact_address' => 'Corporate Park 66, 66 Von Willich Ave, Die Hoewes, Centurion, Pretoria, South Africa 0163',
-                'contact_phone_office' => '012-440-1325',
-                'contact_phone_mobile' => '064-503-4334',
-                'contact_email' => 'info@satfyf.org.za',
-            ],
-            'social' => [
-                'social_facebook' => 'https://facebook.com/SATFYF2030',
-                'social_instagram' => 'https://instagram.com/satfyf2030',
-                'social_twitter' => 'https://twitter.com/satfyf2030',
-                'social_youtube' => 'https://youtube.com/@satfyf2030',
-            ],
-            'footer' => [
-                'footer_tagline' => 'A smoke free generation in our lifetime.',
-            ],
-            'trusted_by' => [
-                'trusted_by_heading' => 'Trusted by',
-            ],
-            'partners' => [
-                'partners_hero_eyebrow' => 'Partners & Collaborative',
-                'partners_hero_heading' => "We don't do this alone.",
-                'partners_hero_subtext' => 'Schools, health organisations, government departments and community groups who share the venues, the credibility and the reach it takes to put tobacco-free choices in front of more young people.',
-            ],
             'why_we_exist' => [
                 'why_we_exist_hero_eyebrow' => 'Why We Exist',
                 'why_we_exist_hero_heading' => "Tobacco doesn't market itself to adults.",
@@ -101,7 +78,10 @@ class SiteSettingSeeder extends Seeder
                 'who_we_are_team_heading' => 'People behind the forum.',
                 'who_we_are_team_body' => 'A small, youth-led core team coordinates chapters and campaigns across the country, backed by volunteers, mentors and partner organisations who help run every Think Session, Imbizo and demonstration on the ground.',
             ],
-            // Left empty on purpose — see the matching migration note.
+            // Left empty on purpose: this whole section is gated behind
+            // "intro" being non-empty (see who-we-are.blade.php), and it
+            // currently renders nothing — seeding it empty keeps that
+            // behaviour and just makes it appear in admin ready to fill in.
             'youth_chapters' => [
                 'youth_chapters_eyebrow' => '',
                 'youth_chapters_heading' => '',
@@ -111,11 +91,19 @@ class SiteSettingSeeder extends Seeder
                 'youth_chapters_province_3' => '',
                 'youth_chapters_province_4' => '',
             ],
+            // Left empty on purpose: same dead-hook situation, gated behind
+            // champions_network_heading being non-empty.
             'champions_network' => [
                 'champions_network_heading' => '',
                 'champions_network_body' => '',
                 'champions_network_cta_label' => '',
                 'champions_network_cta_url' => '',
+            ],
+            'contact' => [
+                'contact_hero_eyebrow' => 'Contact Us',
+                'contact_hero_heading' => "Let's talk.",
+                'contact_hero_subtext' => 'Questions about starting a chapter, media enquiries, partnership ideas, or just something on your mind — reach us directly, or send a message below.',
+                'contact_intro_body' => "We're a small, youth-led team, so a real person reads every message — expect a reply within a few working days.",
             ],
             'what_we_do' => [
                 'what_we_do_hero_eyebrow' => 'What We Do',
@@ -161,87 +149,78 @@ class SiteSettingSeeder extends Seeder
                 'resources_page_hero_heading' => 'Facts you can hand someone.',
                 'resources_page_hero_subtext' => 'Fact sheets, toolkits and reports — free to download and share.',
             ],
-            'closing_cta' => [
-                'closing_cta_heading' => 'Ready to speak up?',
-                'closing_cta_body' => 'There is no membership fee, and no single way in. Start a Think Session, become a Youth Ambassador, or just tell us what you\'d like to do.',
-            ],
-            'why_it_matters' => [
-                'why_it_matters_eyebrow' => [
-                    'en' => 'Why It Matters',
-                    'zu' => 'Kungani Kubalulekile',
-                    'af' => 'Waarom Dit Saak Maak',
-                    'st' => 'Hobaneng ho Bohlokwa',
-                ],
-                'why_it_matters_heading' => [
-                    'en' => 'More than awareness.',
-                    'zu' => 'Okungaphezu kokuqwashisa.',
-                    'af' => 'Meer as net bewustheid.',
-                    'st' => 'Ho feta tlhokomeliso feela.',
-                ],
-                'why_it_matters_tab_1' => [
-                    'en' => 'Youth-led',
-                    'zu' => 'Eholwa Yintsha',
-                    'af' => 'Jeuggelei',
-                    'st' => 'E etelletsweng pele ke bacha',
-                ],
-                'why_it_matters_tab_1_body' => [
-                    'en' => 'Every campaign, think session and demonstration is planned and led by young people themselves, not adults speaking on their behalf.',
-                    'zu' => 'Wonke umkhankaso, iseshini yokucabanga kanye nomashi kuhlelwa futhi kuholwa yintsha uqobo — hhayi abadala abakhuluma egameni layo.',
-                    'af' => 'Elke veldtog, denksessie en betoging word deur jong mense self beplan en gelei — nie deur volwassenes wat namens hulle praat nie.',
-                    'st' => 'Leeto le leng le le leng, potjhiso ya menahano le pontsho di rerwa le ho etellwa pele ke bacha ka bobona — eseng baholo ba buang bakeng sa bona.',
-                ],
-                'why_it_matters_tab_2' => [
-                    'en' => 'Evidence-based',
-                    'zu' => 'Okusekelwe Kobufakazi',
-                    'af' => 'Bewysgebaseer',
-                    'st' => 'E theilweng hodima bopaki',
-                ],
-                'why_it_matters_tab_2_body' => [
-                    'en' => 'Our messaging is grounded in real research on tobacco harm, nicotine addiction and youth marketing tactics, not scare tactics.',
-                    'zu' => 'Umlayezo wethu usekelwe ocwaningweni lwangempela ngengozi kagwayi, ukulutha kwe-nicotine kanye namasu okukhangisa entsheni — hhayi amasu okwesabisa.',
-                    'af' => 'Ons boodskap is gegrond op werklike navorsing oor tabakskade, nikotienverslawing en jeugbemarkingstaktieke — nie skrikmaaktaktieke nie.',
-                    'st' => 'Molaetsa wa rona o theilwe dipatlisisong tsa nnete mabapi le kotsi ya tobacco, boitlami ba nicotine le maano a papatso ho bacha — eseng maano a ho tshosa.',
-                ],
-                'why_it_matters_tab_3' => [
-                    'en' => 'Community-rooted',
-                    'zu' => 'Egxile emphakathini',
-                    'af' => 'Gemeenskapsgewortel',
-                    'st' => 'E metseng setjhabeng',
-                ],
-                'why_it_matters_tab_3_body' => [
-                    'en' => 'Community Imbizos bring parents, teachers and local leaders into the conversation, because tobacco-free choices are made together.',
-                    'zu' => 'Ama-Imbizo omphakathi aletha abazali, othisha kanye nabaholi bendawo engxoxweni, ngoba izinqumo zokungabhemi zenziwa ndawonye.',
-                    'af' => 'Gemeenskap-Imbizos bring ouers, onderwysers en plaaslike leiers by die gesprek, want rookvrye keuses word saam gemaak.',
-                    'st' => 'Diimbizo tsa setjhaba di kenya batswadi, matitjhere le baeta-pele ba lehae puisanong, hobane diqeto tse se nang tobacco di etswa mmoho.',
-                ],
-                'why_it_matters_tab_4' => [
-                    'en' => 'Free to join',
-                    'zu' => 'Mahhala ukujoyina',
-                    'af' => 'Gratis om aan te sluit',
-                    'st' => 'Ho kena ha ho lefe',
-                ],
-                'why_it_matters_tab_4_body' => [
-                    'en' => 'There is no membership fee. Any young person, school or community group can join a Think Session or start a chapter.',
-                    'zu' => 'Ayikho imali yobulungu. Noma imuphi umuntu osemusha, isikole noma iqembu lomphakathi lingajoyina Iseshini Yokucabanga noma liqale isigaba.',
-                    'af' => 'Daar is geen lidmaatskapfooi nie. Enige jong persoon, skool of gemeenskapsgroep kan by \'n Denksessie aansluit of \'n tak begin.',
-                    'st' => 'Ha ho tefo ya boitokiso. Motho ofe kapa ofe e motjha, sekolo kapa sehlopha sa setjhaba se ka kena Potjhisong ya Menahano kapa sa qala lekala.',
-                ],
+            'partners' => [
+                'partners_hero_eyebrow' => 'Partners & Collaborative',
+                'partners_hero_heading' => "We don't do this alone.",
+                'partners_hero_subtext' => 'Schools, health organisations, government departments and community groups who share the venues, the credibility and the reach it takes to put tobacco-free choices in front of more young people.',
             ],
         ];
 
         foreach ($settings as $group => $pairs) {
             foreach ($pairs as $key => $value) {
-                if ($value === '') {
-                    $encoded = null;
-                } else {
-                    $encoded = json_encode(is_array($value) ? $value : ['en' => $value]);
-                }
-
-                SiteSetting::query()->updateOrCreate(
+                SiteSetting::query()->firstOrCreate(
                     ['key' => $key],
-                    ['group' => $group, 'value' => $encoded],
+                    ['group' => $group, 'value' => $value === '' ? null : json_encode(['en' => $value])],
                 );
             }
         }
+
+        // mission.org_motto: same dead-hook situation as youth_chapters/
+        // champions_network above — gated behind being non-empty, left
+        // empty so the quote block stays hidden until an admin fills it in.
+        SiteSetting::query()->firstOrCreate(
+            ['key' => 'org_motto'],
+            ['group' => 'mission', 'value' => null],
+        );
+
+        // hero.hero_closing_subtext: the shared x-ui.closing-cta component
+        // (Who We Are, What We Do) had its subtext hardcoded even though
+        // its heading already reads from this same `hero` group.
+        SiteSetting::query()->firstOrCreate(
+            ['key' => 'hero_closing_subtext'],
+            ['group' => 'hero', 'value' => json_encode(['en' => 'No membership fee. Open to every school and community.'])],
+        );
+
+        // trusted_by_heading is used on the Home page's partner marquee,
+        // not the Partners page — move it out of `partners` so that group
+        // belongs solely to the Partners page's own content.
+        DB::table('site_settings')->where('key', 'trusted_by_heading')->update(['group' => 'trusted_by']);
+
+        SiteSetting::forgetCache();
     }
-}
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        DB::table('site_settings')->where('key', 'trusted_by_heading')->update(['group' => 'partners']);
+
+        SiteSetting::query()->whereIn('group', [
+            'why_we_exist',
+            'get_involved',
+            'who_we_are',
+            'youth_chapters',
+            'champions_network',
+            'what_we_do',
+            'privacy',
+            'articles_page',
+            'events_page',
+            'gallery_page',
+            'resources_page',
+        ])->delete();
+
+        SiteSetting::query()->where('group', 'contact')->whereIn('key', [
+            'contact_hero_eyebrow', 'contact_hero_heading', 'contact_hero_subtext', 'contact_intro_body',
+        ])->delete();
+
+        SiteSetting::query()->where('group', 'partners')->whereIn('key', [
+            'partners_hero_eyebrow', 'partners_hero_heading', 'partners_hero_subtext',
+        ])->delete();
+
+        SiteSetting::query()->where('key', 'org_motto')->delete();
+        SiteSetting::query()->where('key', 'hero_closing_subtext')->delete();
+
+        SiteSetting::forgetCache();
+    }
+};

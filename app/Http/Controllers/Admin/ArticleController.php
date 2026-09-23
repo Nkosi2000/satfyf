@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ArticleRequest;
 use App\Models\Article;
+use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -14,6 +15,7 @@ class ArticleController extends Controller
     public function index(): View
     {
         return view('admin.articles.index', [
+            'pageSettings' => SiteSetting::query()->where('group', 'articles_page')->orderBy('key')->get(),
             'articles' => Article::query()->latest('published_at')->paginate(20),
         ]);
     }

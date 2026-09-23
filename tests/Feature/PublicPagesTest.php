@@ -154,7 +154,7 @@ it('reflects an admin edit to the Trusted By heading on the home page', function
 
     SiteSetting::query()->updateOrCreate(
         ['key' => 'trusted_by_heading'],
-        ['group' => 'partners', 'value' => json_encode(['en' => 'Custom Trusted Heading'])],
+        ['group' => 'trusted_by', 'value' => json_encode(['en' => 'Custom Trusted Heading'])],
     );
 
     $this->get('/')

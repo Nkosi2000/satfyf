@@ -1,6 +1,6 @@
-<x-layouts.app :title="__('Partners & Collaborative')">
-    <x-ui.page-hero :eyebrow="__('Partners & Collaborative')" :subtext="__('Schools, health organisations, government departments and community groups who share the venues, the credibility and the reach it takes to put tobacco-free choices in front of more young people.')">
-        {{ __("We don't do this alone.") }}
+<x-layouts.app :title="$partnerSettings['partners_hero_eyebrow'] ?? __('Partners & Collaborative')">
+    <x-ui.page-hero :eyebrow="$partnerSettings['partners_hero_eyebrow'] ?? __('Partners & Collaborative')" :subtext="$partnerSettings['partners_hero_subtext'] ?? __('Schools, health organisations, government departments and community groups who share the venues, the credibility and the reach it takes to put tobacco-free choices in front of more young people.')">
+        {{ $partnerSettings['partners_hero_heading'] ?? __("We don't do this alone.") }}
 
         <x-slot:image>
             <x-ui.brand-hero-image />

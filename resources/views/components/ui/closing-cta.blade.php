@@ -39,7 +39,7 @@
                 <span style="color: var(--color-secondary-soft)">{{ $hero['hero_heading_accent'] ?? __('A smoke-free generation.') }}</span>
             </h2>
             <p class="max-w-xl text-balance text-lg leading-relaxed" style="color: color-mix(in oklab, var(--color-on-accent) 78%, transparent)">
-                {{ __('No membership fee. Open to every school and community.') }}
+                {{ $hero['hero_closing_subtext'] ?? __('No membership fee. Open to every school and community.') }}
             </p>
             <x-ui.button href="{{ route('get-involved') }}" variant="invert" size="lg" class="mt-2" magnetic>{{ __('Get Involved') }}</x-ui.button>
         </div>

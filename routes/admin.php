@@ -65,8 +65,8 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::get('newsletter-subscribers/export', [NewsletterSubscriberController::class, 'export'])->name('newsletter-subscribers.export');
         Route::delete('newsletter-subscribers/{newsletterSubscriber}', [NewsletterSubscriberController::class, 'destroy'])->name('newsletter-subscribers.destroy');
 
-        Route::get('settings', [SiteSettingController::class, 'edit'])->name('settings.edit');
-        Route::put('settings', [SiteSettingController::class, 'update'])->name('settings.update');
+        Route::get('settings/{page}', [SiteSettingController::class, 'edit'])->name('settings.edit');
+        Route::put('settings/{page}', [SiteSettingController::class, 'update'])->name('settings.update');
 
         Route::get('account', [AccountController::class, 'edit'])->name('account.edit');
         Route::put('account/password', [AccountController::class, 'updatePassword'])->name('account.password.update');

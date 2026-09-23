@@ -1,4 +1,6 @@
 <x-admin.layout title="Articles">
+    <x-admin.page-header-panel page="articles-page" :settings="$pageSettings" />
+
     <div class="flex items-center justify-between">
         <p class="text-sm text-muted">{{ $articles->total() }} articles</p>
         <x-ui.button href="{{ route('admin.articles.create') }}" size="sm">Write article</x-ui.button>

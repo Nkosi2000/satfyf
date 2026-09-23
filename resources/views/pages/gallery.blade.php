@@ -1,6 +1,6 @@
-<x-layouts.app :title="__('Gallery')">
-    <x-ui.page-hero :eyebrow="__('Gallery')" :subtext="__('Think sessions, school visits, public demonstrations and Community Imbizos — a running record of where young people are showing up and speaking out.')">
-        {{ __('SATFYF, in the field.') }}
+<x-layouts.app :title="$content['gallery_page_hero_eyebrow'] ?? __('Gallery')">
+    <x-ui.page-hero :eyebrow="$content['gallery_page_hero_eyebrow'] ?? __('Gallery')" :subtext="$content['gallery_page_hero_subtext'] ?? __('Think sessions, school visits, public demonstrations and Community Imbizos — a running record of where young people are showing up and speaking out.')">
+        {{ $content['gallery_page_hero_heading'] ?? __('SATFYF, in the field.') }}
 
         <x-slot:image>
             @if ($images->isNotEmpty())

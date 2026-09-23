@@ -1,6 +1,6 @@
-<x-layouts.app :title="__('Get Involved')">
-    <x-ui.page-hero :eyebrow="__('Get Involved')" :subtext="__('There\'s no membership fee, and no single way in. Pick what fits.')">
-        {{ __('Help achieve a culture where young people reject tobacco.') }}
+<x-layouts.app :title="$getInvolved['get_involved_hero_eyebrow'] ?? __('Get Involved')">
+    <x-ui.page-hero :eyebrow="$getInvolved['get_involved_hero_eyebrow'] ?? __('Get Involved')" :subtext="$getInvolved['get_involved_hero_subtext'] ?? __('There\'s no membership fee, and no single way in. Pick what fits.')">
+        {{ $getInvolved['get_involved_hero_heading'] ?? __('Help achieve a culture where young people reject tobacco.') }}
 
         <x-slot:image>
             <x-ui.brand-hero-image />
@@ -27,16 +27,16 @@
     @endif
 
     <x-ui.section class="hairline-t" width="wide">
-        <x-ui.section-header :eyebrow="__('Ways In')">{{ __('Four ways to get involved.') }}</x-ui.section-header>
+        <x-ui.section-header :eyebrow="$getInvolved['get_involved_ways_eyebrow'] ?? __('Ways In')">{{ $getInvolved['get_involved_ways_heading'] ?? __('Four ways to get involved.') }}</x-ui.section-header>
 
         <div class="reveal-stagger mt-10 grid gap-6 sm:grid-cols-2">
             @php
-                $ways = [
-                    ['title' => __('Start a Think Session'), 'body' => __('Bring a facilitated conversation about tobacco and substance abuse to your school or youth group.')],
-                    ['title' => __('Become a Youth Ambassador'), 'body' => __('Get trained to run campaigns, speak at events and lead in your own community.')],
-                    ['title' => __('Host a Community Imbizo'), 'body' => __('Bring parents, teachers and local leaders together for an honest conversation.')],
-                    ['title' => __('Partner with SATFYF'), 'body' => __('Organisations and donors — see how a partnership could work.')],
-                ];
+                $ways = collect([1, 2, 3, 4])
+                    ->map(fn ($i) => [
+                        'title' => $getInvolved['get_involved_way_'.$i.'_title'] ?? '',
+                        'body' => $getInvolved['get_involved_way_'.$i.'_body'] ?? '',
+                    ])
+                    ->filter(fn ($way) => $way['title'] !== '');
             @endphp
             @foreach ($ways as $way)
                 <x-ui.card class="flex flex-col">
@@ -51,13 +51,13 @@
     </x-ui.section>
 
     <x-ui.section id="contact-form" class="hairline-t" width="wide">
-        <x-ui.section-header :eyebrow="__('Reach Out')">{{ __("Tell us what you'd like to do.") }}</x-ui.section-header>
+        <x-ui.section-header :eyebrow="$getInvolved['get_involved_reach_eyebrow'] ?? __('Reach Out')">{{ $getInvolved['get_involved_reach_heading'] ?? __("Tell us what you'd like to do.") }}</x-ui.section-header>
         <x-contact-form :subject="request()->query('interest', 'Getting involved')" class="mt-8" />
     </x-ui.section>
 
     @if ($faqs->isNotEmpty())
         <x-ui.section class="hairline-t" width="wide">
-            <x-ui.section-header>{{ __('Questions.') }}</x-ui.section-header>
+            <x-ui.section-header>{{ $getInvolved['get_involved_questions_heading'] ?? __('Questions.') }}</x-ui.section-header>
             <x-ui.accordion class="reveal-stagger mt-8">
                 @foreach ($faqs as $faq)
                     <x-ui.accordion-item :question="$faq->question">{{ $faq->answer }}</x-ui.accordion-item>

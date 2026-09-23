@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -11,6 +12,7 @@ class ArticleController extends Controller
     public function index(): View
     {
         return view('pages.articles.index', [
+            'content' => SiteSetting::group('articles_page'),
             'articles' => Article::query()->published()->latest('published_at')->paginate(9),
         ]);
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\EventItemRequest;
 use App\Models\EventItem;
+use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -14,6 +15,7 @@ class EventItemController extends Controller
     public function index(): View
     {
         return view('admin.events.index', [
+            'pageSettings' => SiteSetting::query()->where('group', 'events_page')->orderBy('key')->get(),
             'events' => EventItem::query()->latest('starts_at')->paginate(20),
         ]);
     }

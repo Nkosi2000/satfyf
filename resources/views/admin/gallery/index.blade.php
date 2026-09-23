@@ -1,4 +1,6 @@
 <x-admin.layout title="Gallery">
+    <x-admin.page-header-panel page="gallery-page" :settings="$pageSettings" />
+
     <div class="flex items-center justify-between">
         <p class="text-sm text-muted">{{ $images->total() }} images</p>
         <x-ui.button href="{{ route('admin.gallery-images.create') }}" size="sm">Add image</x-ui.button>

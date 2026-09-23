@@ -1,4 +1,6 @@
 <x-admin.layout title="Events">
+    <x-admin.page-header-panel page="events-page" :settings="$pageSettings" />
+
     <div class="flex items-center justify-between">
         <p class="text-sm text-muted">{{ $events->total() }} events</p>
         <x-ui.button href="{{ route('admin.events.create') }}" size="sm">Add event</x-ui.button>

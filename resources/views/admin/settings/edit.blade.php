@@ -1,5 +1,5 @@
-<x-admin.layout title="Site settings">
-    <form method="POST" action="{{ route('admin.settings.update') }}" class="max-w-4xl space-y-6">
+<x-admin.layout :title="$pageTitle">
+    <form method="POST" action="{{ route('admin.settings.update', ['page' => $page]) }}" class="max-w-6xl space-y-6">
         @csrf
         @method('PUT')
 
@@ -18,9 +18,9 @@
 
         @foreach ($settings as $group => $items)
             <div class="rounded-xl border border-hairline-strong bg-surface p-6">
-                <h2 class="font-semibold capitalize">{{ $group }}</h2>
+                <h2 class="font-semibold capitalize">{{ str_replace('_', ' ', $group) }}</h2>
 
-                <div class="mt-4 grid gap-5">
+                <div class="mt-4 grid gap-x-6 gap-y-5 sm:grid-cols-2">
                     @foreach ($items as $setting)
                         @php
                             $translations = $setting->translations();
@@ -42,6 +42,7 @@
                                 :label="\Illuminate\Support\Str::headline($setting->key)"
                                 :type="$longest > 100 ? 'textarea' : 'text'"
                                 :translations="$translations"
+                                :class="$longest > 100 ? 'sm:col-span-2' : null"
                             />
                         @endif
                     @endforeach

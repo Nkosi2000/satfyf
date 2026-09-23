@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\GalleryImageRequest;
 use App\Models\GalleryImage;
+use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -14,6 +15,7 @@ class GalleryImageController extends Controller
     public function index(): View
     {
         return view('admin.gallery.index', [
+            'pageSettings' => SiteSetting::query()->where('group', 'gallery_page')->orderBy('key')->get(),
             'images' => GalleryImage::query()->ordered()->paginate(24),
         ]);
     }

@@ -10,7 +10,7 @@ class WhyWeExistController extends Controller
     public function show(): View
     {
         return view('pages.why-we-exist', [
-            'mission' => SiteSetting::group('mission'),
+            'content' => SiteSetting::group('why_we_exist'),
         ]);
     }
 }

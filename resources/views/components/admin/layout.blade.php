@@ -1,22 +1,49 @@
 @props(['title' => 'Dashboard'])
 
 @php
-    $nav = [
-        ['label' => 'Dashboard', 'route' => 'admin.dashboard'],
-        ['label' => 'Articles', 'route' => 'admin.articles.index'],
-        ['label' => 'Events', 'route' => 'admin.events.index'],
-        ['label' => 'Programmes', 'route' => 'admin.programs.index'],
-        ['label' => 'Team', 'route' => 'admin.team-members.index'],
-        ['label' => 'Testimonials', 'route' => 'admin.testimonials.index'],
-        ['label' => 'Resources', 'route' => 'admin.resources.index'],
-        ['label' => 'Gallery', 'route' => 'admin.gallery-images.index'],
-        ['label' => 'Partners', 'route' => 'admin.partners.index'],
-        ['label' => 'FAQs', 'route' => 'admin.faqs.index'],
-        ['label' => 'Contact submissions', 'route' => 'admin.contact-submissions.index'],
-        ['label' => 'Newsletter subscribers', 'route' => 'admin.newsletter-subscribers.index'],
-        ['label' => 'Site settings', 'route' => 'admin.settings.edit'],
-        ['label' => 'My Account', 'route' => 'admin.account.edit'],
+    // Every settings-page nav item shares the one `admin.settings.edit`
+    // route name (only the `page` route param differs), so a plain
+    // routeIs() check would light up every one of them at once — $isActive
+    // additionally compares the current `page` param for those items.
+    $navSections = [
+        null => [
+            ['label' => 'Dashboard', 'route' => 'admin.dashboard'],
+        ],
+        'Pages' => [
+            ['label' => 'Home', 'route' => 'admin.settings.edit', 'params' => ['page' => 'home']],
+            ['label' => 'Who We Are', 'route' => 'admin.settings.edit', 'params' => ['page' => 'who-we-are']],
+            ['label' => 'Why We Exist', 'route' => 'admin.settings.edit', 'params' => ['page' => 'why-we-exist']],
+            ['label' => 'What We Do', 'route' => 'admin.settings.edit', 'params' => ['page' => 'what-we-do']],
+            ['label' => 'Get Involved', 'route' => 'admin.settings.edit', 'params' => ['page' => 'get-involved']],
+            ['label' => 'Contact', 'route' => 'admin.settings.edit', 'params' => ['page' => 'contact']],
+            ['label' => 'Privacy & Cookies', 'route' => 'admin.settings.edit', 'params' => ['page' => 'privacy']],
+        ],
+        'Content' => [
+            ['label' => 'Articles', 'route' => 'admin.articles.index'],
+            ['label' => 'Events', 'route' => 'admin.events.index'],
+            ['label' => 'Programmes', 'route' => 'admin.programs.index'],
+            ['label' => 'Team', 'route' => 'admin.team-members.index'],
+            ['label' => 'Testimonials', 'route' => 'admin.testimonials.index'],
+            ['label' => 'Resources', 'route' => 'admin.resources.index'],
+            ['label' => 'Gallery', 'route' => 'admin.gallery-images.index'],
+            ['label' => 'Partners', 'route' => 'admin.partners.index'],
+            ['label' => 'FAQs', 'route' => 'admin.faqs.index'],
+        ],
+        'Organisation' => [
+            ['label' => 'Mission & Vision', 'route' => 'admin.settings.edit', 'params' => ['page' => 'mission']],
+            ['label' => 'Social Media', 'route' => 'admin.settings.edit', 'params' => ['page' => 'social']],
+            ['label' => 'Footer', 'route' => 'admin.settings.edit', 'params' => ['page' => 'footer']],
+        ],
+        'Admin' => [
+            ['label' => 'Contact submissions', 'route' => 'admin.contact-submissions.index'],
+            ['label' => 'Newsletter subscribers', 'route' => 'admin.newsletter-subscribers.index'],
+            ['label' => 'My Account', 'route' => 'admin.account.edit'],
+        ],
     ];
+
+    $isNavItemActive = fn (array $item): bool => isset($item['params']['page'])
+        ? request()->routeIs($item['route']) && request()->route('page') === $item['params']['page']
+        : request()->routeIs($item['route'].'*');
 @endphp
 
 <!doctype html>
@@ -48,12 +75,19 @@
                 <img src="{{ asset('images/48 x 48.png') }}" alt="SATFYF" class="brand-mark h-9 w-9 rounded-full object-cover" />
                 <span class="text-sm font-semibold text-fg">Admin</span>
             </a>
-            <nav class="flex flex-col gap-0.5 p-3">
-                @foreach ($nav as $item)
-                    <a
-                        href="{{ route($item['route']) }}"
-                        class="rounded-lg px-3 py-2 text-sm font-medium transition-colors {{ request()->routeIs($item['route'].'*') ? 'bg-primary text-on-accent' : 'text-muted hover:bg-surface-2 hover:text-fg' }}"
-                    >{{ $item['label'] }}</a>
+            <nav class="flex flex-col gap-4 overflow-y-auto p-3">
+                @foreach ($navSections as $heading => $items)
+                    <div class="flex flex-col gap-0.5">
+                        @if ($heading)
+                            <p class="px-3 pb-1 text-xs font-bold tracking-wider text-faint uppercase">{{ $heading }}</p>
+                        @endif
+                        @foreach ($items as $item)
+                            <a
+                                href="{{ route($item['route'], $item['params'] ?? []) }}"
+                                class="rounded-lg px-3 py-2 text-sm font-medium transition-colors {{ $isNavItemActive($item) ? 'bg-primary text-on-accent' : 'text-muted hover:bg-surface-2 hover:text-fg' }}"
+                            >{{ $item['label'] }}</a>
+                        @endforeach
+                    </div>
                 @endforeach
             </nav>
         </aside>
@@ -93,13 +127,20 @@
                 data-open="false"
                 class="grid grid-rows-[0fr] border-b border-hairline-strong bg-surface transition-[grid-template-rows] duration-300 ease-out data-[open=true]:grid-rows-[1fr] lg:hidden"
             >
-                <nav class="overflow-hidden">
-                    <div class="flex flex-col gap-1 p-3">
-                        @foreach ($nav as $item)
-                            <a
-                                href="{{ route($item['route']) }}"
-                                class="rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->routeIs($item['route'].'*') ? 'bg-primary text-on-accent' : 'text-muted hover:bg-surface-2 hover:text-fg' }}"
-                            >{{ $item['label'] }}</a>
+                <nav class="max-h-[70vh] overflow-y-auto">
+                    <div class="flex flex-col gap-4 p-3">
+                        @foreach ($navSections as $heading => $items)
+                            <div class="flex flex-col gap-1">
+                                @if ($heading)
+                                    <p class="px-3 pb-1 text-xs font-bold tracking-wider text-faint uppercase">{{ $heading }}</p>
+                                @endif
+                                @foreach ($items as $item)
+                                    <a
+                                        href="{{ route($item['route'], $item['params'] ?? []) }}"
+                                        class="rounded-lg px-3 py-2.5 text-sm font-medium {{ $isNavItemActive($item) ? 'bg-primary text-on-accent' : 'text-muted hover:bg-surface-2 hover:text-fg' }}"
+                                    >{{ $item['label'] }}</a>
+                                @endforeach
+                            </div>
                         @endforeach
                     </div>
                 </nav>

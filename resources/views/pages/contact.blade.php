@@ -1,6 +1,6 @@
-<x-layouts.app :title="__('Contact Us')">
-    <x-ui.page-hero :eyebrow="__('Contact Us')" :subtext="__('Questions about starting a chapter, media enquiries, partnership ideas, or just something on your mind — reach us directly, or send a message below.')">
-        {{ __("Let's talk.") }}
+<x-layouts.app :title="$contact['contact_hero_eyebrow'] ?? __('Contact Us')">
+    <x-ui.page-hero :eyebrow="$contact['contact_hero_eyebrow'] ?? __('Contact Us')" :subtext="$contact['contact_hero_subtext'] ?? __('Questions about starting a chapter, media enquiries, partnership ideas, or just something on your mind — reach us directly, or send a message below.')">
+        {{ $contact['contact_hero_heading'] ?? __("Let's talk.") }}
 
         <x-slot:image>
             <x-ui.brand-hero-image />
@@ -10,7 +10,7 @@
     <x-ui.section class="hairline-t" width="wide">
         <div class="grid gap-16 lg:grid-cols-[0.8fr_1.2fr]">
             <div class="space-y-6">
-                <p class="text-balance text-lg leading-relaxed text-muted">{{ __("We're a small, youth-led team, so a real person reads every message — expect a reply within a few working days.") }}</p>
+                <p class="text-balance text-lg leading-relaxed text-muted">{{ $contact['contact_intro_body'] ?? __("We're a small, youth-led team, so a real person reads every message — expect a reply within a few working days.") }}</p>
                 @if (! empty($contact['contact_address']))
                     <div>
                         <p class="text-xs font-bold tracking-[0.14em] text-faint uppercase">{{ __('Address') }}</p>

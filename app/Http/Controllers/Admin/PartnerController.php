@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PartnerRequest;
 use App\Models\Partner;
+use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -14,6 +15,7 @@ class PartnerController extends Controller
     public function index(): View
     {
         return view('admin.partners.index', [
+            'pageSettings' => SiteSetting::query()->where('group', 'partners')->orderBy('key')->get(),
             'partners' => Partner::query()->ordered()->paginate(20),
         ]);
     }

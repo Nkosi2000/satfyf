@@ -1,10 +1,10 @@
-<x-layouts.app :title="__('Articles')">
+<x-layouts.app :title="$content['articles_page_hero_eyebrow'] ?? __('Articles')">
     @php
         $featuredArticle = $articles->first(fn ($article) => $article->cover_image_path);
     @endphp
 
-    <x-ui.page-hero :eyebrow="__('Articles')" :subtext="__('Fact-checked coverage of tobacco harm, industry tactics and policy — plus the campaigns, chapters and young people driving the response.')">
-        {{ __('Reporting, explainers and stories.') }}
+    <x-ui.page-hero :eyebrow="$content['articles_page_hero_eyebrow'] ?? __('Articles')" :subtext="$content['articles_page_hero_subtext'] ?? __('Fact-checked coverage of tobacco harm, industry tactics and policy — plus the campaigns, chapters and young people driving the response.')">
+        {{ $content['articles_page_hero_heading'] ?? __('Reporting, explainers and stories.') }}
 
         <x-slot:image>
             @if ($featuredArticle)
