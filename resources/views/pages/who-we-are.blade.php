@@ -3,7 +3,12 @@
         {{ __('Youth voices, not youth audiences.') }}
 
         <x-slot:image>
-            <x-ui.brand-hero-image />
+            <img
+                src="{{ asset('images/gallery/IMG_7468-scaled.jpeg') }}"
+                alt=""
+                class="aspect-4/5 w-full rounded-2xl object-cover"
+                style="box-shadow: var(--shadow-soft)"
+            />
         </x-slot:image>
     </x-ui.page-hero>
 
