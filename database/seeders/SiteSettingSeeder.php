@@ -44,6 +44,9 @@ class SiteSettingSeeder extends Seeder
             'footer' => [
                 'footer_tagline' => 'A smoke free generation in our lifetime.',
             ],
+            'partners' => [
+                'trusted_by_heading' => 'Trusted by',
+            ],
             'closing_cta' => [
                 'closing_cta_heading' => 'Ready to speak up?',
                 'closing_cta_body' => 'There is no membership fee, and no single way in. Start a Think Session, become a Youth Ambassador, or just tell us what you\'d like to do.',

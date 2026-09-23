@@ -3,6 +3,7 @@
 use App\Models\Partner;
 use App\Models\SiteSetting;
 use App\Models\Testimonial;
+use Illuminate\Support\Facades\Storage;
 
 it('renders each simple public page successfully', function (string $uri, string $expectedText) {
     $this->get($uri)
@@ -132,6 +133,33 @@ it('reflects an admin edit to the closing CTA on the home page', function () {
     $this->get('/')
         ->assertOk()
         ->assertSee('Custom CTA Heading');
+});
+
+it('renders the admin-editable Trusted By heading on the home page', function () {
+    Storage::fake('public');
+    Storage::disk('public')->buildTemporaryUrlsUsing(fn ($path, $expiration) => Storage::disk('public')->url($path));
+    Storage::disk('public')->put('partners/logo.png', 'contents');
+    Partner::factory()->create(['logo_path' => 'partners/logo.png', 'published' => true]);
+
+    $this->get('/')
+        ->assertOk()
+        ->assertSee('Trusted by');
+});
+
+it('reflects an admin edit to the Trusted By heading on the home page', function () {
+    Storage::fake('public');
+    Storage::disk('public')->buildTemporaryUrlsUsing(fn ($path, $expiration) => Storage::disk('public')->url($path));
+    Storage::disk('public')->put('partners/logo.png', 'contents');
+    Partner::factory()->create(['logo_path' => 'partners/logo.png', 'published' => true]);
+
+    SiteSetting::query()->updateOrCreate(
+        ['key' => 'trusted_by_heading'],
+        ['group' => 'partners', 'value' => json_encode(['en' => 'Custom Trusted Heading'])],
+    );
+
+    $this->get('/')
+        ->assertOk()
+        ->assertSee('Custom Trusted Heading');
 });
 
 it('prefills the get-involved contact subject from the interest query parameter', function () {

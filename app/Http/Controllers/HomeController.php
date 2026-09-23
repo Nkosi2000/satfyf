@@ -21,6 +21,7 @@ class HomeController extends Controller
             'mission' => SiteSetting::group('mission'),
             'whyItMatters' => SiteSetting::group('why_it_matters'),
             'closingCta' => SiteSetting::group('closing_cta'),
+            'partnerSettings' => SiteSetting::group('partners'),
             'programs' => Program::publishedOrdered()->groupBy(fn (Program $program) => $program->category->value),
             'articles' => Article::cachedRecent(),
             'events' => EventItem::cachedUpcoming()->take(3),

@@ -266,7 +266,7 @@
         @if ($partnerLogos->isNotEmpty())
             <section class="overflow-hidden bg-cream-raised py-20 sm:py-24">
                 <div class="mx-auto w-full max-w-[110rem] px-6 sm:px-8">
-                    <p class="text-center text-xs font-bold tracking-[0.14em] text-faint uppercase">{{ __('Trusted by') }}</p>
+                    <p class="text-center text-xs font-bold tracking-[0.14em] text-faint uppercase">{{ $partnerSettings['trusted_by_heading'] ?? __('Trusted by') }}</p>
                 </div>
 
                 <div class="mt-10" style="mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent)">
