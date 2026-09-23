@@ -27,12 +27,12 @@
                     </x-ui.section-header>
 
                     <canvas
-                        data-lottie="{{ asset('images/no smoking.lottie') }}"
-                        width="160"
-                        height="160"
+                        data-lottie="{{ asset('images/No smoking animation.json') }}"
+                        width="570"
+                        height="550"
                         role="img"
                         aria-label="{{ __('No smoking') }}"
-                        class="mt-8 h-40 w-40"
+                        class="mt-8 aspect-[570/550] w-64 sm:w-80"
                     ></canvas>
                 </div>
 

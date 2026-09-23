@@ -22,7 +22,7 @@ it('renders each simple public page successfully', function (string $uri, string
 it('renders the no-smoking animation canvas below the Why We Exist heading', function () {
     $this->get('/')
         ->assertOk()
-        ->assertSee('data-lottie="'.asset('images/no smoking.lottie').'"', false);
+        ->assertSee('data-lottie="'.asset('images/No smoking animation.json').'"', false);
 });
 
 it('renders the partners page grouped by type', function () {
