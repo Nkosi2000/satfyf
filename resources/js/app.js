@@ -15,6 +15,7 @@ import { initVisibility } from './modules/visibility';
 import { initBackToTop } from './modules/back-to-top';
 import { initSearchModal } from './modules/search-modal';
 import { initMagnetic } from './modules/magnetic';
+import { initLottie } from './modules/lottie';
 
 initNav();
 initTabs();
@@ -33,3 +34,4 @@ initVisibility();
 initBackToTop();
 initSearchModal();
 initMagnetic();
+initLottie();

@@ -19,6 +19,12 @@ it('renders each simple public page successfully', function (string $uri, string
     'privacy' => ['/privacy', 'What we store, and why.'],
 ]);
 
+it('renders the no-smoking animation canvas below the Why We Exist heading', function () {
+    $this->get('/')
+        ->assertOk()
+        ->assertSee('data-lottie="'.asset('images/no smoking.lottie').'"', false);
+});
+
 it('renders the partners page grouped by type', function () {
     Partner::factory()->create(['name' => 'Test Partner Org', 'type' => 'partner', 'published' => true]);
 

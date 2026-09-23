@@ -21,9 +21,20 @@
              later dark beat without competing with it. --}}
         <x-ui.section width="wide" class="bg-cream-raised">
             <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
-                <x-ui.section-header soft :eyebrow="__('Why We Exist')">
-                    {{ $mission['mission_tagline'] ?? __('We speak and spread the truth about smoking.') }}
-                </x-ui.section-header>
+                <div>
+                    <x-ui.section-header soft :eyebrow="__('Why We Exist')">
+                        {{ $mission['mission_tagline'] ?? __('We speak and spread the truth about smoking.') }}
+                    </x-ui.section-header>
+
+                    <canvas
+                        data-lottie="{{ asset('images/no smoking.lottie') }}"
+                        width="160"
+                        height="160"
+                        role="img"
+                        aria-label="{{ __('No smoking') }}"
+                        class="mt-8 h-40 w-40"
+                    ></canvas>
+                </div>
 
                 <div class="space-y-7 text-balance text-lg leading-relaxed text-muted">
                     <p>{{ $mission['mission_statement'] ?? '' }}</p>
