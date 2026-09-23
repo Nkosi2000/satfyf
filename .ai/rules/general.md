@@ -1,6 +1,7 @@
 ---
 paths:
   - .env
+  - database/migrations/*.php
 ---
 
 # General
@@ -16,6 +17,11 @@ phpunit.xml already clears DB_URL to "" and forces sqlite `:memory:` for the tes
 Laravel's DatabaseStore::increment()/decrement() (used internally by RateLimiter::hit(), so also by any `throttle:*` middleware) wraps a SELECT+UPDATE in an explicit DB::transaction(). Neon's pooled (PgBouncer transaction-mode) connection cannot reliably sustain that multi-statement transaction — it fails with `SQLSTATE[25P02]: current transaction is aborted` on the UPDATE, reproducible via plain `Cache::increment()` in tinker. This is the same underlying PgBouncer limitation documented for migrations (see the `$withinTransaction = false` pattern), but it also breaks a stock, unmodified Laravel feature (rate limiting) at runtime, not just DDL.
 
 Fixed by setting `CACHE_STORE=file` (in `.env` and `.env.example`) instead of `database`. `Cache::rememberForever()`/`put()`/`get()` (e.g. SiteSetting::allRows()) are unaffected either way — only increment/decrement is broken — but there's no good reason to keep fighting Neon for a single-server app, so the whole default store was moved off Postgres. If a future need requires the database store specifically, avoid `Cache::increment()`/`decrement()` against it (use get+put instead) rather than reintroducing this bug.
+
+## A data-seeding migration that calls firstOrCreate()/updateOrCreate() in a loop needs `$withinTransaction = false`
+Laravel's `firstOrCreate()` is race-safe: it wraps its insert attempt in a SAVEPOINT (`Builder::createOrFirst()` → `withSavepointIfNeeded()`) so a concurrent duplicate-key insert can be caught and retried as a plain `first()` instead of aborting the whole transaction. The migration runner already wraps a migration's `up()` in its own transaction by default, so that SAVEPOINT nests inside it — and Neon's pooled (PgBouncer transaction-mode) connection doesn't reliably support a nested SAVEPOINT there, failing with `SQLSTATE[25P02]: current transaction is aborted` on the very first `firstOrCreate()` call. Reproduced in production 2026-09-23 by a migration backfilling `site_settings` rows via `SiteSetting::query()->firstOrCreate(...)` in a `foreach`.
+
+Same root cause and same fix as the DDL case below: set `public $withinTransaction = false;` on the migration class. That makes each `firstOrCreate()` call its own top-level (real) transaction instead of a nested SAVEPOINT, and is safe here regardless, since `firstOrCreate()`/`updateOrCreate()` are already idempotent — a migration retried after a mid-loop failure just finds the rows already inserted and moves on.
 
 ## SESSION_DRIVER is 'database' against the pooled Neon connection — this is safe, unlike CACHE_STORE=database above
 Don't assume the `Cache::increment()`/`decrement()` transaction problem above also rules out database-backed sessions — it doesn't. Laravel's `DatabaseSessionHandler` does plain single-statement SELECT/INSERT/UPDATE queries with no explicit multi-statement transaction, so it has no conflict with PgBouncer transaction-mode pooling. The `sessions` table already exists (bundled in `0001_01_01_000000_create_users_table.php`).

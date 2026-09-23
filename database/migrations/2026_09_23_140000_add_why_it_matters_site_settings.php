@@ -6,6 +6,17 @@ use Illuminate\Database\Migrations\Migration;
 return new class extends Migration
 {
     /**
+     * firstOrCreate() wraps its insert in a SAVEPOINT (Laravel's
+     * race-safe createOrFirst()). Neon's pooled (PgBouncer
+     * transaction-mode) connection doesn't reliably support a SAVEPOINT
+     * nested inside the migration runner's own transaction — see the
+     * identical DDL note on 2026_09_11_172613_make_site_settings_translatable.
+     * Disabling the wrapping transaction here makes each firstOrCreate()
+     * call its own top-level (real) transaction instead of a nested one.
+     */
+    public $withinTransaction = false;
+
+    /**
      * Run the migrations.
      *
      * Backfills the "Why It Matters" tabs (previously hardcoded in
