@@ -8,12 +8,19 @@ beforeEach(function () {
 });
 
 it('redirects guests away from the settings page', function () {
-    $this->get(route('admin.settings.edit', ['page' => 'mission']))->assertRedirect(route('admin.login'));
+    $this->get(route('admin.organisation.edit', ['page' => 'mission']))->assertRedirect(route('admin.login'));
 });
 
 it('404s for an unknown settings page slug', function () {
     $this->actingAs($this->admin)
-        ->get(route('admin.settings.edit', ['page' => 'not-a-real-page']))
+        ->get(route('admin.pages.edit', ['page' => 'not-a-real-page']))
+        ->assertNotFound();
+});
+
+it('404s when a page is requested under the wrong section prefix', function () {
+    // "mission" belongs to the "organisation" section, not "pages".
+    $this->actingAs($this->admin)
+        ->get(route('admin.pages.edit', ['page' => 'mission']))
         ->assertNotFound();
 });
 
@@ -25,7 +32,7 @@ describe('edit', function () {
         );
 
         $this->actingAs($this->admin)
-            ->get(route('admin.settings.edit', ['page' => 'mission']))
+            ->get(route('admin.organisation.edit', ['page' => 'mission']))
             ->assertOk()
             ->assertSee('name="settings[vision_2030_1_icon][en]"', false)
             ->assertSee('<option value="shield" selected', false);
@@ -39,10 +46,17 @@ describe('edit', function () {
         SiteSetting::query()->updateOrCreate(['key' => 'mission_statement'], ['group' => 'mission', 'value' => json_encode(['en' => 'Some Statement'])]);
 
         $this->actingAs($this->admin)
-            ->get(route('admin.settings.edit', ['page' => 'contact']))
+            ->get(route('admin.pages.edit', ['page' => 'contact']))
             ->assertOk()
             ->assertSee('Contact Address')
             ->assertDontSee('Mission Statement');
+    });
+
+    it('shows a breadcrumb trail down to the current page', function () {
+        $this->actingAs($this->admin)
+            ->get(route('admin.pages.edit', ['page' => 'contact']))
+            ->assertOk()
+            ->assertSeeInOrder(['Dashboard', 'Pages', 'Contact']);
     });
 });
 
@@ -53,13 +67,13 @@ describe('update', function () {
             ['group' => 'mission', 'value' => json_encode(['en' => 'target'])],
         );
 
-        $response = $this->actingAs($this->admin)->put(route('admin.settings.update', ['page' => 'mission']), [
+        $response = $this->actingAs($this->admin)->put(route('admin.organisation.update', ['page' => 'mission']), [
             'settings' => [
                 'vision_2030_1_icon' => ['en' => 'shield'],
             ],
         ]);
 
-        $response->assertRedirect(route('admin.settings.edit', ['page' => 'mission']));
+        $response->assertRedirect(route('admin.organisation.edit', ['page' => 'mission']));
         expect(SiteSetting::get('vision_2030_1_icon'))->toBe('shield');
     });
 
@@ -67,7 +81,7 @@ describe('update', function () {
         SiteSetting::query()->updateOrCreate(['key' => 'contact_address'], ['group' => 'contact', 'value' => json_encode(['en' => 'Old Address'])]);
         SiteSetting::query()->updateOrCreate(['key' => 'mission_statement'], ['group' => 'mission', 'value' => json_encode(['en' => 'Old Statement'])]);
 
-        $response = $this->actingAs($this->admin)->put(route('admin.settings.update', ['page' => 'contact']), [
+        $response = $this->actingAs($this->admin)->put(route('admin.pages.update', ['page' => 'contact']), [
             'settings' => [
                 // contact_address belongs to the "contact" page — allowed.
                 'contact_address' => ['en' => 'New Address'],
@@ -76,7 +90,7 @@ describe('update', function () {
             ],
         ]);
 
-        $response->assertRedirect(route('admin.settings.edit', ['page' => 'contact']));
+        $response->assertRedirect(route('admin.pages.edit', ['page' => 'contact']));
         expect(SiteSetting::get('contact_address'))->toBe('New Address');
         expect(SiteSetting::get('mission_statement'))->not->toBe('Tampered Statement');
     });

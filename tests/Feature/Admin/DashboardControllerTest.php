@@ -24,3 +24,14 @@ it('does not warn once the storage-url warm command has run recently', function 
         ->assertOk()
         ->assertDontSee("hasn't refreshed recently", false);
 });
+
+it('renders the collapsible sidebar and breadcrumb trail', function () {
+    $admin = User::factory()->admin()->create();
+
+    $this->actingAs($admin)
+        ->get(route('admin.dashboard'))
+        ->assertOk()
+        ->assertSee('data-admin-sidebar', false)
+        ->assertSee('data-sidebar-toggle', false)
+        ->assertSee('aria-label="Breadcrumb"', false);
+});

@@ -1,6 +1,7 @@
 import { initNav } from './modules/nav';
 import { initTabs } from './modules/tabs';
 import { initAdmin } from './modules/admin';
+import { initAdminSidebar } from './modules/admin-sidebar';
 import { initReveal } from './modules/reveal';
 import { initSliders } from './modules/slider';
 import { initTheme } from './modules/theme';
@@ -20,6 +21,7 @@ import { initLottie } from './modules/lottie';
 initNav();
 initTabs();
 initAdmin();
+initAdminSidebar();
 initReveal();
 initSliders();
 initTheme();

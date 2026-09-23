@@ -1,84 +1,96 @@
 <?php
 
 // Maps an admin settings screen (URL slug) to the SiteSetting groups it
-// edits and where to send the admin after saving. Standalone pages (no
-// existing CRUD screen) redirect back to themselves; pages that already
-// have a CRUD admin screen (Articles, Events, Gallery, Partners,
-// Resources) get their page-hero settings embedded there instead and
-// redirect back to that screen.
+// edits, which sidebar section it lives under, and where to send the
+// admin after saving.
+//
+// `section` drives both the URL prefix (see routes/admin.php — 'pages'
+// screens live under /admin/pages/{page}, 'organisation' under
+// /admin/organisation/{page}) and, for those two sections, where a save
+// redirects back to (its own edit screen). Pages that already have a CRUD
+// admin screen (Articles, Events, Gallery, Partners, Resources) use
+// section 'embedded': their page-hero settings are shown inside that
+// screen instead of a standalone one (see x-admin.page-header-panel),
+// posting to the plain /admin/settings/{page} route and redirecting back
+// to that CRUD screen via their own explicit `redirect` route name.
 return [
     'home' => [
         'label' => 'Home',
+        'section' => 'pages',
         'groups' => ['hero', 'why_it_matters', 'trusted_by', 'closing_cta'],
-        'redirect' => 'admin.settings.edit',
     ],
     'who-we-are' => [
         'label' => 'Who We Are',
+        'section' => 'pages',
         'groups' => ['who_we_are', 'youth_chapters', 'champions_network'],
-        'redirect' => 'admin.settings.edit',
     ],
     'why-we-exist' => [
         'label' => 'Why We Exist',
+        'section' => 'pages',
         'groups' => ['why_we_exist'],
-        'redirect' => 'admin.settings.edit',
     ],
     'what-we-do' => [
         'label' => 'What We Do',
+        'section' => 'pages',
         'groups' => ['what_we_do'],
-        'redirect' => 'admin.settings.edit',
     ],
     'get-involved' => [
         'label' => 'Get Involved',
+        'section' => 'pages',
         'groups' => ['get_involved'],
-        'redirect' => 'admin.settings.edit',
     ],
     'contact' => [
         'label' => 'Contact',
+        'section' => 'pages',
         'groups' => ['contact'],
-        'redirect' => 'admin.settings.edit',
     ],
     'privacy' => [
         'label' => 'Privacy & Cookies',
+        'section' => 'pages',
         'groups' => ['privacy'],
-        'redirect' => 'admin.settings.edit',
     ],
     'mission' => [
         'label' => 'Mission & Vision',
+        'section' => 'organisation',
         'groups' => ['mission'],
-        'redirect' => 'admin.settings.edit',
     ],
     'social' => [
         'label' => 'Social Media',
+        'section' => 'organisation',
         'groups' => ['social'],
-        'redirect' => 'admin.settings.edit',
     ],
     'footer' => [
         'label' => 'Footer',
+        'section' => 'organisation',
         'groups' => ['footer'],
-        'redirect' => 'admin.settings.edit',
     ],
     'articles-page' => [
         'label' => 'Articles',
+        'section' => 'embedded',
         'groups' => ['articles_page'],
         'redirect' => 'admin.articles.index',
     ],
     'events-page' => [
         'label' => 'Events',
+        'section' => 'embedded',
         'groups' => ['events_page'],
         'redirect' => 'admin.events.index',
     ],
     'gallery-page' => [
         'label' => 'Gallery',
+        'section' => 'embedded',
         'groups' => ['gallery_page'],
         'redirect' => 'admin.gallery-images.index',
     ],
     'partners-page' => [
         'label' => 'Partners',
+        'section' => 'embedded',
         'groups' => ['partners'],
         'redirect' => 'admin.partners.index',
     ],
     'resources-page' => [
         'label' => 'Resources',
+        'section' => 'embedded',
         'groups' => ['resources_page'],
         'redirect' => 'admin.resources.index',
     ],

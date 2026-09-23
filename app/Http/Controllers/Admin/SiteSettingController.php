@@ -11,12 +11,13 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SiteSettingController extends Controller
 {
-    public function edit(string $page): View
+    public function edit(string $page, string $section): View
     {
-        $config = $this->pageConfig($page);
+        $config = $this->pageConfig($page, $section);
 
         return view('admin.settings.edit', [
             'page' => $page,
+            'section' => $section,
             'pageTitle' => $config['label'],
             'settings' => SiteSetting::query()
                 ->whereIn('group', $config['groups'])
@@ -27,9 +28,9 @@ class SiteSettingController extends Controller
         ]);
     }
 
-    public function update(Request $request, string $page): RedirectResponse
+    public function update(Request $request, string $page, string $section): RedirectResponse
     {
-        $config = $this->pageConfig($page);
+        $config = $this->pageConfig($page, $section);
 
         $values = $request->validate([
             'settings' => ['required', 'array'],
@@ -56,21 +57,23 @@ class SiteSettingController extends Controller
 
         SiteSetting::forgetCache();
 
-        $redirect = $config['redirect'] === 'admin.settings.edit'
-            ? redirect()->route('admin.settings.edit', ['page' => $page])
-            : redirect()->route($config['redirect']);
+        $redirect = match ($section) {
+            'pages' => redirect()->route('admin.pages.edit', ['page' => $page]),
+            'organisation' => redirect()->route('admin.organisation.edit', ['page' => $page]),
+            default => redirect()->route($config['redirect']),
+        };
 
         return $redirect->with('success', 'Settings saved.');
     }
 
     /**
-     * @return array{label: string, groups: array<int, string>, redirect: string}
+     * @return array{label: string, section: string, groups: array<int, string>, redirect?: string}
      */
-    protected function pageConfig(string $page): array
+    protected function pageConfig(string $page, string $section): array
     {
         $config = config("site_setting_pages.{$page}");
 
-        if ($config === null) {
+        if ($config === null || $config['section'] !== $section) {
             throw new NotFoundHttpException;
         }
 

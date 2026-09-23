@@ -1,5 +1,5 @@
 <x-admin.layout :title="$pageTitle">
-    <form method="POST" action="{{ route('admin.settings.update', ['page' => $page]) }}" class="max-w-6xl space-y-6">
+    <form method="POST" action="{{ route('admin.'.$section.'.update', ['page' => $page]) }}" class="max-w-6xl space-y-6">
         @csrf
         @method('PUT')
 

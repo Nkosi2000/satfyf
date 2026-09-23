@@ -1214,6 +1214,38 @@ img[data-loaded] {
     transition-delay: 200ms;
 }
 
+/* Admin sidebar collapse — a class on <html> rather than a data-attribute
+   on the sidebar itself, set synchronously by an inline script before the
+   sidebar renders (same technique as the dark-mode toggle) so there's no
+   flash of the wrong width on load. See admin/layout.blade.php and
+   resources/js/modules/admin-sidebar.js. */
+[data-admin-sidebar] {
+    width: 20rem;
+    transition: width 200ms ease;
+}
+
+[data-admin-sidebar] [data-nav-label],
+[data-admin-sidebar] [data-nav-section-heading] {
+    transition: opacity 120ms ease;
+}
+
+.admin-sidebar-collapsed [data-admin-sidebar] {
+    width: 4.5rem;
+}
+
+.admin-sidebar-collapsed [data-admin-sidebar] a {
+    justify-content: center;
+}
+
+.admin-sidebar-collapsed [data-admin-sidebar] [data-nav-label],
+.admin-sidebar-collapsed [data-admin-sidebar] [data-nav-section-heading] {
+    display: none;
+}
+
+.admin-sidebar-collapsed [data-sidebar-toggle] svg {
+    transform: rotate(180deg);
+}
+
 @media (prefers-reduced-motion: reduce) {
     .marquee-track {
         animation: none;
@@ -1296,6 +1328,10 @@ img[data-loaded] {
     }
 
     .row-hover::before {
+        transition: none;
+    }
+
+    [data-admin-sidebar] {
         transition: none;
     }
 }

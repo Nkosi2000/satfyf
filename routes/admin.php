@@ -65,8 +65,15 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::get('newsletter-subscribers/export', [NewsletterSubscriberController::class, 'export'])->name('newsletter-subscribers.export');
         Route::delete('newsletter-subscribers/{newsletterSubscriber}', [NewsletterSubscriberController::class, 'destroy'])->name('newsletter-subscribers.destroy');
 
-        Route::get('settings/{page}', [SiteSettingController::class, 'edit'])->name('settings.edit');
-        Route::put('settings/{page}', [SiteSettingController::class, 'update'])->name('settings.update');
+        Route::get('pages/{page}', [SiteSettingController::class, 'edit'])->name('pages.edit')->defaults('section', 'pages');
+        Route::put('pages/{page}', [SiteSettingController::class, 'update'])->name('pages.update')->defaults('section', 'pages');
+
+        Route::get('organisation/{page}', [SiteSettingController::class, 'edit'])->name('organisation.edit')->defaults('section', 'organisation');
+        Route::put('organisation/{page}', [SiteSettingController::class, 'update'])->name('organisation.update')->defaults('section', 'organisation');
+
+        // Embedded page-header panels (see x-admin.page-header-panel) have
+        // no standalone edit screen of their own — only a save endpoint.
+        Route::put('settings/{page}', [SiteSettingController::class, 'update'])->name('settings.update')->defaults('section', 'embedded');
 
         Route::get('account', [AccountController::class, 'edit'])->name('account.edit');
         Route::put('account/password', [AccountController::class, 'updatePassword'])->name('account.password.update');
