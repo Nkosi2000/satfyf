@@ -23,7 +23,7 @@
     <x-ui.section class="hairline-t" width="wide">
         <div class="magazine-grid reveal-stagger">
             @foreach ($articles as $article)
-                <a href="{{ route('articles.show', $article) }}" class="group block">
+                <a href="{{ route('articles.show', $article) }}" class="group block break-inside-avoid">
                     <div class="aspect-[16/10] overflow-hidden rounded-xl bg-surface-2">
                         @if ($article->cover_image_path)
                             <img src="{{ storage_url($article->cover_image_path) }}" alt="" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
