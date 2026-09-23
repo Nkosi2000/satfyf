@@ -58,6 +58,19 @@ class Article extends Model
     }
 
     /**
+     * Gates the newspaper-column treatment in articles/show.blade.php to
+     * pieces short enough to read in columns without the reader having to
+     * scroll one column to its end and back up to start the next — real
+     * multi-column text is a print-era pattern that only works on a
+     * scrolling web page while the whole flowed block still fits on one
+     * screen.
+     */
+    public function isShortForm(): bool
+    {
+        return str_word_count(strip_tags($this->renderedBody())) <= 220;
+    }
+
+    /**
      * Always returned in display order — there's no case where an
      * unordered list of an article's body images is useful, so the
      * ordering lives on the relationship itself rather than relying on

@@ -45,6 +45,22 @@ describe('show', function () {
         $this->get(route('articles.show', $article))->assertNotFound();
     });
 
+    it('renders a short article body in newspaper-style columns', function () {
+        $article = Article::factory()->create(['body' => str_repeat('word ', 50)]);
+
+        $this->get(route('articles.show', $article))
+            ->assertOk()
+            ->assertSee('article-columns', false);
+    });
+
+    it('does not column-format a long article body', function () {
+        $article = Article::factory()->create(['body' => str_repeat('word ', 300)]);
+
+        $this->get(route('articles.show', $article))
+            ->assertOk()
+            ->assertDontSee('article-columns', false);
+    });
+
     it('strips raw HTML out of the rendered markdown body', function () {
         $article = Article::factory()->create(['body' => "<script>alert('xss')</script>\n\nSome **safe** text."]);
 

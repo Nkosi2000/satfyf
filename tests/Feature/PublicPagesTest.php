@@ -116,6 +116,24 @@ it('reflects an admin edit to a Why It Matters tab on the home page', function (
         ->assertSee('Custom Tab Label');
 });
 
+it('renders the admin-editable closing CTA on the home page', function () {
+    $this->get('/')
+        ->assertOk()
+        ->assertSee('Ready to speak up?')
+        ->assertSee('There is no membership fee, and no single way in. Start a Think Session, become a Youth Ambassador, or just tell us what you\'d like to do.');
+});
+
+it('reflects an admin edit to the closing CTA on the home page', function () {
+    SiteSetting::query()->updateOrCreate(
+        ['key' => 'closing_cta_heading'],
+        ['group' => 'closing_cta', 'value' => json_encode(['en' => 'Custom CTA Heading'])],
+    );
+
+    $this->get('/')
+        ->assertOk()
+        ->assertSee('Custom CTA Heading');
+});
+
 it('prefills the get-involved contact subject from the interest query parameter', function () {
     $this->get('/get-involved?interest=Become a Youth Ambassador')
         ->assertOk()

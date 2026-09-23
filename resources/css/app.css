@@ -282,41 +282,27 @@ html {
     border-top: 1px solid var(--color-hairline);
 }
 
-/* Editorial index for the articles listing — true CSS multi-column layout
-   (not a grid standing in for one), the same mechanism newspapers and
-   magazines use for columnar text. Each story flows down a column in
-   document order and the browser breaks to the next column on its own;
-   column-rule draws the vertical divider between columns natively, and
-   column-gap is the gutter. A single stacked column with a plain hairline
-   rule between stories covers small screens, where there's only one
-   column and no rule to draw. */
-@utility magazine-grid {
+/* Newspaper-style column layout for a short article body (see
+   Article::isShortForm() — resources/views/pages/articles/show.blade.php
+   only applies this class for pieces short enough to read in columns
+   without the reader having to scroll one column to its end and back up
+   to start the next). column-rule draws the vertical divider between
+   columns natively and column-gap is the gutter; break-inside: avoid on
+   each block keeps a paragraph or heading from being sliced across the
+   break. Single column below sm, where there's no room for a real gutter. */
+@utility article-columns {
     column-count: 1;
 }
 
-.magazine-grid > * {
-    padding-block: 2.5rem;
-}
-
-.magazine-grid > *:first-child {
-    padding-top: 0;
-}
-
-.magazine-grid > *:not(:first-child) {
-    border-top: 1px solid var(--color-hairline);
-}
-
-@media (min-width: 64rem) {
-    .magazine-grid {
-        column-count: 3;
-        column-gap: 3.5rem;
+@media (min-width: 40rem) {
+    .article-columns {
+        column-count: 2;
+        column-gap: 3rem;
         column-rule: 1px solid var(--color-hairline);
     }
 
-    .magazine-grid > * {
-        border-top: 0;
-        padding-block: 0;
-        margin-bottom: 3rem;
+    .article-columns > * {
+        break-inside: avoid;
     }
 }
 

@@ -20,6 +20,7 @@ class HomeController extends Controller
             'hero' => SiteSetting::group('hero'),
             'mission' => SiteSetting::group('mission'),
             'whyItMatters' => SiteSetting::group('why_it_matters'),
+            'closingCta' => SiteSetting::group('closing_cta'),
             'programs' => Program::publishedOrdered()->groupBy(fn (Program $program) => $program->category->value),
             'articles' => Article::cachedRecent(),
             'events' => EventItem::cachedUpcoming()->take(3),

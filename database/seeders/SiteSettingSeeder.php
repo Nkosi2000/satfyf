@@ -44,6 +44,10 @@ class SiteSettingSeeder extends Seeder
             'footer' => [
                 'footer_tagline' => 'A smoke free generation in our lifetime.',
             ],
+            'closing_cta' => [
+                'closing_cta_heading' => 'Ready to speak up?',
+                'closing_cta_body' => 'There is no membership fee, and no single way in. Start a Think Session, become a Youth Ambassador, or just tell us what you\'d like to do.',
+            ],
             'why_it_matters' => [
                 'why_it_matters_eyebrow' => [
                     'en' => 'Why It Matters',

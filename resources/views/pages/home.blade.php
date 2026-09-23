@@ -390,10 +390,10 @@
             <x-ui.light-rays class="opacity-70" />
             <div class="relative mx-auto flex w-full max-w-[110rem] flex-col items-center gap-6 text-center">
                 <h2 class="font-display text-balance text-5xl leading-[1] tracking-tight text-on-accent sm:text-6xl lg:text-7xl">
-                    {{ __('Ready to speak up?') }}
+                    {{ $closingCta['closing_cta_heading'] ?? __('Ready to speak up?') }}
                 </h2>
                 <p class="max-w-xl text-balance text-lg leading-relaxed" style="color: color-mix(in oklab, var(--color-on-accent) 78%, transparent)">
-                    {{ __('There is no membership fee, and no single way in. Start a Think Session, become a Youth Ambassador, or just tell us what you\'d like to do.') }}
+                    {{ $closingCta['closing_cta_body'] ?? __('There is no membership fee, and no single way in. Start a Think Session, become a Youth Ambassador, or just tell us what you\'d like to do.') }}
                 </p>
                 <x-ui.button href="{{ route('get-involved') }}" variant="invert" size="lg" class="mt-2" magnetic>{{ __('Get Involved') }}</x-ui.button>
             </div>

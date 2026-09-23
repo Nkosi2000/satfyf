@@ -14,12 +14,20 @@
                 </div>
             @endif
 
-            <div class="mt-10 max-w-2xl space-y-5 text-base leading-relaxed text-muted [&_a]:text-primary-soft [&_a]:underline [&_h2]:mt-8 [&_h2]:text-2xl [&_h2]:font-black [&_h2]:text-fg [&_img]:w-full [&_img]:rounded-2xl [&_img]:border [&_img]:border-hairline [&_strong]:text-fg">
+            @php
+                // Short pieces read in real newspaper-style columns (see
+                // Article::isShortForm()); a wider measure gives those
+                // columns room to breathe. Longer articles keep the
+                // original single-column reading width.
+                $bodyWidthClass = $article->isShortForm() ? 'max-w-3xl' : 'max-w-2xl';
+            @endphp
+
+            <div class="{{ $bodyWidthClass }} {{ $article->isShortForm() ? 'article-columns' : '' }} mt-10 space-y-5 text-base leading-relaxed text-muted [&_a]:text-primary-soft [&_a]:underline [&_h2]:mt-8 [&_h2]:text-2xl [&_h2]:font-black [&_h2]:text-fg [&_img]:w-full [&_img]:rounded-2xl [&_img]:border [&_img]:border-hairline [&_strong]:text-fg">
                 {!! $article->renderedBody() !!}
             </div>
 
             @if ($article->attachment_path)
-                <div class="mt-8 max-w-2xl">
+                <div class="mt-8 {{ $bodyWidthClass }}">
                     <x-ui.button href="{{ route('articles.attachment', $article) }}" variant="secondary">
                         {{ __('Download attachment') }}
                         @if ($article->attachment_name)
@@ -30,7 +38,7 @@
             @endif
 
             @if ($article->images->isNotEmpty())
-                <div class="reveal-stagger mt-10 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-3">
+                <div class="reveal-stagger mt-10 grid {{ $bodyWidthClass }} grid-cols-2 gap-3 sm:grid-cols-3">
                     @foreach ($article->images as $image)
                         <div class="hover-zoom aspect-square overflow-hidden rounded-xl border border-hairline">
                             <img
