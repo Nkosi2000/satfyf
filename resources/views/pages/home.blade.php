@@ -32,7 +32,7 @@
                         height="550"
                         role="img"
                         aria-label="{{ __('No smoking') }}"
-                        class="mt-8 aspect-[570/550] w-64 sm:w-80"
+                        class="mx-auto mt-8 block aspect-[570/550] w-80 sm:w-[26rem]"
                     ></canvas>
                 </div>
 
