@@ -78,7 +78,9 @@
         <x-ui.section width="wide" class="bg-cream-raised">
             <div class="grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
                 <div>
-                    <x-ui.section-header soft :eyebrow="__('Why It Matters')">{{ __('More than awareness.') }}</x-ui.section-header>
+                    <x-ui.section-header soft :eyebrow="$whyItMatters['why_it_matters_eyebrow'] ?? __('Why It Matters')">
+                        {{ $whyItMatters['why_it_matters_heading'] ?? __('More than awareness.') }}
+                    </x-ui.section-header>
 
                     {{-- Same data-tabs/data-tab-trigger/data-tab-panel hooks
                          as x-ui.tabs (tabs.js drives both identically) — just
@@ -87,12 +89,13 @@
                     <div class="mt-10" data-tabs>
                         <div class="inline-flex flex-wrap gap-1 rounded-full bg-surface-2 p-1" role="tablist">
                             @php
-                                $whyTabs = [
-                                    ['label' => __('Youth-led'), 'body' => __('Every campaign, think session and demonstration is planned and led by young people themselves, not adults speaking on their behalf.')],
-                                    ['label' => __('Evidence-based'), 'body' => __('Our messaging is grounded in real research on tobacco harm, nicotine addiction and youth marketing tactics, not scare tactics.')],
-                                    ['label' => __('Community-rooted'), 'body' => __('Community Imbizos bring parents, teachers and local leaders into the conversation, because tobacco-free choices are made together.')],
-                                    ['label' => __('Free to join'), 'body' => __('There is no membership fee. Any young person, school or community group can join a Think Session or start a chapter.')],
-                                ];
+                                $whyTabs = collect([1, 2, 3, 4])
+                                    ->map(fn ($i) => [
+                                        'label' => $whyItMatters['why_it_matters_tab_'.$i] ?? '',
+                                        'body' => $whyItMatters['why_it_matters_tab_'.$i.'_body'] ?? '',
+                                    ])
+                                    ->filter(fn ($tab) => $tab['label'] !== '')
+                                    ->values();
                             @endphp
                             @foreach ($whyTabs as $i => $tab)
                                 <button

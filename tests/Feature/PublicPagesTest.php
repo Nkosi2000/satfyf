@@ -96,6 +96,26 @@ it('falls back to the target icon when a vision has no icon selected', function 
         ->assertSee('data-icon="target"', false);
 });
 
+it('renders the admin-editable Why It Matters tabs on the home page', function () {
+    $this->get('/')
+        ->assertOk()
+        ->assertSee('Why It Matters')
+        ->assertSee('More than awareness.')
+        ->assertSee('Youth-led')
+        ->assertSee('Every campaign, think session and demonstration is planned and led by young people themselves, not adults speaking on their behalf.');
+});
+
+it('reflects an admin edit to a Why It Matters tab on the home page', function () {
+    SiteSetting::query()->updateOrCreate(
+        ['key' => 'why_it_matters_tab_1'],
+        ['group' => 'why_it_matters', 'value' => json_encode(['en' => 'Custom Tab Label'])],
+    );
+
+    $this->get('/')
+        ->assertOk()
+        ->assertSee('Custom Tab Label');
+});
+
 it('prefills the get-involved contact subject from the interest query parameter', function () {
     $this->get('/get-involved?interest=Become a Youth Ambassador')
         ->assertOk()

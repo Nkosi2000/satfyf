@@ -19,6 +19,7 @@ class HomeController extends Controller
         return view('pages.home', [
             'hero' => SiteSetting::group('hero'),
             'mission' => SiteSetting::group('mission'),
+            'whyItMatters' => SiteSetting::group('why_it_matters'),
             'programs' => Program::publishedOrdered()->groupBy(fn (Program $program) => $program->category->value),
             'articles' => Article::cachedRecent(),
             'events' => EventItem::cachedUpcoming()->take(3),
