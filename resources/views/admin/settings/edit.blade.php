@@ -1,7 +1,20 @@
 <x-admin.layout title="Site settings">
-    <form method="POST" action="{{ route('admin.settings.update') }}" class="max-w-3xl space-y-6">
+    <form method="POST" action="{{ route('admin.settings.update') }}" class="max-w-4xl space-y-6">
         @csrf
         @method('PUT')
+
+        @php
+            $iconOptions = [
+                'target' => 'Target',
+                'shield' => 'Shield',
+                'users' => 'Community',
+                'heart' => 'Heart',
+                'book' => 'Book',
+                'megaphone' => 'Megaphone',
+                'leaf' => 'Leaf',
+                'flag' => 'Flag',
+            ];
+        @endphp
 
         @foreach ($settings as $group => $items)
             <div class="rounded-xl border border-hairline-strong bg-surface p-6">
@@ -12,13 +25,25 @@
                         @php
                             $translations = $setting->translations();
                             $longest = collect($translations)->map(fn ($value) => strlen((string) $value))->max() ?? 0;
+                            $isIcon = str_ends_with($setting->key, '_icon');
                         @endphp
-                        <x-admin.translatable-field
-                            :name="'settings['.$setting->key.']'"
-                            :label="\Illuminate\Support\Str::headline($setting->key)"
-                            :type="$longest > 100 ? 'textarea' : 'text'"
-                            :translations="$translations"
-                        />
+                        @if ($isIcon)
+                            <x-admin.field
+                                :name="'settings['.$setting->key.'][en]'"
+                                :label="\Illuminate\Support\Str::headline($setting->key)"
+                                type="select"
+                                :options="$iconOptions"
+                                :value="$translations['en'] ?? 'target'"
+                                class="max-w-xs"
+                            />
+                        @else
+                            <x-admin.translatable-field
+                                :name="'settings['.$setting->key.']'"
+                                :label="\Illuminate\Support\Str::headline($setting->key)"
+                                :type="$longest > 100 ? 'textarea' : 'text'"
+                                :translations="$translations"
+                            />
+                        @endif
                     @endforeach
                 </div>
             </div>

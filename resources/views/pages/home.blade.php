@@ -26,11 +26,16 @@
                 </x-ui.section-header>
 
                 <div class="space-y-7 text-balance text-lg leading-relaxed text-muted">
-                    <p class="max-w-3xl">{{ $mission['mission_statement'] ?? '' }}</p>
+                    <p>{{ $mission['mission_statement'] ?? '' }}</p>
                     <ul class="reveal-stagger grid gap-5 sm:grid-cols-3">
-                        <li class="card-soft p-6 text-sm font-bold text-fg">{{ $mission['vision_2030_1'] ?? '' }}</li>
-                        <li class="card-soft p-6 text-sm font-bold text-fg">{{ $mission['vision_2030_2'] ?? '' }}</li>
-                        <li class="card-soft p-6 text-sm font-bold text-fg">{{ $mission['vision_2030_3'] ?? '' }}</li>
+                        @foreach ([1, 2, 3] as $i)
+                            <li class="card-soft flex flex-col gap-4 p-6 text-sm font-bold text-fg">
+                                <span class="flex h-10 w-10 items-center justify-center rounded-full bg-surface-2 text-primary-soft">
+                                    <x-icon.vision :name="$mission['vision_2030_'.$i.'_icon'] ?? 'target'" class="h-5 w-5" />
+                                </span>
+                                {{ $mission['vision_2030_'.$i] ?? '' }}
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

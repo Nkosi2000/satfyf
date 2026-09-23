@@ -13,7 +13,7 @@ class SiteSettingController extends Controller
     public function edit(): View
     {
         return view('admin.settings.edit', [
-            'settings' => SiteSetting::query()->orderBy('group')->get()->groupBy('group'),
+            'settings' => SiteSetting::query()->orderBy('group')->orderBy('key')->get()->groupBy('group'),
         ]);
     }
 

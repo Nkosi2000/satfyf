@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Partner;
+use App\Models\SiteSetting;
 use App\Models\Testimonial;
 
 it('renders each simple public page successfully', function (string $uri, string $expectedText) {
@@ -65,6 +66,28 @@ it('does not show unpublished testimonials on the home page', function () {
     $this->get('/')
         ->assertOk()
         ->assertDontSee('Hidden Voice');
+});
+
+it('renders the admin-selected icon for each vision on the home page', function () {
+    SiteSetting::query()->updateOrCreate(
+        ['key' => 'vision_2030_1_icon'],
+        ['group' => 'mission', 'value' => json_encode(['en' => 'megaphone'])],
+    );
+
+    $this->get('/')
+        ->assertOk()
+        ->assertSee('data-icon="megaphone"', false);
+});
+
+it('falls back to the target icon when a vision has no icon selected', function () {
+    SiteSetting::query()->updateOrCreate(
+        ['key' => 'vision_2030_1_icon'],
+        ['group' => 'mission', 'value' => null],
+    );
+
+    $this->get('/')
+        ->assertOk()
+        ->assertSee('data-icon="target"', false);
 });
 
 it('prefills the get-involved contact subject from the interest query parameter', function () {

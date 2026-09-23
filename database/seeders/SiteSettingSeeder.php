@@ -23,8 +23,11 @@ class SiteSettingSeeder extends Seeder
                 'mission_tagline' => 'We speak and spread the truth about smoking.',
                 'mission_statement' => 'Youth voices championing & fighting against the harsh and dangerous realities of tobacco, as well as substance & drug abuse amongst young people.',
                 'vision_2030_1' => 'Young people reject smoking in social settings.',
+                'vision_2030_1_icon' => 'users',
                 'vision_2030_2' => 'Every educational institution is smoke-free.',
+                'vision_2030_2_icon' => 'book',
                 'vision_2030_3' => 'Youth confidently decline every tobacco offer.',
+                'vision_2030_3_icon' => 'shield',
             ],
             'contact' => [
                 'contact_address' => 'Corporate Park 66, 66 Von Willich Ave, Die Hoewes, Centurion, Pretoria, South Africa 0163',
