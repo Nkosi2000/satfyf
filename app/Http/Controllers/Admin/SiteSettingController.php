@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -19,13 +20,34 @@ class SiteSettingController extends Controller
             'page' => $page,
             'section' => $section,
             'pageTitle' => $config['label'],
-            'settings' => SiteSetting::query()
-                ->whereIn('group', $config['groups'])
-                ->orderBy('group')
-                ->orderBy('key')
-                ->get()
-                ->groupBy('group'),
+            'settings' => $this->inPageOrder(
+                SiteSetting::query()->whereIn('group', $config['groups'])->orderBy('key')->get(),
+                $config,
+            )->groupBy('group'),
         ]);
+    }
+
+    /**
+     * Sorts settings into the order they appear on the public page: by the
+     * config's `groups` order, then its `fields` order. Keys missing from
+     * `fields` keep their alphabetical order after the listed ones.
+     *
+     * @param  Collection<int, SiteSetting>  $settings
+     * @param  array{groups: array<int, string>, fields?: array<int, string>}  $config
+     * @return Collection<int, SiteSetting>
+     */
+    protected function inPageOrder(Collection $settings, array $config): Collection
+    {
+        $groupPositions = array_flip($config['groups']);
+        $fieldPositions = array_flip($config['fields'] ?? []);
+
+        return $settings
+            ->sortBy([
+                fn (SiteSetting $a, SiteSetting $b): int => $groupPositions[$a->group] <=> $groupPositions[$b->group],
+                fn (SiteSetting $a, SiteSetting $b): int => ($fieldPositions[$a->key] ?? PHP_INT_MAX) <=> ($fieldPositions[$b->key] ?? PHP_INT_MAX),
+                fn (SiteSetting $a, SiteSetting $b): int => strcmp($a->key, $b->key),
+            ])
+            ->values();
     }
 
     public function update(Request $request, string $page, string $section): RedirectResponse
@@ -67,7 +89,7 @@ class SiteSettingController extends Controller
     }
 
     /**
-     * @return array{label: string, section: string, groups: array<int, string>, redirect?: string}
+     * @return array{label: string, section: string, groups: array<int, string>, fields?: array<int, string>, redirect?: string}
      */
     protected function pageConfig(string $page, string $section): array
     {
