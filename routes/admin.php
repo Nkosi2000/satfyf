@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\PasswordResetLinkController;
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\ResourceController;
+use App\Http\Controllers\Admin\SessionHeartbeatController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Admin\TestimonialController;
@@ -41,6 +42,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
 
     Route::middleware(['auth', 'admin', 'session.fingerprint', 'session.idle'])->group(function (): void {
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+        Route::post('heartbeat', SessionHeartbeatController::class)->name('heartbeat');
 
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 

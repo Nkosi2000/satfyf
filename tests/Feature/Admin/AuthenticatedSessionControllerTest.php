@@ -128,6 +128,39 @@ describe('idle timeout', function () {
         $this->assertGuest();
     });
 
+    it('treats on-page activity heartbeats as activity', function () {
+        $user = User::factory()->admin()->create();
+
+        $this->actingAs($user)->get(route('admin.dashboard'))->assertOk();
+
+        $this->travel(4)->minutes();
+        $this->post(route('admin.heartbeat'))->assertNoContent();
+
+        $this->travel(4)->minutes();
+        $this->get(route('admin.dashboard'))->assertOk();
+
+        $this->assertAuthenticatedAs($user);
+    });
+
+    it('signs out on a heartbeat that arrives after the idle timeout', function () {
+        $user = User::factory()->admin()->create();
+
+        $this->actingAs($user)->get(route('admin.dashboard'))->assertOk();
+
+        $this->travel(6)->minutes();
+
+        $this->post(route('admin.heartbeat'))->assertRedirect(route('admin.login'));
+        $this->assertGuest();
+    });
+
+    it('gives admin pages what the browser needs to track inactivity', function () {
+        $this->actingAs(User::factory()->admin()->create())
+            ->get(route('admin.dashboard'))
+            ->assertOk()
+            ->assertSee('data-admin-idle-timeout="300"', false)
+            ->assertSee('data-admin-heartbeat-url="'.route('admin.heartbeat').'"', false);
+    });
+
     it('keeps an admin signed in while they stay active', function () {
         $user = User::factory()->admin()->create();
 

@@ -122,7 +122,12 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-cream font-sans text-fg antialiased">
+<body
+    class="min-h-screen bg-cream font-sans text-fg antialiased"
+    data-admin-idle-timeout="{{ \App\Http\Middleware\SignOutIdleSessions::IDLE_TIMEOUT_MINUTES * 60 }}"
+    data-admin-heartbeat-url="{{ route('admin.heartbeat') }}"
+    data-admin-idle-redirect="{{ route('admin.dashboard') }}"
+>
     <div class="flex min-h-screen">
         <aside data-admin-sidebar class="hidden shrink-0 border-r border-hairline-strong bg-surface lg:flex lg:flex-col">
             <div class="flex h-16 items-center justify-between gap-2 border-b border-hairline-strong px-5">
