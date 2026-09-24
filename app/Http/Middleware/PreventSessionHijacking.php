@@ -8,16 +8,17 @@ use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Binds an authenticated admin session to the IP + User-Agent it was
- * created under (AuthenticatedSessionController stores the fingerprint on
- * login). If a request later arrives with a different fingerprint on that
- * same session — the signature of a stolen/replayed session cookie — the
- * session is torn down and the user is sent back to sign in, rather than
- * letting the request through as whoever holds the cookie.
+ * Binds an authenticated admin session to the User-Agent it was created
+ * under (AuthenticatedSessionController stores the fingerprint on login).
+ * If a request later arrives with a different fingerprint on that same
+ * session — the signature of a stolen/replayed session cookie — the session
+ * is torn down and the user is sent back to sign in, rather than letting
+ * the request through as whoever holds the cookie.
  *
- * This app has a small, trusted set of admin users, so the cost of an
- * occasional false positive (an ISP rotating a public IP mid-session) is
- * worth it for the anti-hijacking guarantee.
+ * The IP is deliberately left out: browsers alternate between IPv4 and
+ * IPv6, and mobile/Wi-Fi hand-offs change it mid-session, which signed
+ * admins out every few minutes in production. SignOutIdleSessions covers
+ * the "walked away from an open session" case instead.
  */
 class PreventSessionHijacking
 {
@@ -44,6 +45,6 @@ class PreventSessionHijacking
 
     public static function fingerprint(Request $request): string
     {
-        return hash('sha256', $request->ip().'|'.$request->userAgent());
+        return hash('sha256', (string) $request->userAgent());
     }
 }

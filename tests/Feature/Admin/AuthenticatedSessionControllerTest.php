@@ -90,6 +90,19 @@ describe('session hijacking protection', function () {
         $this->assertGuest();
     });
 
+    it('keeps a real login session when only the IP address changes', function () {
+        $user = User::factory()->admin()->create(['password' => 'correct-password']);
+
+        $this->withServerVariables(['REMOTE_ADDR' => '10.0.0.1', 'HTTP_USER_AGENT' => 'Same Browser'])
+            ->post(route('admin.login.store'), ['email' => $user->email, 'password' => 'correct-password']);
+
+        $this->withServerVariables(['REMOTE_ADDR' => '10.0.0.2', 'HTTP_USER_AGENT' => 'Same Browser'])
+            ->get(route('admin.dashboard'))
+            ->assertOk();
+
+        $this->assertAuthenticatedAs($user);
+    });
+
     it('does not affect a session established via actingAs (no fingerprint set)', function () {
         // actingAs() bypasses the real login flow, so no auth_fingerprint
         // is ever stored — the middleware must not treat "no fingerprint
@@ -97,5 +110,35 @@ describe('session hijacking protection', function () {
         $user = User::factory()->admin()->create();
 
         $this->actingAs($user)->get(route('admin.dashboard'))->assertOk();
+    });
+});
+
+describe('idle timeout', function () {
+    it('signs an admin out after more than five minutes without a request', function () {
+        $user = User::factory()->admin()->create();
+
+        $this->actingAs($user)->get(route('admin.dashboard'))->assertOk();
+
+        $this->travel(6)->minutes();
+
+        $this->get(route('admin.dashboard'))
+            ->assertRedirect(route('admin.login'))
+            ->assertSessionHasErrors('email');
+
+        $this->assertGuest();
+    });
+
+    it('keeps an admin signed in while they stay active', function () {
+        $user = User::factory()->admin()->create();
+
+        $this->actingAs($user)->get(route('admin.dashboard'))->assertOk();
+
+        $this->travel(4)->minutes();
+        $this->get(route('admin.dashboard'))->assertOk();
+
+        $this->travel(4)->minutes();
+        $this->get(route('admin.dashboard'))->assertOk();
+
+        $this->assertAuthenticatedAs($user);
     });
 });

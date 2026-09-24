@@ -166,7 +166,7 @@
         {{-- Testimonials --}}
         @if ($testimonials->isNotEmpty())
             <x-ui.section width="wide" class="bg-cream-raised">
-                <x-ui.section-header soft>{{ __('What people are saying.') }}</x-ui.section-header>
+                <x-ui.section-header soft :eyebrow="__('Testimonials')">{{ __('What people are saying.') }}</x-ui.section-header>
 
                 <div class="reveal-stagger mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach ($testimonials as $testimonial)

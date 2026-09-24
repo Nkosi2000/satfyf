@@ -63,6 +63,7 @@ it('shows published testimonials on the home page', function () {
 
     $this->get('/')
         ->assertOk()
+        ->assertSeeInOrder(['Testimonials', 'What people are saying.'])
         ->assertSee('Zanele Test')
         ->assertSee('This programme changed how I see tobacco.');
 });

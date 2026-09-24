@@ -3,6 +3,7 @@
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\PreventSessionHijacking;
 use App\Http\Middleware\SetLocale;
+use App\Http\Middleware\SignOutIdleSessions;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -36,6 +37,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => EnsureUserIsAdmin::class,
             'locale' => SetLocale::class,
             'session.fingerprint' => PreventSessionHijacking::class,
+            'session.idle' => SignOutIdleSessions::class,
         ]);
 
         $middleware->redirectGuestsTo(fn (Request $request) => route('admin.login'));

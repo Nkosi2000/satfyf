@@ -42,7 +42,7 @@ class AuthenticatedSessionController extends Controller
             ]);
         }
 
-        // Bind this session to the browser/network it was created from —
+        // Bind this session to the browser it was created from —
         // see PreventSessionHijacking, which invalidates the session if a
         // later request's fingerprint doesn't match this one.
         $request->session()->put('auth_fingerprint', PreventSessionHijacking::fingerprint($request));

@@ -38,7 +38,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             ->name('password.update');
     });
 
-    Route::middleware(['auth', 'admin', 'session.fingerprint'])->group(function (): void {
+    Route::middleware(['auth', 'admin', 'session.fingerprint', 'session.idle'])->group(function (): void {
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
