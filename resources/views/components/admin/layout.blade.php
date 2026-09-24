@@ -22,6 +22,7 @@
             ['label' => 'Testimonials', 'route' => 'admin.testimonials.index', 'icon' => 'quote'],
             ['label' => 'Resources', 'route' => 'admin.resources.index', 'icon' => 'download'],
             ['label' => 'Gallery', 'route' => 'admin.gallery-images.index', 'icon' => 'image'],
+            ['label' => 'Goals Slideshow', 'route' => 'admin.goal-images.index', 'icon' => 'image'],
             ['label' => 'Partners', 'route' => 'admin.partners.index', 'icon' => 'link'],
             ['label' => 'FAQs', 'route' => 'admin.faqs.index', 'icon' => 'question'],
         ],

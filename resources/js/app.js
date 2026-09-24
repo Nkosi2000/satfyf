@@ -17,6 +17,7 @@ import { initBackToTop } from './modules/back-to-top';
 import { initSearchModal } from './modules/search-modal';
 import { initMagnetic } from './modules/magnetic';
 import { initLottie } from './modules/lottie';
+import { initCrossfade } from './modules/crossfade';
 
 initNav();
 initTabs();
@@ -37,3 +38,4 @@ initBackToTop();
 initSearchModal();
 initMagnetic();
 initLottie();
+initCrossfade();

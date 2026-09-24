@@ -5,21 +5,19 @@ use App\Models\SiteSetting;
 use App\Models\User;
 
 it('renders the home page in English by default', function () {
-    SiteSetting::factory()->create([
-        'group' => 'hero',
-        'key' => 'hero_heading',
-        'value' => json_encode(['en' => 'Speak up. Stand out.']),
-    ]);
+    SiteSetting::query()->updateOrCreate(
+        ['key' => 'closing_cta_heading'],
+        ['group' => 'closing_cta', 'value' => json_encode(['en' => 'Speak up. Stand out.'])],
+    );
 
     $this->get('/')->assertOk()->assertSeeText('Speak up. Stand out.');
 });
 
 it('switches the rendered locale and persists it via cookie', function () {
-    SiteSetting::factory()->create([
-        'group' => 'hero',
-        'key' => 'hero_heading',
-        'value' => json_encode(['en' => 'Speak up. Stand out.', 'zu' => 'Khuluma. Vela.']),
-    ]);
+    SiteSetting::query()->updateOrCreate(
+        ['key' => 'closing_cta_heading'],
+        ['group' => 'closing_cta', 'value' => json_encode(['en' => 'Speak up. Stand out.', 'zu' => 'Khuluma. Vela.'])],
+    );
 
     $response = $this->get('/language/zu');
 

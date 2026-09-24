@@ -5,6 +5,7 @@ use App\Models\Article;
 use App\Models\ArticleImage;
 use App\Models\EventItem;
 use App\Models\GalleryImage;
+use App\Models\GoalImage;
 use App\Models\Partner;
 use App\Models\Resource;
 use App\Models\TeamMember;
@@ -18,6 +19,7 @@ it('caches a signed url for every stored file path across every model', function
     );
 
     $gallery = GalleryImage::factory()->create(['image_path' => 'gallery/one.jpg']);
+    $goalImage = GoalImage::factory()->create(['image_path' => 'goals/one.jpg']);
     $partner = Partner::factory()->create(['logo_path' => 'partners/one.png']);
     $testimonial = Testimonial::factory()->create(['photo_path' => 'testimonials/one.jpg']);
     $teamMember = TeamMember::factory()->create(['photo_path' => 'team/one.jpg']);
@@ -32,6 +34,7 @@ it('caches a signed url for every stored file path across every model', function
     $this->artisan('app:warm-storage-urls')->assertSuccessful();
 
     expect(Cache::get('storage_url:public:'.$gallery->image_path))->toBe('https://fake.test/'.$gallery->image_path)
+        ->and(Cache::get('storage_url:public:'.$goalImage->image_path))->toBe('https://fake.test/'.$goalImage->image_path)
         ->and(Cache::get('storage_url:public:'.$partner->logo_path))->toBe('https://fake.test/'.$partner->logo_path)
         ->and(Cache::get('storage_url:public:'.$testimonial->photo_path))->toBe('https://fake.test/'.$testimonial->photo_path)
         ->and(Cache::get('storage_url:public:'.$teamMember->photo_path))->toBe('https://fake.test/'.$teamMember->photo_path)

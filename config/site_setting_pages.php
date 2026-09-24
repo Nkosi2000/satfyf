@@ -44,6 +44,8 @@ return [
         'groups' => ['who_we_are', 'youth_chapters', 'champions_network'],
         'fields' => [
             'who_we_are_hero_eyebrow', 'who_we_are_hero_heading', 'who_we_are_hero_subtext',
+            'who_we_are_goals_heading', 'who_we_are_goals_intro',
+            'who_we_are_goal_1', 'who_we_are_goal_2', 'who_we_are_goal_3', 'who_we_are_goal_4',
             'who_we_are_vision_eyebrow', 'who_we_are_vision_heading',
             'who_we_are_team_eyebrow', 'who_we_are_team_heading', 'who_we_are_team_body',
             'youth_chapters_eyebrow', 'youth_chapters_heading', 'youth_chapters_intro',

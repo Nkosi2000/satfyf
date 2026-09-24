@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\GoalImage;
 use App\Models\Partner;
 use App\Models\SiteSetting;
 use App\Models\Testimonial;
@@ -70,6 +71,27 @@ it('shows the overview on the home page but not on who we are', function () {
         ->assertOk()
         ->assertSee('Who we are subtext.')
         ->assertDontSee('Home-only overview text.');
+});
+
+it('shows the goals and objectives section with its slideshow on who we are', function () {
+    SiteSetting::query()->updateOrCreate(['key' => 'who_we_are_goals_heading'], ['group' => 'who_we_are', 'value' => json_encode(['en' => 'SATFYF Goals & Objectives'])]);
+    SiteSetting::query()->updateOrCreate(['key' => 'who_we_are_goal_1'], ['group' => 'who_we_are', 'value' => json_encode(['en' => 'Creating a youth movement'])]);
+    GoalImage::factory()->create(['caption' => 'First slide', 'order' => 0]);
+    GoalImage::factory()->create(['caption' => 'Second slide', 'order' => 1]);
+
+    $this->get('/who-we-are')
+        ->assertOk()
+        ->assertSeeInOrder(['SATFYF Goals &amp; Objectives', 'Creating a youth movement', 'alt="First slide"', 'alt="Second slide"'], false)
+        ->assertSee('data-crossfade-toggle', false);
+});
+
+it('shows the goals section without a slideshow when no images are uploaded', function () {
+    SiteSetting::query()->updateOrCreate(['key' => 'who_we_are_goals_heading'], ['group' => 'who_we_are', 'value' => json_encode(['en' => 'SATFYF Goals & Objectives'])]);
+
+    $this->get('/who-we-are')
+        ->assertOk()
+        ->assertSee('SATFYF Goals &amp; Objectives', false)
+        ->assertDontSee('data-crossfade', false);
 });
 
 it('shows published testimonials on the home page', function () {

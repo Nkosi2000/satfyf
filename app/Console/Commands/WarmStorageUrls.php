@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\ArticleImage;
 use App\Models\EventItem;
 use App\Models\GalleryImage;
+use App\Models\GoalImage;
 use App\Models\Partner;
 use App\Models\Resource;
 use App\Models\TeamMember;
@@ -51,6 +52,7 @@ class WarmStorageUrls extends Command
     {
         $paths = [
             ...GalleryImage::pluck('image_path'),
+            ...GoalImage::pluck('image_path'),
             ...Partner::whereNotNull('logo_path')->pluck('logo_path'),
             ...Testimonial::whereNotNull('photo_path')->pluck('photo_path'),
             ...TeamMember::whereNotNull('photo_path')->pluck('photo_path'),

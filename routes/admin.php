@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventItemController;
 use App\Http\Controllers\Admin\FaqItemController;
 use App\Http\Controllers\Admin\GalleryImageController;
+use App\Http\Controllers\Admin\GoalImageController;
 use App\Http\Controllers\Admin\MarkdownPreviewController;
 use App\Http\Controllers\Admin\NewPasswordController;
 use App\Http\Controllers\Admin\NewsletterSubscriberController;
@@ -54,6 +55,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::resource('events', EventItemController::class)->except('show');
         Route::resource('resources', ResourceController::class)->except('show');
         Route::resource('gallery-images', GalleryImageController::class)->except('show');
+        Route::resource('goal-images', GoalImageController::class)->except('show');
         Route::resource('partners', PartnerController::class)->except('show');
         Route::resource('faqs', FaqItemController::class)->except('show');
 
