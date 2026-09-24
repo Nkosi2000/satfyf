@@ -4,6 +4,8 @@
 // toggle) so there's no flash of the wrong width on load — this handler
 // only needs to react to clicks from then on.
 export function initAdminSidebar() {
+    initNavGroups();
+
     const toggle = document.querySelector('[data-sidebar-toggle]');
     if (!toggle) return;
 
@@ -19,5 +21,21 @@ export function initAdminSidebar() {
             // Private browsing / storage disabled — collapse still works
             // for this page load, it just won't persist.
         }
+    });
+}
+
+// Opens/closes a nav section (Pages, Content, ...) when its heading is
+// clicked. The section holding the current page is rendered open by
+// admin/layout.blade.php; the rest start closed.
+function initNavGroups() {
+    document.querySelectorAll('[data-nav-group-toggle]').forEach((toggle) => {
+        const panel = document.getElementById(toggle.getAttribute('aria-controls'));
+        if (!panel) return;
+
+        toggle.addEventListener('click', () => {
+            const open = toggle.getAttribute('aria-expanded') !== 'true';
+            toggle.setAttribute('aria-expanded', String(open));
+            panel.dataset.open = String(open);
+        });
     });
 }

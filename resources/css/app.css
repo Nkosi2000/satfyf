@@ -1246,6 +1246,42 @@ img[data-loaded] {
     transform: rotate(180deg);
 }
 
+/* Collapsible nav sections (Pages, Content, ...) — the section heading
+   button flips data-open on its panel (resources/js/modules/admin-sidebar.js).
+   visibility, not just the 0fr row, keeps the hidden links out of the tab
+   order; it flips instantly on open and waits for the row to finish
+   shrinking on close. The icon-only rail has no headings to click, so every
+   section is forced open there. */
+[data-nav-group-panel] {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 200ms ease;
+}
+
+[data-nav-group-panel] > div {
+    min-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transition: visibility 200ms;
+}
+
+[data-nav-group-panel][data-open='true'],
+.admin-sidebar-collapsed [data-admin-sidebar] [data-nav-group-panel] {
+    grid-template-rows: 1fr;
+}
+
+[data-nav-group-panel][data-open='true'] > div,
+.admin-sidebar-collapsed [data-admin-sidebar] [data-nav-group-panel] > div {
+    visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-nav-group-panel],
+    [data-nav-group-panel] > div {
+        transition: none;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .marquee-track {
         animation: none;

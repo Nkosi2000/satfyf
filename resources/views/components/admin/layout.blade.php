@@ -142,24 +142,34 @@
                 </button>
             </div>
 
-            <nav class="flex flex-1 flex-col gap-4 overflow-y-auto p-3">
+            <nav class="flex flex-1 flex-col gap-2 overflow-y-auto p-3">
                 @foreach ($navSections as $heading => $items)
-                    <div class="flex flex-col gap-0.5">
+                    <div class="flex flex-col">
                         @if ($heading)
-                            <p data-nav-section-heading class="px-3 pb-1 text-xs font-bold tracking-wider text-faint uppercase">{{ $heading }}</p>
+                            <x-admin.nav-group-toggle :heading="$heading" :open="$heading === $activeSection" id-prefix="admin-nav-group" data-nav-section-heading />
                         @endif
-                        @foreach ($items as $item)
-                            <a
-                                href="{{ route($item['route'], $item['params'] ?? []) }}"
-                                title="{{ $item['label'] }}"
-                                class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors {{ $isNavItemActive($item) ? 'bg-primary text-on-accent' : 'text-muted hover:bg-surface-2 hover:text-fg' }}"
-                            >
-                                <span class="flex h-5 w-5 shrink-0 items-center justify-center">
-                                    <x-admin.icon :name="$item['icon']" class="h-5 w-5" />
-                                </span>
-                                <span data-nav-label class="truncate">{{ $item['label'] }}</span>
-                            </a>
-                        @endforeach
+                        <div
+                            @if ($heading)
+                                id="admin-nav-group-{{ Str::slug($heading) }}"
+                                data-nav-group-panel
+                                data-open="{{ $heading === $activeSection ? 'true' : 'false' }}"
+                            @endif
+                        >
+                            <div class="flex flex-col gap-0.5">
+                                @foreach ($items as $item)
+                                    <a
+                                        href="{{ route($item['route'], $item['params'] ?? []) }}"
+                                        title="{{ $item['label'] }}"
+                                        class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors {{ $isNavItemActive($item) ? 'bg-primary text-on-accent' : 'text-muted hover:bg-surface-2 hover:text-fg' }}"
+                                    >
+                                        <span class="flex h-5 w-5 shrink-0 items-center justify-center">
+                                            <x-admin.icon :name="$item['icon']" class="h-5 w-5" />
+                                        </span>
+                                        <span data-nav-label class="truncate">{{ $item['label'] }}</span>
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 @endforeach
             </nav>
@@ -203,21 +213,31 @@
                 <nav class="max-h-[70vh] overflow-y-auto">
                     <div class="flex flex-col gap-4 p-3">
                         @foreach ($navSections as $heading => $items)
-                            <div class="flex flex-col gap-1">
+                            <div class="flex flex-col">
                                 @if ($heading)
-                                    <p class="px-3 pb-1 text-xs font-bold tracking-wider text-faint uppercase">{{ $heading }}</p>
+                                    <x-admin.nav-group-toggle :heading="$heading" :open="$heading === $activeSection" id-prefix="admin-mobile-nav-group" />
                                 @endif
-                                @foreach ($items as $item)
-                                    <a
-                                        href="{{ route($item['route'], $item['params'] ?? []) }}"
-                                        class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium {{ $isNavItemActive($item) ? 'bg-primary text-on-accent' : 'text-muted hover:bg-surface-2 hover:text-fg' }}"
-                                    >
-                                        <span class="flex h-5 w-5 shrink-0 items-center justify-center">
-                                            <x-admin.icon :name="$item['icon']" class="h-5 w-5" />
-                                        </span>
-                                        {{ $item['label'] }}
-                                    </a>
-                                @endforeach
+                                <div
+                                    @if ($heading)
+                                        id="admin-mobile-nav-group-{{ Str::slug($heading) }}"
+                                        data-nav-group-panel
+                                        data-open="{{ $heading === $activeSection ? 'true' : 'false' }}"
+                                    @endif
+                                >
+                                    <div class="flex flex-col gap-1">
+                                        @foreach ($items as $item)
+                                            <a
+                                                href="{{ route($item['route'], $item['params'] ?? []) }}"
+                                                class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium {{ $isNavItemActive($item) ? 'bg-primary text-on-accent' : 'text-muted hover:bg-surface-2 hover:text-fg' }}"
+                                            >
+                                                <span class="flex h-5 w-5 shrink-0 items-center justify-center">
+                                                    <x-admin.icon :name="$item['icon']" class="h-5 w-5" />
+                                                </span>
+                                                {{ $item['label'] }}
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
                         @endforeach
                     </div>
