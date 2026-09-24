@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="space-y-7 text-balance text-lg leading-relaxed text-muted">
-                    <p>{{ $mission['mission_statement'] ?? '' }}</p>
+                    <p>{{ $overview['overview'] ?? '' }}</p>
                     <ul class="reveal-stagger grid gap-5 sm:grid-cols-3">
                         @foreach ([1, 2, 3] as $i)
                             <li class="card-soft flex flex-col gap-4 p-6 text-sm font-bold text-fg">

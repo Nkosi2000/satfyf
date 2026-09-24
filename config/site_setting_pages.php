@@ -17,7 +17,7 @@ return [
     'home' => [
         'label' => 'Home',
         'section' => 'pages',
-        'groups' => ['hero', 'why_it_matters', 'trusted_by', 'closing_cta'],
+        'groups' => ['hero', 'overview', 'why_it_matters', 'trusted_by', 'closing_cta'],
     ],
     'who-we-are' => [
         'label' => 'Who We Are',

@@ -35,11 +35,11 @@ class SiteKnowledgeBuilder
 
     private function about(): ?string
     {
-        $mission = SiteSetting::group('mission');
+        $overview = SiteSetting::group('overview');
         $contact = SiteSetting::group('contact');
 
         $lines = array_filter([
-            $mission['mission_statement'] ?? null,
+            $overview['overview'] ?? null,
             isset($contact['contact_email']) ? 'Contact email: '.$contact['contact_email'] : null,
             isset($contact['contact_phone_office']) ? 'Contact phone: '.$contact['contact_phone_office'] : null,
             isset($contact['contact_address']) ? 'Address: '.$contact['contact_address'] : null,

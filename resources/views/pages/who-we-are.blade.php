@@ -1,5 +1,5 @@
 <x-layouts.app :title="$content['who_we_are_hero_eyebrow'] ?? __('Who We Are')">
-    <x-ui.page-hero :eyebrow="$content['who_we_are_hero_eyebrow'] ?? __('Who We Are')" :subtext="$mission['mission_statement'] ?? null">
+    <x-ui.page-hero :eyebrow="$content['who_we_are_hero_eyebrow'] ?? __('Who We Are')" :subtext="$content['who_we_are_hero_subtext'] ?? null">
         {{ $content['who_we_are_hero_heading'] ?? __('Youth voices, not youth audiences.') }}
 
         <x-slot:image>

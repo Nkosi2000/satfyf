@@ -20,9 +20,11 @@ class SiteSettingSeeder extends Seeder
                 'hero_subtext' => 'We are the youth voices championing and fighting against the harsh and dangerous realities of tobacco, substance and drug abuse amongst young people.',
                 'hero_closing_subtext' => 'No membership fee. Open to every school and community.',
             ],
+            'overview' => [
+                'overview' => 'Youth voices championing & fighting against the harsh and dangerous realities of tobacco, as well as substance & drug abuse amongst young people.',
+            ],
             'mission' => [
                 'mission_tagline' => 'We speak and spread the truth about smoking.',
-                'mission_statement' => 'Youth voices championing & fighting against the harsh and dangerous realities of tobacco, as well as substance & drug abuse amongst young people.',
                 'org_motto' => '',
                 'vision_2030_1' => 'Young people reject smoking in social settings.',
                 'vision_2030_1_icon' => 'users',
@@ -95,6 +97,7 @@ class SiteSettingSeeder extends Seeder
             'who_we_are' => [
                 'who_we_are_hero_eyebrow' => 'Who We Are',
                 'who_we_are_hero_heading' => 'Youth voices, not youth audiences.',
+                'who_we_are_hero_subtext' => 'Youth voices championing & fighting against the harsh and dangerous realities of tobacco, as well as substance & drug abuse amongst young people.',
                 'who_we_are_vision_eyebrow' => 'Vision 2030',
                 'who_we_are_vision_heading' => 'By 2030, we want to see.',
                 'who_we_are_team_eyebrow' => 'The Team',

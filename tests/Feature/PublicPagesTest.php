@@ -58,6 +58,20 @@ it('does not show unpublished partners', function () {
         ->assertDontSee('Hidden Org');
 });
 
+it('shows the overview on the home page but not on who we are', function () {
+    SiteSetting::query()->updateOrCreate(['key' => 'overview'], ['group' => 'overview', 'value' => json_encode(['en' => 'Home-only overview text.'])]);
+    SiteSetting::query()->updateOrCreate(['key' => 'who_we_are_hero_subtext'], ['group' => 'who_we_are', 'value' => json_encode(['en' => 'Who we are subtext.'])]);
+
+    $this->get('/')
+        ->assertOk()
+        ->assertSee('Home-only overview text.');
+
+    $this->get('/who-we-are')
+        ->assertOk()
+        ->assertSee('Who we are subtext.')
+        ->assertDontSee('Home-only overview text.');
+});
+
 it('shows published testimonials on the home page', function () {
     Testimonial::factory()->create(['name' => 'Zanele Test', 'quote' => 'This programme changed how I see tobacco.', 'published' => true]);
 

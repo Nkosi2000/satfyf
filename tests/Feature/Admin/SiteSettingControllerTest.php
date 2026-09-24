@@ -39,17 +39,32 @@ describe('edit', function () {
     });
 
     it('only shows settings belonging to the requested page', function () {
-        // contact_address/mission_statement are normally seeded by
+        // contact_address/overview are normally seeded by
         // SiteSettingSeeder, which RefreshDatabase doesn't run — create
         // them directly so this test only depends on migrated schema.
         SiteSetting::query()->updateOrCreate(['key' => 'contact_address'], ['group' => 'contact', 'value' => json_encode(['en' => 'Some Address'])]);
-        SiteSetting::query()->updateOrCreate(['key' => 'mission_statement'], ['group' => 'mission', 'value' => json_encode(['en' => 'Some Statement'])]);
+        SiteSetting::query()->updateOrCreate(['key' => 'overview'], ['group' => 'overview', 'value' => json_encode(['en' => 'Some Overview'])]);
 
         $this->actingAs($this->admin)
             ->get(route('admin.pages.edit', ['page' => 'contact']))
             ->assertOk()
             ->assertSee('Contact Address')
-            ->assertDontSee('Mission Statement');
+            ->assertDontSee('Some Overview');
+    });
+
+    it('shows the overview on the home page screen, not under mission & vision', function () {
+        SiteSetting::query()->updateOrCreate(['key' => 'overview'], ['group' => 'overview', 'value' => json_encode(['en' => 'Home overview text'])]);
+
+        $this->actingAs($this->admin)
+            ->get(route('admin.pages.edit', ['page' => 'home']))
+            ->assertOk()
+            ->assertSee('name="settings[overview][en]"', false)
+            ->assertSee('Home overview text');
+
+        $this->actingAs($this->admin)
+            ->get(route('admin.organisation.edit', ['page' => 'mission']))
+            ->assertOk()
+            ->assertDontSee('name="settings[overview][en]"', false);
     });
 
     it('shows a breadcrumb trail down to the current page', function () {
@@ -79,20 +94,20 @@ describe('update', function () {
 
     it('ignores keys outside the requested page\'s groups', function () {
         SiteSetting::query()->updateOrCreate(['key' => 'contact_address'], ['group' => 'contact', 'value' => json_encode(['en' => 'Old Address'])]);
-        SiteSetting::query()->updateOrCreate(['key' => 'mission_statement'], ['group' => 'mission', 'value' => json_encode(['en' => 'Old Statement'])]);
+        SiteSetting::query()->updateOrCreate(['key' => 'overview'], ['group' => 'overview', 'value' => json_encode(['en' => 'Old Overview'])]);
 
         $response = $this->actingAs($this->admin)->put(route('admin.pages.update', ['page' => 'contact']), [
             'settings' => [
                 // contact_address belongs to the "contact" page — allowed.
                 'contact_address' => ['en' => 'New Address'],
-                // mission_statement belongs to "mission", not "contact" — must be ignored.
-                'mission_statement' => ['en' => 'Tampered Statement'],
+                // overview belongs to the home page, not "contact" — must be ignored.
+                'overview' => ['en' => 'Tampered Overview'],
             ],
         ]);
 
         $response->assertRedirect(route('admin.pages.edit', ['page' => 'contact']));
         expect(SiteSetting::get('contact_address'))->toBe('New Address');
-        expect(SiteSetting::get('mission_statement'))->not->toBe('Tampered Statement');
+        expect(SiteSetting::get('overview'))->not->toBe('Tampered Overview');
     });
 
     it('redirects back to the resource list for an embedded page-header panel', function () {

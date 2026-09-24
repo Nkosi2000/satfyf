@@ -18,6 +18,7 @@ class HomeController extends Controller
     {
         return view('pages.home', [
             'hero' => SiteSetting::group('hero'),
+            'overview' => SiteSetting::group('overview'),
             'mission' => SiteSetting::group('mission'),
             'whyItMatters' => SiteSetting::group('why_it_matters'),
             'closingCta' => SiteSetting::group('closing_cta'),
