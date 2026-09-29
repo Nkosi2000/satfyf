@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Article;
+use App\Models\EventItem;
 use App\Models\GoalImage;
 use App\Models\Partner;
 use App\Models\SiteSetting;
@@ -102,6 +104,18 @@ it('shows published testimonials on the home page', function () {
         ->assertSeeInOrder(['Testimonials', 'What people are saying.'])
         ->assertSee('Zanele Test')
         ->assertSee('This programme changed how I see tobacco.');
+});
+
+it('links the latest articles and upcoming events on the home page', function () {
+    $article = Article::factory()->create(['title' => 'Youth Summit Recap', 'published_at' => now()->subDay()]);
+    $event = EventItem::factory()->create(['title' => 'Cape Town Workshop', 'starts_at' => now()->addWeek()]);
+
+    $this->get('/')
+        ->assertOk()
+        ->assertSee('href="'.route('articles.show', $article).'"', false)
+        ->assertSee('Youth Summit Recap')
+        ->assertSee('href="'.route('events.show', $event).'"', false)
+        ->assertSee('Cape Town Workshop');
 });
 
 it('does not show unpublished testimonials on the home page', function () {

@@ -24,13 +24,13 @@
         <x-ui.section-header :eyebrow="__('Upcoming')">{{ __('Join us.') }}</x-ui.section-header>
         <div class="reveal-stagger mt-8 hairline-t">
             @forelse ($upcoming as $event)
-                <a href="{{ route('events.show', $event) }}" class="group glass-row row-hover flex flex-col gap-2 py-6 pl-5 hairline-b sm:flex-row sm:items-center sm:justify-between">
+                <x-ui.link-row :href="route('events.show', $event)" class="flex flex-col gap-2 py-6 hairline-b sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                        <p class="font-medium text-fg group-hover:text-primary-soft">{{ $event->title }}</p>
+                        <x-ui.row-title>{{ $event->title }}</x-ui.row-title>
                         <p class="mt-1 text-sm text-muted">{{ $event->location }}</p>
                     </div>
                     <p class="text-sm text-faint">{{ $event->starts_at->translatedFormat('d M Y, H:i') }}</p>
-                </a>
+                </x-ui.link-row>
             @empty
                 <x-ui.empty-state>{{ __('No upcoming events right now — check back soon.') }}</x-ui.empty-state>
             @endforelse
@@ -42,10 +42,10 @@
             <x-ui.section-header :eyebrow="__('Past')">{{ __("Where we've been.") }}</x-ui.section-header>
             <div class="reveal-stagger mt-8 hairline-t">
                 @foreach ($past as $event)
-                    <a href="{{ route('events.show', $event) }}" class="group glass-row row-hover flex flex-col gap-2 py-6 pl-5 hairline-b sm:flex-row sm:items-center sm:justify-between">
-                        <p class="font-medium text-muted group-hover:text-fg">{{ $event->title }}</p>
+                    <x-ui.link-row :href="route('events.show', $event)" class="flex flex-col gap-2 py-6 hairline-b sm:flex-row sm:items-center sm:justify-between">
+                        <x-ui.row-title muted>{{ $event->title }}</x-ui.row-title>
                         <p class="text-sm text-faint">{{ $event->starts_at->translatedFormat('d M Y') }}</p>
-                    </a>
+                    </x-ui.link-row>
                 @endforeach
             </div>
             <div class="mt-8">{{ $past->links('vendor.pagination.satfyf') }}</div>

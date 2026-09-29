@@ -25,15 +25,15 @@
         @if ($query !== '')
             <div class="reveal-stagger mt-10 hairline-t">
                 @forelse ($results as $result)
-                    <a href="{{ $result['url'] }}" class="group glass-row row-hover flex flex-col gap-2 py-5 pl-5 hairline-b">
+                    <x-ui.link-row :href="$result['url']" class="flex flex-col gap-2 py-5 hairline-b">
                         <div class="flex items-center gap-3">
                             <x-ui.pill-chip>{{ $result['type'] }}</x-ui.pill-chip>
-                            <p class="font-black text-fg group-hover:text-primary-soft">{{ $result['title'] }}</p>
+                            <x-ui.row-title>{{ $result['title'] }}</x-ui.row-title>
                         </div>
                         @if ($result['excerpt'])
                             <p class="line-clamp-2 max-w-2xl text-sm text-muted">{{ $result['excerpt'] }}</p>
                         @endif
-                    </a>
+                    </x-ui.link-row>
                 @empty
                     <x-ui.empty-state class="!py-16">
                         {{ __('No results for ":query" — try a different word.', ['query' => $query]) }}

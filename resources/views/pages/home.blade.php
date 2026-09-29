@@ -63,13 +63,13 @@
 
             <div class="reveal-stagger mt-10 hairline-t">
                 @foreach ($programs as $category => $items)
-                    <a href="{{ route('what-we-do') }}" class="group glass-row row-hover flex items-center justify-between gap-6 py-5 pl-5 hairline-b">
+                    <x-ui.link-row :href="route('what-we-do')" class="flex items-center justify-between gap-6 py-5 hairline-b">
                         <div>
-                            <p class="font-medium text-fg">{{ $items->first()->category->label() }}</p>
+                            <x-ui.row-title>{{ $items->first()->category->label() }}</x-ui.row-title>
                             <p class="mt-1 text-sm text-muted">{{ $items->pluck('title')->join(', ') }}</p>
                         </div>
                         <span class="shrink-0 text-muted transition-transform group-hover:translate-x-1 group-hover:text-primary-soft">&rarr;</span>
-                    </a>
+                    </x-ui.link-row>
                 @endforeach
             </div>
         </x-ui.section>
@@ -170,25 +170,7 @@
 
                 <div class="reveal-stagger mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach ($testimonials as $testimonial)
-                        <figure class="card-soft flex flex-col gap-5 p-7">
-                            <span class="text-5xl leading-none font-black text-primary-soft" aria-hidden="true">&ldquo;</span>
-                            <blockquote class="flex-1 text-balance text-fg">{{ $testimonial->quote }}</blockquote>
-                            <figcaption class="flex items-center gap-3 border-t border-hairline pt-4">
-                                @if ($testimonial->photo_path)
-                                    <img src="{{ storage_url($testimonial->photo_path) }}" alt="" class="h-11 w-11 shrink-0 rounded-full object-cover" />
-                                @else
-                                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-2 text-sm font-black text-fg">
-                                        {{ \Illuminate\Support\Str::of($testimonial->name)->explode(' ')->map(fn ($n) => $n[0])->join('') }}
-                                    </span>
-                                @endif
-                                <div>
-                                    <p class="font-black text-fg">{{ $testimonial->name }}</p>
-                                    @if ($testimonial->role)
-                                        <p class="text-xs font-bold text-muted uppercase">{{ $testimonial->role }}</p>
-                                    @endif
-                                </div>
-                            </figcaption>
-                        </figure>
+                        <x-ui.testimonial-card :testimonial="$testimonial" />
                     @endforeach
                 </div>
             </x-ui.section>
@@ -205,11 +187,11 @@
 
                     <div class="reveal-stagger mt-8 space-y-6">
                         @forelse ($articles as $article)
-                            <a href="{{ route('articles.show', $article) }}" class="group glass-row row-hover block pb-6 pl-5 hairline-b">
+                            <x-ui.link-row :href="route('articles.show', $article)" class="block pb-6 hairline-b">
                                 <p class="text-xs text-faint">{{ $article->published_at->translatedFormat('d M Y') }}</p>
-                                <p class="mt-2 font-medium text-fg group-hover:text-primary-soft">{{ $article->title }}</p>
+                                <x-ui.row-title class="mt-2">{{ $article->title }}</x-ui.row-title>
                                 <p class="mt-1 text-sm text-muted">{{ $article->excerpt }}</p>
-                            </a>
+                            </x-ui.link-row>
                         @empty
                             <x-ui.empty-state>{{ __('Articles are coming soon.') }}</x-ui.empty-state>
                         @endforelse
@@ -224,10 +206,10 @@
 
                     <div class="reveal-stagger mt-8 space-y-6">
                         @forelse ($events as $event)
-                            <a href="{{ route('events.show', $event) }}" class="group glass-row row-hover block pb-6 pl-5 hairline-b">
+                            <x-ui.link-row :href="route('events.show', $event)" class="block pb-6 hairline-b">
                                 <p class="text-xs text-faint">{{ $event->starts_at->translatedFormat('d M Y, H:i') }} &middot; {{ $event->location }}</p>
-                                <p class="mt-2 font-medium text-fg group-hover:text-primary-soft">{{ $event->title }}</p>
-                            </a>
+                                <x-ui.row-title class="mt-2">{{ $event->title }}</x-ui.row-title>
+                            </x-ui.link-row>
                         @empty
                             <x-ui.empty-state>{{ __('No upcoming events right now. Check back soon.') }}</x-ui.empty-state>
                         @endforelse

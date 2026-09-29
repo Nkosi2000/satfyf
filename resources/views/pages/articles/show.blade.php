@@ -58,10 +58,10 @@
                 <x-ui.section-header :eyebrow="__('Keep Reading')">{{ __('More articles.') }}</x-ui.section-header>
                 <div class="reveal-stagger mt-8 grid gap-8 sm:grid-cols-3">
                     @foreach ($related as $item)
-                        <a href="{{ route('articles.show', $item) }}" class="group glass-row row-hover block py-3 pl-5">
+                        <x-ui.link-row :href="route('articles.show', $item)" class="block py-3">
                             <p class="text-xs font-bold text-faint uppercase">{{ $item->published_at->translatedFormat('d M Y') }}</p>
-                            <p class="mt-2 font-black text-fg group-hover:text-primary-soft">{{ $item->title }}</p>
-                        </a>
+                            <x-ui.row-title class="mt-2">{{ $item->title }}</x-ui.row-title>
+                        </x-ui.link-row>
                     @endforeach
                 </div>
             </x-ui.section>
