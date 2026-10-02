@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\GoalImage;
+use App\Models\Province;
 use App\Models\SiteSetting;
 use App\Models\TeamMember;
 use Illuminate\View\View;
@@ -18,6 +19,7 @@ class WhoWeAreController extends Controller
             'team' => TeamMember::publishedOrdered(),
             'championsNetwork' => SiteSetting::group('champions_network'),
             'youthChapters' => SiteSetting::group('youth_chapters'),
+            'provinces' => Province::allOrdered(),
         ]);
     }
 }

@@ -4,6 +4,7 @@ use App\Models\Article;
 use App\Models\EventItem;
 use App\Models\GoalImage;
 use App\Models\Partner;
+use App\Models\Province;
 use App\Models\SiteSetting;
 use App\Models\Testimonial;
 use Illuminate\Support\Facades\Storage;
@@ -94,6 +95,21 @@ it('shows the goals section without a slideshow when no images are uploaded', fu
         ->assertOk()
         ->assertSee('SATFYF Goals &amp; Objectives', false)
         ->assertDontSee('data-crossfade', false);
+});
+
+it('lists admin-managed provinces in order under youth chapters on who we are', function () {
+    Province::factory()->create(['name' => 'Western Cape', 'order' => 2]);
+    Province::factory()->create(['name' => 'Gauteng', 'order' => 1]);
+
+    $this->get('/who-we-are')
+        ->assertOk()
+        ->assertSeeInOrder(['Active across the country.', 'Gauteng', 'Western Cape']);
+});
+
+it('hides the youth chapters section when there is no intro and no provinces', function () {
+    $this->get('/who-we-are')
+        ->assertOk()
+        ->assertDontSee('Active across the country.');
 });
 
 it('shows published testimonials on the home page', function () {

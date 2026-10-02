@@ -14,7 +14,7 @@
                     {{ trans_choice(':count organisation|:count organisations', $partners[$type->value]->count(), ['count' => $partners[$type->value]->count()]) }}
                 </x-ui.section-header>
                 @if ($type === App\Enums\PartnerType::AdvisoryCouncil && ! empty($partnerSettings['advisory_council_intro']))
-                    <p class="mt-4 max-w-2xl text-balance text-lg leading-relaxed text-muted">{{ $partnerSettings['advisory_council_intro'] }}</p>
+                    <x-ui.lead class="mt-4">{{ $partnerSettings['advisory_council_intro'] }}</x-ui.lead>
                 @endif
                 <div class="reveal-stagger mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach ($partners[$type->value] as $partner)
