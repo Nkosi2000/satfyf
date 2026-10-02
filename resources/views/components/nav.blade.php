@@ -20,13 +20,18 @@
 
     // Centred secondary bar under the main one, shown/hidden by the
     // visitor (remembered per browser — see resources/js/modules/nav.js).
+    // `danger` renders a link in the brand red (Donate) so it stands out.
     $secondaryLinks = [
         ['label' => __('Quit Support'), 'route' => 'quit-support'],
         ['label' => __('Media & Press'), 'route' => 'media'],
         ['label' => __('Reports & Publications'), 'route' => 'reports'],
         ['label' => __('Volunteer'), 'route' => 'volunteer'],
-        ['label' => __('Donate'), 'route' => 'donate'],
+        ['label' => __('Donate'), 'route' => 'donate', 'danger' => true],
     ];
+
+    $secondaryLinkColor = fn (array $link): string => ($link['danger'] ?? false)
+        ? 'text-danger hover:text-danger-soft'
+        : 'text-muted hover:text-fg'.(request()->routeIs($link['route']) ? ' text-fg' : '');
 @endphp
 
 {{--
@@ -114,19 +119,24 @@
         </div>
     </div>
 
-    <div
-        id="secondary-nav"
-        class="hidden grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out min-[1450px]:grid [.secondary-nav-closed_&]:grid-rows-[0fr]"
-    >
-        <nav data-secondary-nav class="overflow-hidden" aria-label="{{ __('Secondary') }}">
-            <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-2 border-t border-hairline px-6 py-3">
+    {{-- Hangs from the header's bottom edge as a centred tab (see the
+         nav-tab utility in app.css) instead of a full-width row, so it
+         overlays the page rather than pushing it down. w-max sizes the tab
+         to its links, so it grows or shrinks with however many there are. --}}
+    <div id="secondary-nav" class="pointer-events-none absolute inset-x-0 top-full hidden justify-center min-[1450px]:flex">
+        <nav
+            data-secondary-nav
+            aria-label="{{ __('Secondary') }}"
+            class="nav-tab pointer-events-auto w-max transition-[translate,opacity] duration-300 ease-out [.secondary-nav-closed_&]:-translate-y-full [.secondary-nav-closed_&]:opacity-0"
+        >
+            <div class="flex items-center gap-x-10 px-10 py-3">
                 @foreach ($secondaryLinks as $link)
                     <a
                         href="{{ route($link['route']) }}"
-                        class="group relative py-1 text-sm font-bold text-muted transition-colors hover:text-fg {{ request()->routeIs($link['route']) ? 'text-fg' : '' }}"
+                        class="group relative py-1 text-sm font-bold whitespace-nowrap transition-colors {{ $secondaryLinkColor($link) }}"
                     >
                         {{ $link['label'] }}
-                        <span class="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-primary-soft transition-transform duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
+                        <span class="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 transition-transform duration-200 ease-out-strong group-hover:scale-x-100 {{ ($link['danger'] ?? false) ? 'bg-danger' : 'bg-primary-soft' }} {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
                     </a>
                 @endforeach
             </div>
@@ -153,7 +163,7 @@
                 @foreach ($secondaryLinks as $link)
                     <a
                         href="{{ route($link['route']) }}"
-                        class="rounded-lg px-3 py-2.5 text-sm font-bold text-muted transition-colors hover:bg-surface hover:text-fg"
+                        class="rounded-lg px-3 py-2.5 text-sm font-bold transition-colors hover:bg-surface {{ $secondaryLinkColor($link) }}"
                     >
                         {{ $link['label'] }}
                     </a>

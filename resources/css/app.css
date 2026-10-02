@@ -361,6 +361,48 @@ html {
     }
 }
 
+/* A tab hanging from the bottom edge of the site header (the secondary
+   nav): rounded (inward-curving) bottom corners, and top corners that
+   flare outward into the header. The flares are two pseudo-elements filled
+   with the tab colour, with a quarter-circle cut out so the curve reads as
+   concave. Radii are px, not rem — the 65% root font-size would shrink them.
+   Solid cream (not the header's cream/85) so it cleanly covers the
+   header's bottom hairline where they meet. */
+@utility nav-tab {
+    --nav-tab-radius: 18px;
+    position: relative;
+    background-color: var(--color-cream);
+    border-radius: 0 0 var(--nav-tab-radius) var(--nav-tab-radius);
+    filter: drop-shadow(0 10px 14px rgb(var(--color-primary-rgb) / 14%));
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: var(--nav-tab-radius);
+        height: var(--nav-tab-radius);
+    }
+
+    &::before {
+        right: 100%;
+        background: radial-gradient(
+            circle at 0 100%,
+            transparent calc(var(--nav-tab-radius) - 0.5px),
+            var(--color-cream) var(--nav-tab-radius)
+        );
+    }
+
+    &::after {
+        left: 100%;
+        background: radial-gradient(
+            circle at 100% 100%,
+            transparent calc(var(--nav-tab-radius) - 0.5px),
+            var(--color-cream) var(--nav-tab-radius)
+        );
+    }
+}
+
 /* Soft surface — a blurred ambient shadow and a barely-there border
    instead of a thick ink outline, for the site's warmer, quieter
    aesthetic (used everywhere now — see card-hard above). */

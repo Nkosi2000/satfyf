@@ -32,6 +32,12 @@ it('links every secondary nav page from the site header', function () {
         ->assertSee('href="'.route('donate').'"', false);
 });
 
+it('highlights the donate link in red in the secondary nav', function () {
+    $html = $this->get(route('home'))->assertOk()->getContent();
+
+    expect($html)->toMatch('/<a\s+href="'.preg_quote(route('donate'), '/').'"\s+class="[^"]*text-danger[^"]*"/');
+});
+
 it('hides banking details until an account number is entered', function () {
     $this->get(route('donate'))->assertDontSee('Give by EFT.');
 
