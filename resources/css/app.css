@@ -4,20 +4,15 @@
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    /* Two typefaces, matched to the brand cover photo
-       (public/images/SATFYF-Facebook-Cover-1280x474.jpeg): Fredoka (a
-       rounded, friendly geometric sans) is what the photo's own body copy
-       uses, and is now the whole site's default via <body>'s font-sans
-       class — headings, subheadings, nav and body copy all inherit it
-       without their own override. font-display is the tall, condensed,
-       pointed-apex caps font the photo's headline and the logo wordmark
-       itself both use (Bebas Neue) — opt in per element with the
-       `font-display` utility where that same poster-headline treatment is
-       wanted, rather than applying it everywhere (it has no lowercase
-       forms worth using at body-copy size). */
-    --font-sans: 'Fredoka', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    /* One corporate, formal typeface throughout: IBM Plex Sans is the
+       site's default via <body>'s font-sans class, and font-display (used
+       by section headings, page heroes and stats) points at the same face
+       so headings differ only by size and weight. Replaced the earlier
+       casual pairing (rounded Fredoka + Bebas Neue poster caps). Loaded in
+       vite.config.js. */
+    --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
-    --font-display: 'Bebas Neue', ui-sans-serif, system-ui, sans-serif;
+    --font-display: var(--font-sans);
 
     /* Noticeably larger than Tailwind's stock xs–2xl steps. The site runs
        html { font-size: 65% } (see below) so headings read at the right

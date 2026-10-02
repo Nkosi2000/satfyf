@@ -9,18 +9,11 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
             fonts: [
-                // Body/UI typeface — matches the rounded, friendly sans used
-                // for body copy on the brand cover photo (replaces Zalando
-                // Sans, which the cover photo doesn't use at all).
-                bunny('Fredoka', {
+                // The site's only typeface — a corporate, formal sans used for
+                // both body copy and headings. Its heaviest weight is 700, so
+                // font-black (900) resolves to bold.
+                bunny('IBM Plex Sans', {
                     weights: [400, 500, 600, 700],
-                }),
-                // Display typeface — the tall, condensed, pointed-apex caps
-                // font used for "SOUTH AFRICAN TOBACCO-FREE YOUTH FORUM" on
-                // the cover photo and in the logo wordmark itself. Only
-                // ships weight 400 (it's a single-weight display face).
-                bunny('Bebas Neue', {
-                    weights: [400],
                 }),
             ],
         }),
