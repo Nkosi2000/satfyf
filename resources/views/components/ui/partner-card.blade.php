@@ -6,7 +6,7 @@
      itself focusable so touch and keyboard users can reveal the back. --}}
 <div
     tabindex="0"
-    {{ $attributes->class(['group relative aspect-square overflow-hidden rounded-2xl border border-hairline bg-surface outline-none focus-visible:ring-2 focus-visible:ring-primary-soft']) }}
+    {{ $attributes->class(['group relative aspect-square overflow-hidden rounded-2xl border border-hairline bg-cream-raised outline-none focus-visible:ring-2 focus-visible:ring-primary-soft']) }}
     style="box-shadow: var(--shadow-soft-sm)"
 >
     <div class="absolute inset-0 flex flex-col items-center justify-center gap-5 p-8 text-center transition-opacity duration-500 ease-out group-focus-within:opacity-0 group-hover:opacity-0">
@@ -27,13 +27,15 @@
         class="absolute inset-0 flex flex-col items-center justify-center gap-6 p-8 text-center text-on-accent opacity-0 transition-opacity duration-500 ease-out group-focus-within:opacity-100 group-hover:opacity-100"
         style="background-image: linear-gradient(150deg, var(--color-primary-deep) 0%, var(--color-primary) 100%)"
     >
-        <p class="text-lg leading-relaxed line-clamp-7">{{ $partner->description ?: ($partner->role ?: $partner->name) }}</p>
+        {{-- Scrolls rather than truncating: real partner blurbs run to
+             600+ characters, more than a square card shows at once. --}}
+        <p class="min-h-0 overflow-y-auto text-base leading-relaxed">{{ $partner->description ?: ($partner->role ?: $partner->name) }}</p>
         @if ($partner->url)
             <a
                 href="{{ $partner->url }}"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="rounded-full border border-current px-5 py-2 text-sm font-bold transition-colors hover:bg-on-accent hover:text-primary-deep"
+                class="shrink-0 rounded-full border border-current px-5 py-2 text-sm font-bold transition-colors hover:bg-on-accent hover:text-primary-deep"
             >
                 {{ __('Visit :name', ['name' => $partner->name]) }}
             </a>

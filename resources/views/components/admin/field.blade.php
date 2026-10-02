@@ -25,7 +25,10 @@
             class="{{ $inputClasses }}"
         >{{ $old }}</textarea>
     @elseif ($type === 'select')
-        <select id="field-{{ $name }}" name="{{ $name }}" class="{{ $inputClasses }}">
+        {{-- autocomplete="off" stops browsers (Firefox especially) restoring
+             a previously chosen option on Back/reload, which would silently
+             resubmit a stale value instead of the one saved in the database. --}}
+        <select id="field-{{ $name }}" name="{{ $name }}" autocomplete="off" class="{{ $inputClasses }}">
             @foreach ($options as $optionValue => $optionLabel)
                 <option value="{{ $optionValue }}" @selected((string) $old === (string) $optionValue)>{{ $optionLabel }}</option>
             @endforeach

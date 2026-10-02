@@ -10,6 +10,7 @@
         <table class="w-full text-left text-sm">
             <thead class="border-b border-hairline-strong bg-surface-2 text-xs uppercase tracking-wide text-muted">
                 <tr>
+                    <th class="px-4 py-3">Logo</th>
                     <th class="px-4 py-3">Name</th>
                     <th class="px-4 py-3">Type</th>
                     <th class="px-4 py-3">Published</th>
@@ -19,8 +20,15 @@
             <tbody class="divide-y divide-hairline">
                 @foreach ($partners as $partner)
                     <tr>
+                        <td class="px-4 py-3">
+                            @if ($partner->logo_path)
+                                <img src="{{ storage_url($partner->logo_path) }}" alt="" class="h-10 w-16 rounded-md bg-cream-raised object-contain p-1" />
+                            @else
+                                <span class="text-xs text-faint">None</span>
+                            @endif
+                        </td>
                         <td class="px-4 py-3 font-medium">{{ $partner->name }}</td>
-                        <td class="px-4 py-3 text-muted">{{ $partner->type->label() }}</td>
+                        <td class="px-4 py-3"><x-ui.pill-chip>{{ $partner->type->label() }}</x-ui.pill-chip></td>
                         <td class="px-4 py-3">{{ $partner->published ? 'Yes' : 'No' }}</td>
                         <td class="px-4 py-3 text-right">
                             <a href="{{ route('admin.partners.edit', $partner) }}" class="font-medium text-muted hover:text-fg">Edit</a>

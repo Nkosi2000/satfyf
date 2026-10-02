@@ -33,9 +33,9 @@ class PartnerController extends Controller
             $data['logo_path'] = $request->file('logo')->store('partners', 'public');
         }
 
-        Partner::query()->create($data);
+        $partner = Partner::query()->create($data);
 
-        return redirect()->route('admin.partners.index')->with('success', 'Partner added.');
+        return redirect()->route('admin.partners.index')->with('success', "Partner added under {$partner->type->label()}.");
     }
 
     public function edit(Partner $partner): View
@@ -57,7 +57,7 @@ class PartnerController extends Controller
 
         $partner->update($data);
 
-        return redirect()->route('admin.partners.index')->with('success', 'Partner updated.');
+        return redirect()->route('admin.partners.index')->with('success', "Partner updated — listed under {$partner->type->label()}.");
     }
 
     public function destroy(Partner $partner): RedirectResponse
