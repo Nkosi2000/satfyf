@@ -23,6 +23,7 @@
             ['label' => 'Resources', 'route' => 'admin.resources.index', 'icon' => 'download'],
             ['label' => 'Gallery', 'route' => 'admin.gallery-images.index', 'icon' => 'image'],
             ['label' => 'Goals Slideshow', 'route' => 'admin.goal-images.index', 'icon' => 'image'],
+            ['label' => 'Provinces', 'route' => 'admin.provinces.index', 'icon' => 'map-pin'],
             ['label' => 'Partners', 'route' => 'admin.partners.index', 'icon' => 'link'],
             ['label' => 'FAQs', 'route' => 'admin.faqs.index', 'icon' => 'question'],
         ],

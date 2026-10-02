@@ -115,10 +115,6 @@ class SiteSettingSeeder extends Seeder
                 'youth_chapters_eyebrow' => '',
                 'youth_chapters_heading' => '',
                 'youth_chapters_intro' => '',
-                'youth_chapters_province_1' => '',
-                'youth_chapters_province_2' => '',
-                'youth_chapters_province_3' => '',
-                'youth_chapters_province_4' => '',
             ],
             'champions_network' => [
                 'champions_network_heading' => '',

@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\NewsletterSubscriberController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\PasswordResetLinkController;
 use App\Http\Controllers\Admin\ProgramController;
+use App\Http\Controllers\Admin\ProvinceController;
 use App\Http\Controllers\Admin\ResourceController;
 use App\Http\Controllers\Admin\SessionHeartbeatController;
 use App\Http\Controllers\Admin\SiteSettingController;
@@ -58,6 +59,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::resource('resources', ResourceController::class)->except('show');
         Route::resource('gallery-images', GalleryImageController::class)->except('show');
         Route::resource('goal-images', GoalImageController::class)->except('show');
+        Route::resource('provinces', ProvinceController::class)->except('show');
         Route::resource('partners', PartnerController::class)->except('show');
         Route::resource('faqs', FaqItemController::class)->except('show');
 

@@ -27,15 +27,15 @@
                     <x-ui.section-header>{{ $content['who_we_are_goals_heading'] }}</x-ui.section-header>
 
                     @if (! empty($content['who_we_are_goals_intro']))
-                        <p class="mt-6 max-w-2xl text-balance text-lg leading-relaxed text-muted">{{ $content['who_we_are_goals_intro'] }}</p>
+                        <x-ui.lead class="mt-6">{{ $content['who_we_are_goals_intro'] }}</x-ui.lead>
                     @endif
 
                     <ol class="reveal-stagger mt-8 flex flex-col gap-4">
                         @foreach ([1, 2, 3, 4] as $i)
                             @if (! empty($content['who_we_are_goal_'.$i]))
                                 <li class="card-soft flex items-start gap-4 p-5">
-                                    <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-surface-2 text-sm font-black text-primary-soft">{{ $loop->iteration }}</span>
-                                    <p class="pt-1.5 font-bold text-fg">{{ $content['who_we_are_goal_'.$i] }}</p>
+                                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface-2 text-base font-black text-primary-soft">{{ $loop->iteration }}</span>
+                                    <x-ui.card-text strong class="pt-1">{{ $content['who_we_are_goal_'.$i] }}</x-ui.card-text>
                                 </li>
                             @endif
                         @endforeach

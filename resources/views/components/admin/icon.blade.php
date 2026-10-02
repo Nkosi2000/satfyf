@@ -135,6 +135,13 @@
         </svg>
         @break
 
+    @case('map-pin')
+        <svg {{ $attributes->merge(['viewBox' => '0 0 24 24', 'fill' => 'none']) }} aria-hidden="true">
+            <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+            <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5" />
+        </svg>
+        @break
+
     @case('share')
         <svg {{ $attributes->merge(['viewBox' => '0 0 24 24', 'fill' => 'none']) }} aria-hidden="true">
             <circle cx="18" cy="6" r="2.3" stroke="currentColor" stroke-width="1.5" />

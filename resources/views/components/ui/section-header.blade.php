@@ -4,9 +4,12 @@
     'align' => 'left',
     'reveal' => true,
     'soft' => false,
+    'wide' => false,
 ])
 
-<div {{ $attributes->class(['max-w-2xl', 'text-center mx-auto' => $align === 'center', 'reveal' => $reveal]) }}>
+{{-- `wide` lets a heading spread further across the page before wrapping;
+     max-w-2xl alone is only ~440px under the site's 65% root font-size. --}}
+<div {{ $attributes->class(['max-w-2xl' => ! $wide, 'max-w-7xl' => $wide, 'text-center mx-auto' => $align === 'center', 'reveal' => $reveal]) }}>
     @if ($eyebrow)
         <x-ui.eyebrow class="mb-4" :soft="$soft">{{ $eyebrow }}</x-ui.eyebrow>
     @endif
