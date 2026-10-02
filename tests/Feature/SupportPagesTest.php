@@ -32,6 +32,14 @@ it('links every secondary nav page from the site header', function () {
         ->assertSee('href="'.route('donate').'"', false);
 });
 
+it('lists every secondary nav page in the footer', function () {
+    $footer = str($this->get(route('home'))->assertOk()->getContent())->after('<footer');
+
+    foreach (['quit-support', 'media', 'reports', 'volunteer', 'donate'] as $routeName) {
+        expect((string) $footer)->toContain('href="'.route($routeName).'"');
+    }
+});
+
 it('highlights the donate link in red in the secondary nav', function () {
     $html = $this->get(route('home'))->assertOk()->getContent();
 

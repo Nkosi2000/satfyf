@@ -20,14 +20,11 @@
 
     // Centred secondary bar under the main one, shown/hidden by the
     // visitor (remembered per browser — see resources/js/modules/nav.js).
-    // `danger` renders a link in the brand red (Donate) so it stands out.
-    $secondaryLinks = [
-        ['label' => __('Quit Support'), 'route' => 'quit-support'],
-        ['label' => __('Media & Press'), 'route' => 'media'],
-        ['label' => __('Reports & Publications'), 'route' => 'reports'],
-        ['label' => __('Volunteer'), 'route' => 'volunteer'],
-        ['label' => __('Donate'), 'route' => 'donate', 'danger' => true],
-    ];
+    // Shared with the footer via config/navigation.php; `danger` renders a
+    // link in the brand red (Donate) so it stands out.
+    $secondaryLinks = collect(config('navigation.secondary'))
+        ->map(fn (array $link): array => [...$link, 'label' => __($link['label'])])
+        ->all();
 
     $secondaryLinkColor = fn (array $link): string => ($link['danger'] ?? false)
         ? 'text-danger hover:text-danger-soft'
@@ -37,13 +34,18 @@
 {{--
     A full-width banner bar, pinned to the top of the viewport, with a
     quiet hairline edge and a translucent backdrop-blur ground instead of
-    the old poster system's thick flag border.
+    the old poster system's thick flag border. The ground lives on the bar
+    row, not on <header>: a backdrop-filter on <header> would make it the
+    backdrop root for the secondary tab below, so the tab couldn't blur the
+    page behind it. Keeping the bar as a z-10 sibling also lets the tab
+    slide up underneath it.
 --}}
-<header data-site-header class="sticky inset-x-0 top-0 z-50 border-b border-hairline bg-cream/85 backdrop-blur">
+<header data-site-header class="sticky inset-x-0 top-0 z-50">
     {{-- max-width is a literal px value, not rem — the site's html { font-size:
          65% } scales every rem-based size down (by design, for page content),
          but that would also silently shrink this cap to ~1248px regardless of
          viewport width, starving the nav of room and wrapping link labels. --}}
+    <div class="relative z-10 border-b border-hairline bg-cream/85 backdrop-blur">
     <div class="mx-auto flex w-full max-w-[1800px] items-center justify-between gap-8 px-6 py-3 sm:px-8">
         <div class="flex items-center gap-10">
             <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-2">
@@ -118,18 +120,18 @@
             </button>
         </div>
     </div>
+    </div>
 
-    {{-- Hangs from the header's bottom edge as a centred tab (see the
-         nav-tab utility in app.css) instead of a full-width row, so it
-         overlays the page rather than pushing it down. w-max sizes the tab
-         to its links, so it grows or shrinks with however many there are. --}}
+    {{-- Hangs from the bar's bottom edge as a centred tab (see the nav-tab
+         utilities in app.css) instead of a full-width row, so it overlays
+         the page rather than pushing it down. w-max sizes the tab to its
+         links, so it grows or shrinks with however many there are. Sits
+         below the z-10 bar, so closing slides it up underneath the bar. --}}
     <div id="secondary-nav" class="pointer-events-none absolute inset-x-0 top-full hidden justify-center min-[1450px]:flex">
-        <nav
-            data-secondary-nav
-            aria-label="{{ __('Secondary') }}"
-            class="nav-tab pointer-events-auto w-max transition-[translate,opacity] duration-300 ease-out [.secondary-nav-closed_&]:-translate-y-full [.secondary-nav-closed_&]:opacity-0"
-        >
-            <div class="flex items-center gap-x-10 px-10 py-3">
+        <nav data-secondary-nav aria-label="{{ __('Secondary') }}" class="nav-tab pointer-events-auto w-max">
+            <span class="nav-tab-flare-left" aria-hidden="true"></span>
+            <span class="nav-tab-flare-right" aria-hidden="true"></span>
+            <div class="nav-tab-body flex items-center gap-x-10 px-10 py-3">
                 @foreach ($secondaryLinks as $link)
                     <a
                         href="{{ route($link['route']) }}"

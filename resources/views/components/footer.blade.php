@@ -14,6 +14,9 @@
         ['label' => __('Partners'), 'route' => 'partners'],
     ];
 
+    // Same pages as the header's secondary nav (config/navigation.php).
+    $supportNav = config('navigation.secondary');
+
     $socials = [
         ['label' => 'Facebook', 'url' => $settings['social_facebook'] ?? null, 'icon' => 'facebook'],
         ['label' => 'Instagram', 'url' => $settings['social_instagram'] ?? null, 'icon' => 'instagram'],
@@ -24,7 +27,7 @@
 
 <footer class="border-t border-hairline bg-cream-raised">
     <x-ui.section width="wide" class="!py-16">
-        <div class="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
+        <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr_1.2fr]">
             <div>
                 <a href="{{ route('home') }}" class="inline-flex items-center">
                     <img src="{{ asset('images/48 x 48.png') }}" alt="SATFYF" class="brand-mark h-14 w-14 rounded-full object-cover" style="box-shadow: var(--shadow-soft-sm)" />
@@ -49,6 +52,24 @@
                 <ul class="mt-4 space-y-3">
                     @foreach ($resourcesNav as $link)
                         <li><a href="{{ route($link['route']) }}" class="text-sm text-muted hover:text-fg">{{ $link['label'] }}</a></li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-sm font-black tracking-wide text-fg uppercase">{{ __('Support') }}</h3>
+                <ul class="mt-4 space-y-3">
+                    @foreach ($supportNav as $link)
+                        <li>
+                            <a
+                                href="{{ route($link['route']) }}"
+                                @class([
+                                    'text-sm',
+                                    'font-bold text-danger hover:text-danger-soft' => $link['danger'] ?? false,
+                                    'text-muted hover:text-fg' => ! ($link['danger'] ?? false),
+                                ])
+                            >{{ __($link['label']) }}</a>
+                        </li>
                     @endforeach
                 </ul>
             </div>

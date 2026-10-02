@@ -361,46 +361,79 @@ html {
     }
 }
 
-/* A tab hanging from the bottom edge of the site header (the secondary
-   nav): rounded (inward-curving) bottom corners, and top corners that
-   flare outward into the header. The flares are two pseudo-elements filled
-   with the tab colour, with a quarter-circle cut out so the curve reads as
-   concave. Radii are px, not rem — the 65% root font-size would shrink them.
-   Solid cream (not the header's cream/85) so it cleanly covers the
-   header's bottom hairline where they meet. */
+/* A tab hanging from the bottom edge of the site header bar (the
+   secondary nav): rounded (inward-curving) bottom corners, and top corners
+   that flare outward into the bar. Same ground as the bar itself
+   (bg-cream/85 + backdrop-blur, i.e. 85% cream and an 8px blur).
+
+   Built from three sibling elements — .nav-tab-body plus a left and right
+   .nav-tab-flare-* — rather than one element with pseudo-element flares:
+   an element with a backdrop-filter (or filter) becomes the backdrop root
+   for its descendants, so flares nested inside a blurred body could only
+   blur the body, not the page behind. Each flare is a translucent square
+   masked to leave a concave quarter-circle. Radii are px, not rem — the
+   65% root font-size would shrink them.
+
+   Closing (html.secondary-nav-closed) slides the tab up underneath the
+   z-10 header bar, then fades it once it's mostly tucked away; opening
+   shows it immediately and slides it back down. */
 @utility nav-tab {
     --nav-tab-radius: 18px;
+    --nav-tab-surface: color-mix(in oklab, var(--color-cream) 85%, transparent);
     position: relative;
-    background-color: var(--color-cream);
+    transition:
+        translate 380ms var(--ease-out-strong),
+        opacity 0ms;
+
+    :where(.secondary-nav-closed) & {
+        translate: 0 -100%;
+        opacity: 0;
+        transition:
+            translate 380ms var(--ease-out-strong),
+            opacity 120ms ease 260ms;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        &,
+        :where(.secondary-nav-closed) & {
+            transition: none;
+        }
+    }
+}
+
+@utility nav-tab-body {
+    position: relative;
+    background-color: var(--nav-tab-surface);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border-radius: 0 0 var(--nav-tab-radius) var(--nav-tab-radius);
-    filter: drop-shadow(0 10px 14px rgb(var(--color-primary-rgb) / 14%));
+    box-shadow: var(--shadow-soft-sm);
+}
 
-    &::before,
-    &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        width: var(--nav-tab-radius);
-        height: var(--nav-tab-radius);
-    }
+@utility nav-tab-flare-left {
+    position: absolute;
+    top: 0;
+    right: 100%;
+    width: var(--nav-tab-radius);
+    height: var(--nav-tab-radius);
+    background-color: var(--nav-tab-surface);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    mask-image: radial-gradient(circle at 0 100%, transparent calc(var(--nav-tab-radius) - 0.5px), #000 var(--nav-tab-radius));
+    -webkit-mask-image: radial-gradient(circle at 0 100%, transparent calc(var(--nav-tab-radius) - 0.5px), #000 var(--nav-tab-radius));
+}
 
-    &::before {
-        right: 100%;
-        background: radial-gradient(
-            circle at 0 100%,
-            transparent calc(var(--nav-tab-radius) - 0.5px),
-            var(--color-cream) var(--nav-tab-radius)
-        );
-    }
-
-    &::after {
-        left: 100%;
-        background: radial-gradient(
-            circle at 100% 100%,
-            transparent calc(var(--nav-tab-radius) - 0.5px),
-            var(--color-cream) var(--nav-tab-radius)
-        );
-    }
+@utility nav-tab-flare-right {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: var(--nav-tab-radius);
+    height: var(--nav-tab-radius);
+    background-color: var(--nav-tab-surface);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    mask-image: radial-gradient(circle at 100% 100%, transparent calc(var(--nav-tab-radius) - 0.5px), #000 var(--nav-tab-radius));
+    -webkit-mask-image: radial-gradient(circle at 100% 100%, transparent calc(var(--nav-tab-radius) - 0.5px), #000 var(--nav-tab-radius));
 }
 
 /* Soft surface — a blurred ambient shadow and a barely-there border
