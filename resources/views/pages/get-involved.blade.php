@@ -39,13 +39,11 @@
                     ->filter(fn ($way) => $way['title'] !== '');
             @endphp
             @foreach ($ways as $way)
-                <x-ui.card class="flex flex-col">
-                    <p class="text-2xl font-black text-fg">{{ $way['title'] }}</p>
-                    <p class="mt-2 flex-1 text-sm leading-relaxed text-muted">{{ $way['body'] }}</p>
-                    <a href="{{ route('get-involved', ['interest' => $way['title']]).'#contact-form' }}" class="mt-4 text-sm font-bold text-primary-soft hover:underline">
-                        {{ __("I'm interested") }} &rarr;
-                    </a>
-                </x-ui.card>
+                <x-ui.info-card
+                    :title="$way['title']"
+                    :href="route('get-involved', ['interest' => $way['title']]).'#contact-form'"
+                    :link-label="__('I\'m interested')"
+                >{{ $way['body'] }}</x-ui.info-card>
             @endforeach
         </div>
     </x-ui.section>

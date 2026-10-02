@@ -14,6 +14,7 @@ use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SetLocaleController;
+use App\Http\Controllers\SupportPageController;
 use App\Http\Controllers\WhatWeDoController;
 use App\Http\Controllers\WhoWeAreController;
 use App\Http\Controllers\WhyWeExistController;
@@ -38,6 +39,12 @@ Route::middleware('locale')->group(function (): void {
     Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
     Route::get('/partners', [PartnerController::class, 'index'])->name('partners');
     Route::get('/get-involved', [GetInvolvedController::class, 'show'])->name('get-involved');
+
+    Route::get('/quit-support', [SupportPageController::class, 'quitSupport'])->name('quit-support');
+    Route::get('/media', [SupportPageController::class, 'media'])->name('media');
+    Route::get('/reports', [SupportPageController::class, 'reports'])->name('reports');
+    Route::get('/volunteer', [SupportPageController::class, 'volunteer'])->name('volunteer');
+    Route::get('/donate', [SupportPageController::class, 'donate'])->name('donate');
 
     Route::get('/contact', [ContactController::class, 'show'])->name('contact');
     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');

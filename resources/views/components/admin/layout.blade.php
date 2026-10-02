@@ -13,6 +13,11 @@
             ['label' => 'Get Involved', 'route' => 'admin.pages.edit', 'params' => ['page' => 'get-involved'], 'icon' => 'heart'],
             ['label' => 'Contact', 'route' => 'admin.pages.edit', 'params' => ['page' => 'contact'], 'icon' => 'mail'],
             ['label' => 'Privacy & Cookies', 'route' => 'admin.pages.edit', 'params' => ['page' => 'privacy'], 'icon' => 'shield'],
+            ['label' => 'Quit Support', 'route' => 'admin.pages.edit', 'params' => ['page' => 'quit-support'], 'icon' => 'heart'],
+            ['label' => 'Media & Press', 'route' => 'admin.pages.edit', 'params' => ['page' => 'media'], 'icon' => 'send'],
+            ['label' => 'Reports', 'route' => 'admin.pages.edit', 'params' => ['page' => 'reports'], 'icon' => 'document'],
+            ['label' => 'Volunteer', 'route' => 'admin.pages.edit', 'params' => ['page' => 'volunteer'], 'icon' => 'users'],
+            ['label' => 'Donate', 'route' => 'admin.pages.edit', 'params' => ['page' => 'donate'], 'icon' => 'target'],
         ],
         'Content' => [
             ['label' => 'Articles', 'route' => 'admin.articles.index', 'icon' => 'document'],

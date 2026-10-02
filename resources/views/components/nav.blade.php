@@ -17,6 +17,16 @@
         ['label' => __('Partners'), 'route' => 'partners'],
         ['label' => __('Contact Us'), 'route' => 'contact'],
     ];
+
+    // Centred secondary bar under the main one, shown/hidden by the
+    // visitor (remembered per browser — see resources/js/modules/nav.js).
+    $secondaryLinks = [
+        ['label' => __('Quit Support'), 'route' => 'quit-support'],
+        ['label' => __('Media & Press'), 'route' => 'media'],
+        ['label' => __('Reports & Publications'), 'route' => 'reports'],
+        ['label' => __('Volunteer'), 'route' => 'volunteer'],
+        ['label' => __('Donate'), 'route' => 'donate'],
+    ];
 @endphp
 
 {{--
@@ -59,6 +69,18 @@
                 </a>
             @endforeach
             <x-ui.button href="{{ route('get-involved') }}" size="sm">{{ __('Get Involved') }}</x-ui.button>
+            <button
+                type="button"
+                data-secondary-nav-toggle
+                aria-expanded="true"
+                aria-controls="secondary-nav"
+                class="group flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-2 text-fg transition-colors hover:bg-surface"
+            >
+                <span class="sr-only">{{ __('Show or hide more links') }}</span>
+                <svg viewBox="0 0 20 20" fill="none" class="h-4 w-4 transition-transform duration-200 ease-out group-aria-expanded:rotate-180" aria-hidden="true">
+                    <path d="M5 7.5 10 12.5 15 7.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
             <x-search-trigger />
             <x-language-switcher />
             <x-theme-toggle />
@@ -93,6 +115,25 @@
     </div>
 
     <div
+        id="secondary-nav"
+        class="hidden grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out min-[1450px]:grid [.secondary-nav-closed_&]:grid-rows-[0fr]"
+    >
+        <nav data-secondary-nav class="overflow-hidden" aria-label="{{ __('Secondary') }}">
+            <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-2 border-t border-hairline px-6 py-3">
+                @foreach ($secondaryLinks as $link)
+                    <a
+                        href="{{ route($link['route']) }}"
+                        class="group relative py-1 text-sm font-bold text-muted transition-colors hover:text-fg {{ request()->routeIs($link['route']) ? 'text-fg' : '' }}"
+                    >
+                        {{ $link['label'] }}
+                        <span class="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-primary-soft transition-transform duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
+                    </a>
+                @endforeach
+            </div>
+        </nav>
+    </div>
+
+    <div
         id="mobile-nav"
         data-nav-menu
         data-open="false"
@@ -104,6 +145,15 @@
                     <a
                         href="{{ route($link['route']) }}"
                         class="rounded-lg px-3 py-2.5 text-base font-bold text-muted transition-colors hover:bg-surface hover:text-fg"
+                    >
+                        {{ $link['label'] }}
+                    </a>
+                @endforeach
+                <div class="my-2 border-t border-hairline"></div>
+                @foreach ($secondaryLinks as $link)
+                    <a
+                        href="{{ route($link['route']) }}"
+                        class="rounded-lg px-3 py-2.5 text-sm font-bold text-muted transition-colors hover:bg-surface hover:text-fg"
                     >
                         {{ $link['label'] }}
                     </a>

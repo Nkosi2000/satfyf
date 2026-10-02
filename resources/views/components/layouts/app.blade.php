@@ -29,6 +29,14 @@
         } else {
             document.documentElement.classList.remove('dark');
         }
+
+        // Same pre-paint trick for the secondary nav bar (see x-nav and
+        // resources/js/modules/nav.js) so a hidden bar doesn't flash open.
+        try {
+            if (localStorage.getItem('secondary-nav') === 'closed') {
+                document.documentElement.classList.add('secondary-nav-closed');
+            }
+        } catch (e) {}
     </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
