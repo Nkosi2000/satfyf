@@ -51,7 +51,8 @@ it('shows a partner\'s role, description and website link on the partners page',
         ->assertOk()
         ->assertSee('Funds youth ambassador training')
         ->assertSee('A short blurb about what this partner does for SATFYF.')
-        ->assertSee('https://example.com', false);
+        ->assertSee('https://example.com', false)
+        ->assertSee('Visit Test Partner Org');
 });
 
 it('does not show unpublished partners', function () {
