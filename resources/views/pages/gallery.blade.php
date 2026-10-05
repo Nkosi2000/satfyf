@@ -3,7 +3,15 @@
         {{ $content['gallery_page_hero_heading'] ?? __('SATFYF, in the field.') }}
 
         <x-slot:image>
-            @if ($images->isNotEmpty())
+            @if ($heroImagePath)
+                <img
+                    data-gallery-hero-image
+                    src="{{ storage_url($heroImagePath) }}"
+                    alt=""
+                    class="aspect-4/5 w-full rounded-2xl object-cover"
+                    style="box-shadow: var(--shadow-soft)"
+                />
+            @elseif ($images->isNotEmpty())
                 <img
                     src="{{ storage_url($images->first()->image_path) }}"
                     alt="{{ $images->first()->caption }}"

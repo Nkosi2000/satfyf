@@ -8,6 +8,7 @@ use App\Models\GalleryImage;
 use App\Models\GoalImage;
 use App\Models\Partner;
 use App\Models\Resource;
+use App\Models\SiteSetting;
 use App\Models\TeamMember;
 use App\Models\Testimonial;
 use App\Models\WhatWeDoImage;
@@ -32,6 +33,7 @@ it('caches a signed url for every stored file path across every model', function
     $articleImage = ArticleImage::factory()->create(['article_id' => $article->id, 'image_path' => 'articles/inline.jpg']);
     $event = EventItem::factory()->create(['cover_image_path' => 'events/cover.jpg']);
     $resource = Resource::factory()->create(['file_path' => 'resources/one.pdf']);
+    SiteSetting::query()->create(['key' => 'gallery_page_hero_image', 'group' => 'gallery_page_media', 'value' => json_encode(['en' => 'gallery/hero/one.jpg'])]);
 
     $this->artisan('app:warm-storage-urls')->assertSuccessful();
 
@@ -45,7 +47,8 @@ it('caches a signed url for every stored file path across every model', function
         ->and(Cache::get('storage_url:public:'.$article->attachment_path))->toBe('https://fake.test/'.$article->attachment_path)
         ->and(Cache::get('storage_url:public:'.$articleImage->image_path))->toBe('https://fake.test/'.$articleImage->image_path)
         ->and(Cache::get('storage_url:public:'.$event->cover_image_path))->toBe('https://fake.test/'.$event->cover_image_path)
-        ->and(Cache::get('storage_url:public:'.$resource->file_path))->toBe('https://fake.test/'.$resource->file_path);
+        ->and(Cache::get('storage_url:public:'.$resource->file_path))->toBe('https://fake.test/'.$resource->file_path)
+        ->and(Cache::get('storage_url:public:gallery/hero/one.jpg'))->toBe('https://fake.test/gallery/hero/one.jpg');
 });
 
 it('skips null file paths without error', function () {

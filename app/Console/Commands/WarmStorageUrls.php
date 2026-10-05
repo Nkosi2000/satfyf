@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\Admin\GalleryHeroImageController;
 use App\Models\Article;
 use App\Models\ArticleImage;
 use App\Models\EventItem;
@@ -9,6 +10,7 @@ use App\Models\GalleryImage;
 use App\Models\GoalImage;
 use App\Models\Partner;
 use App\Models\Resource;
+use App\Models\SiteSetting;
 use App\Models\TeamMember;
 use App\Models\Testimonial;
 use App\Models\WhatWeDoImage;
@@ -63,6 +65,7 @@ class WarmStorageUrls extends Command
             ...ArticleImage::pluck('image_path'),
             ...EventItem::whereNotNull('cover_image_path')->pluck('cover_image_path'),
             ...Resource::pluck('file_path'),
+            SiteSetting::get(GalleryHeroImageController::SETTING_KEY),
         ];
 
         $paths = array_unique(array_filter($paths));

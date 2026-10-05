@@ -17,6 +17,7 @@ class GalleryImageController extends Controller
         return view('admin.gallery.index', [
             'pageSettings' => SiteSetting::query()->where('group', 'gallery_page')->orderBy('key')->get(),
             'images' => GalleryImage::query()->ordered()->paginate(24),
+            'heroImagePath' => SiteSetting::get(GalleryHeroImageController::SETTING_KEY),
         ]);
     }
 

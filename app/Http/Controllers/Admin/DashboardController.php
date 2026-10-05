@@ -8,11 +8,13 @@ use App\Models\Article;
 use App\Models\ContactSubmission;
 use App\Models\EventItem;
 use App\Models\GalleryImage;
+use App\Models\GoalImage;
 use App\Models\NewsletterSubscriber;
 use App\Models\Partner;
 use App\Models\Program;
 use App\Models\Resource;
 use App\Models\TeamMember;
+use App\Models\WhatWeDoImage;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -27,6 +29,8 @@ class DashboardController extends Controller
                 'Team members' => TeamMember::query()->count(),
                 'Resources' => Resource::query()->count(),
                 'Gallery images' => GalleryImage::query()->count(),
+                'Goals slideshow images' => GoalImage::query()->count(),
+                'What We Do slideshow images' => WhatWeDoImage::query()->count(),
                 'Partners' => Partner::query()->count(),
             ],
             'recentSubmissions' => ContactSubmission::query()->latest()->take(5)->get(),
