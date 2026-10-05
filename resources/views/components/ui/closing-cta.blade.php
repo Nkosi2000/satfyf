@@ -21,6 +21,7 @@
     ></div>
     <x-ui.light-rays class="opacity-70" />
     <x-ui.triangle-pattern corner="top-right" />
+    <x-ui.triangle-pattern corner="bottom-left" class="opacity-60" />
 
     <div @class([
         'relative mx-auto w-full max-w-[110rem] text-center' => ! $sideImage,

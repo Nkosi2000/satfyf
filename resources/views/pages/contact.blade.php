@@ -7,7 +7,7 @@
         </x-slot:image>
     </x-ui.page-hero>
 
-    <x-ui.section class="hairline-t" width="wide">
+    <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
         <div class="grid gap-16 lg:grid-cols-[0.8fr_1.2fr]">
             <div class="space-y-6">
                 <p class="text-balance text-lg leading-relaxed text-muted">{{ $contact['contact_intro_body'] ?? __("We're a small, youth-led team, so a real person reads every message — expect a reply within a few working days.") }}</p>

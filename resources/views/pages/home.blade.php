@@ -37,7 +37,7 @@
         {{-- Why we exist — a subtly raised tint (not pure cream) breaks the
              page rhythm right after the hero, echoing the Stats section's
              later dark beat without competing with it. --}}
-        <x-ui.section width="wide" class="bg-cream-raised">
+        <x-ui.section width="wide" class="bg-cream-raised" triangles="bottom-right">
             <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
                 <div>
                     <x-ui.section-header soft :eyebrow="__('Why We Exist')">
@@ -71,7 +71,7 @@
         </x-ui.section>
 
         {{-- What we do --}}
-        <x-ui.section width="wide">
+        <x-ui.section width="wide" class="section-divider" triangles="top-left">
             <div class="flex flex-wrap items-end justify-between gap-6">
                 <x-ui.section-header soft :eyebrow="__('Our Programmes')">
                     {{ __('Built around what young people need.') }}
@@ -93,7 +93,7 @@
         </x-ui.section>
 
         {{-- Why SATFYF is different --}}
-        <x-ui.section width="wide" class="bg-cream-raised">
+        <x-ui.section width="wide" class="section-divider bg-cream-raised">
             <div class="grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
                 <div>
                     <x-ui.section-header soft :eyebrow="$whyItMatters['why_it_matters_eyebrow'] ?? __('Why It Matters')">
@@ -167,6 +167,8 @@
                 style="background-image: radial-gradient(ellipse 60% 50% at 20% 30%, color-mix(in oklab, var(--color-primary) 35%, transparent), transparent), radial-gradient(ellipse 50% 50% at 85% 70%, color-mix(in oklab, var(--color-secondary-soft) 25%, transparent), transparent)"
                 aria-hidden="true"
             ></div>
+            <x-ui.triangle-pattern corner="top-left" class="opacity-50" />
+            <x-ui.triangle-pattern corner="bottom-right" class="opacity-50" />
             {{-- Vertical spotlight variant — near-still beams pulsing from
                  above, reading as stage lighting behind the numbers rather
                  than the hero's faster diagonal sweep. --}}
@@ -183,7 +185,7 @@
 
         {{-- Testimonials --}}
         @if ($testimonials->isNotEmpty())
-            <x-ui.section width="wide" class="bg-cream-raised">
+            <x-ui.section width="wide" class="section-divider bg-cream-raised" triangles="bottom-left">
                 <x-ui.section-header soft :eyebrow="__('Testimonials')">{{ __('What people are saying.') }}</x-ui.section-header>
 
                 <div class="reveal-stagger mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -195,7 +197,7 @@
         @endif
 
         {{-- Articles + Events --}}
-        <x-ui.section width="wide">
+        <x-ui.section width="wide" class="section-divider" triangles="top-right">
             <div class="grid gap-16 lg:grid-cols-2">
                 <div>
                     <div class="flex items-end justify-between gap-4">
@@ -264,7 +266,7 @@
                 ]);
         @endphp
         @if ($partnerLogos->isNotEmpty())
-            <section class="overflow-hidden bg-cream-raised py-20 sm:py-24">
+            <section class="section-divider overflow-hidden bg-cream-raised py-20 sm:py-24">
                 <div class="mx-auto w-full max-w-[110rem] px-6 sm:px-8">
                     <p class="text-center text-xs font-bold tracking-[0.14em] text-faint uppercase">{{ $trustedBy['trusted_by_heading'] ?? __('Trusted by') }}</p>
                 </div>
@@ -311,7 +313,7 @@
 
         {{-- Gallery --}}
         @if ($galleryImages->isNotEmpty())
-            <x-ui.section width="wide">
+            <x-ui.section width="wide" class="section-divider" triangles="bottom-right">
                 <div data-slider>
                     <div class="flex flex-wrap items-end justify-between gap-6">
                         <x-ui.section-header soft>{{ __('SATFYF, in pictures.') }}</x-ui.section-header>
@@ -355,7 +357,7 @@
         {{-- FAQ — same <details>/<summary> disclosure pattern as
              x-ui.accordion-item, restyled without the thick border. --}}
         @if ($faqs->isNotEmpty())
-            <x-ui.section width="wide" class="bg-cream-raised">
+            <x-ui.section width="wide" class="section-divider bg-cream-raised" triangles="top-left">
                 <x-ui.section-header soft>{{ __('Questions.') }}</x-ui.section-header>
                 <div class="reveal-stagger mt-8">
                     @foreach ($faqs as $faq)
@@ -389,6 +391,7 @@
             ></div>
             <x-ui.light-rays class="opacity-70" />
             <x-ui.triangle-pattern corner="top-right" />
+            <x-ui.triangle-pattern corner="bottom-left" class="opacity-60" />
             <div class="relative mx-auto flex w-full max-w-[110rem] flex-col items-center gap-6 text-center">
                 <h2 class="font-display text-balance text-5xl leading-[1.1] font-semibold tracking-tight text-on-accent sm:text-6xl lg:text-7xl">
                     {{ $closingCta['closing_cta_heading'] ?? __('Ready to speak up?') }}

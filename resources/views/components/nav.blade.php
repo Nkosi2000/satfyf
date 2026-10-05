@@ -1,28 +1,43 @@
 @php
-    // Every link's underline cycles through the logo colours while it's
-    // hovered (see .nav-underline in app.css).
+    // Each link has its own logo-colour underline. Blue and green use the
+    // role tokens rather than the exact brand hues, since those are
+    // brightened in dark mode where the brand blue/green would vanish.
+    $red = 'var(--color-brand-red)';
+    $green = 'var(--color-green)';
+    $blue = 'var(--color-tertiary)';
+    $yellow = 'var(--color-brand-yellow)';
+    $orange = 'var(--color-brand-orange)';
+    $brown = 'var(--color-brand-brown)';
+
     $links = [
-        ['label' => __('Home'), 'route' => 'home'],
-        ['label' => __('Who We Are'), 'route' => 'who-we-are'],
-        ['label' => __('Why We Exist'), 'route' => 'why-we-exist'],
-        ['label' => __('What We Do'), 'route' => 'what-we-do'],
-        ['label' => __('Articles'), 'route' => 'articles.index'],
-        ['label' => __('Events'), 'route' => 'events.index'],
+        ['label' => __('Home'), 'route' => 'home', 'color' => $red],
+        ['label' => __('Who We Are'), 'route' => 'who-we-are', 'color' => $green],
+        ['label' => __('Why We Exist'), 'route' => 'why-we-exist', 'color' => $blue],
+        ['label' => __('What We Do'), 'route' => 'what-we-do', 'color' => $yellow],
+        ['label' => __('Articles'), 'route' => 'articles.index', 'color' => $orange],
+        ['label' => __('Events'), 'route' => 'events.index', 'color' => $brown],
     ];
 
     $moreLinks = [
-        ['label' => __('Resources'), 'route' => 'resources.index'],
-        ['label' => __('Gallery'), 'route' => 'gallery'],
-        ['label' => __('Partners'), 'route' => 'partners'],
-        ['label' => __('Contact Us'), 'route' => 'contact'],
+        ['label' => __('Resources'), 'route' => 'resources.index', 'color' => $red],
+        ['label' => __('Gallery'), 'route' => 'gallery', 'color' => $green],
+        ['label' => __('Partners'), 'route' => 'partners', 'color' => $blue],
+        ['label' => __('Contact Us'), 'route' => 'contact', 'color' => $yellow],
     ];
+
+    $secondaryLinkColors = [$orange, $brown, $green, $blue];
 
     // Centred secondary bar under the main one, shown/hidden by the
     // visitor (remembered per browser — see resources/js/modules/nav.js).
     // Shared with the footer via config/navigation.php; `danger` renders a
     // link in the brand red (Donate) so it stands out.
     $secondaryLinks = collect(config('navigation.secondary'))
-        ->map(fn (array $link): array => [...$link, 'label' => __($link['label'])])
+        ->values()
+        ->map(fn (array $link, int $index): array => [
+            ...$link,
+            'label' => __($link['label']),
+            'color' => ($link['danger'] ?? false) ? $red : $secondaryLinkColors[$index % count($secondaryLinkColors)],
+        ])
         ->all();
 
     $secondaryLinkColor = fn (array $link): string => ($link['danger'] ?? false)
@@ -58,7 +73,7 @@
                         class="group relative py-1 text-base font-bold text-muted transition-colors hover:text-fg {{ request()->routeIs($link['route']) ? 'text-fg' : '' }}"
                     >
                         {{ $link['label'] }}
-                        <span class="nav-underline absolute inset-x-0 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full transition-transform duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
+                        <span data-nav-underline class="absolute inset-x-0 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full transition-transform duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}" style="background-color: {{ $link['color'] }}"></span>
                     </a>
                 @endforeach
             </nav>
@@ -71,7 +86,7 @@
                     class="group relative py-1 text-base font-bold text-muted transition-colors hover:text-fg {{ request()->routeIs($link['route']) ? 'text-fg' : '' }}"
                 >
                     {{ $link['label'] }}
-                    <span class="nav-underline absolute inset-x-0 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full transition-transform duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
+                    <span data-nav-underline class="absolute inset-x-0 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full transition-transform duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}" style="background-color: {{ $link['color'] }}"></span>
                 </a>
             @endforeach
             <x-ui.button href="{{ route('get-involved') }}" size="sm">{{ __('Get Involved') }}</x-ui.button>
@@ -137,7 +152,7 @@
                         class="group relative py-1 text-sm font-bold whitespace-nowrap transition-colors {{ $secondaryLinkColor($link) }}"
                     >
                         {{ $link['label'] }}
-                        <span class="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 transition-transform duration-200 ease-out-strong group-hover:scale-x-100 {{ ($link['danger'] ?? false) ? 'bg-danger' : 'bg-primary-soft' }} {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
+                        <span data-nav-underline class="absolute inset-x-0 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full transition-transform duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}" style="background-color: {{ $link['color'] }}"></span>
                     </a>
                 @endforeach
             </div>
@@ -155,7 +170,8 @@
                 @foreach ([...$links, ...$moreLinks] as $link)
                     <a
                         href="{{ route($link['route']) }}"
-                        class="rounded-lg px-3 py-2.5 text-base font-bold text-muted transition-colors hover:bg-surface hover:text-fg"
+                        class="rounded-lg border-l-[3px] px-3 py-2.5 text-base font-bold text-muted transition-colors hover:bg-surface hover:text-fg"
+                        style="border-left-color: {{ $link['color'] }}"
                     >
                         {{ $link['label'] }}
                     </a>
@@ -164,7 +180,8 @@
                 @foreach ($secondaryLinks as $link)
                     <a
                         href="{{ route($link['route']) }}"
-                        class="rounded-lg px-3 py-2.5 text-sm font-bold transition-colors hover:bg-surface {{ $secondaryLinkColor($link) }}"
+                        class="rounded-lg border-l-[3px] px-3 py-2.5 text-sm font-bold transition-colors hover:bg-surface {{ $secondaryLinkColor($link) }}"
+                        style="border-left-color: {{ $link['color'] }}"
                     >
                         {{ $link['label'] }}
                     </a>

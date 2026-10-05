@@ -1,5 +1,8 @@
 @props([
     'width' => 'default',
+    // Optional corner for the brand triangle pattern (see
+    // x-ui.triangle-pattern): top-right | top-left | bottom-right | bottom-left.
+    'triangles' => null,
 ])
 
 @php
@@ -14,8 +17,11 @@
     ];
 @endphp
 
-<section {{ $attributes->class(['py-24 sm:py-32']) }}>
-    <div class="mx-auto w-full {{ $widths[$width] ?? $widths['default'] }} px-6 sm:px-8">
+<section {{ $attributes->class(['py-24 sm:py-32', 'relative overflow-hidden' => $triangles]) }}>
+    @if ($triangles)
+        <x-ui.triangle-pattern :corner="$triangles" class="opacity-35" />
+    @endif
+    <div class="relative mx-auto w-full {{ $widths[$width] ?? $widths['default'] }} px-6 sm:px-8">
         {{ $slot }}
     </div>
 </section>

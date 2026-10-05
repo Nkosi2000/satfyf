@@ -8,7 +8,7 @@
     </x-ui.page-hero>
 
     @if (! empty($getInvolved['get_involved_statement']))
-        <x-ui.section class="hairline-t" width="wide">
+        <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
             <p class="max-w-3xl text-balance text-lg leading-relaxed text-muted sm:text-xl">
                 {{ $getInvolved['get_involved_statement'] }}
             </p>
@@ -26,7 +26,7 @@
         </x-ui.section>
     @endif
 
-    <x-ui.section class="hairline-t" width="wide">
+    <x-ui.section class="section-divider" width="wide" triangles="bottom-left">
         <x-ui.section-header :eyebrow="$getInvolved['get_involved_ways_eyebrow'] ?? __('Ways In')">{{ $getInvolved['get_involved_ways_heading'] ?? __('Four ways to get involved.') }}</x-ui.section-header>
 
         <div class="reveal-stagger mt-10 grid gap-6 sm:grid-cols-2">
@@ -48,13 +48,13 @@
         </div>
     </x-ui.section>
 
-    <x-ui.section id="contact-form" class="hairline-t" width="wide">
+    <x-ui.section id="contact-form" class="section-divider" width="wide" triangles="bottom-right">
         <x-ui.section-header :eyebrow="$getInvolved['get_involved_reach_eyebrow'] ?? __('Reach Out')">{{ $getInvolved['get_involved_reach_heading'] ?? __("Tell us what you'd like to do.") }}</x-ui.section-header>
         <x-contact-form :subject="request()->query('interest', 'Getting involved')" class="mt-8" />
     </x-ui.section>
 
     @if ($faqs->isNotEmpty())
-        <x-ui.section class="hairline-t" width="wide">
+        <x-ui.section class="section-divider" width="wide" triangles="bottom-left">
             <x-ui.section-header>{{ $getInvolved['get_involved_questions_heading'] ?? __('Questions.') }}</x-ui.section-header>
             <x-ui.accordion class="reveal-stagger mt-8">
                 @foreach ($faqs as $faq)

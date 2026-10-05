@@ -1431,67 +1431,9 @@ img[data-loaded] {
     }
 }
 
-/* Nav link underline — while its link is hovered, the bar cycles through
-   the logo colours (the current page's underline rests on brand red). Each link in the row
-   starts the cycle at a different colour via a negative delay, so moving
-   along the nav doesn't show the same colour twice in a row. */
-.nav-underline {
-    background-color: var(--color-brand-red);
-}
-
-.group:hover > .nav-underline {
-    animation: nav-underline-cycle 2.4s linear infinite;
-}
-
-a:nth-child(6n + 2) > .nav-underline {
-    animation-delay: -0.4s;
-}
-
-a:nth-child(6n + 3) > .nav-underline {
-    animation-delay: -0.8s;
-}
-
-a:nth-child(6n + 4) > .nav-underline {
-    animation-delay: -1.2s;
-}
-
-a:nth-child(6n + 5) > .nav-underline {
-    animation-delay: -1.6s;
-}
-
-a:nth-child(6n + 6) > .nav-underline {
-    animation-delay: -2s;
-}
-
-@keyframes nav-underline-cycle {
-    0%,
-    100% {
-        background-color: var(--color-brand-red);
-    }
-
-    16.6% {
-        background-color: var(--color-brand-orange);
-    }
-
-    33.3% {
-        background-color: var(--color-brand-yellow);
-    }
-
-    50% {
-        background-color: var(--color-brand-green);
-    }
-
-    66.6% {
-        background-color: var(--color-brand-blue);
-    }
-
-    83.3% {
-        background-color: var(--color-brand-brown);
-    }
-}
-
-/* The red ◀ ▶ triangle grid from the brand letterhead and email banner
-   (see x-ui.triangle-pattern). One SVG tile of two facing triangles, every
+/* The red ▲ ▼ triangle grid from the brand letterhead and email banner
+   (see x-ui.triangle-pattern). One SVG tile of an up- and a down-pointing
+   triangle side by side, every
    other row shifted half a tile, faded out from the chosen corner with a
    radial mask so it thins into the section the way the print pattern does. */
 .triangle-pattern {
@@ -1499,7 +1441,7 @@ a:nth-child(6n + 6) > .nav-underline {
     pointer-events: none;
     width: min(46rem, 60%);
     height: min(30rem, 100%);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='40' viewBox='0 0 36 40'%3E%3Cg fill='%23ed2442'%3E%3Cpath d='M15 3v12L6 9z'/%3E%3Cpath d='M21 3v12l9-6z'/%3E%3Cpath d='M-3 23v12l-9-6z'/%3E%3Cpath d='M3 23v12l9-6z'/%3E%3Cpath d='M33 23v12l-9-6z'/%3E%3Cpath d='M39 23v12l9-6z'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='40' viewBox='0 0 36 40'%3E%3Cg fill='%23ed2442'%3E%3Cpath d='M4 15h12L10 4z'/%3E%3Cpath d='M19 4h12l-6 11z'/%3E%3Cpath d='M22 35h12l-6-11z'/%3E%3Cpath d='M1 24h12l-6 11z'/%3E%3C/g%3E%3C/svg%3E");
     background-size: 36px 40px;
 }
 
@@ -1538,8 +1480,10 @@ a:nth-child(6n + 6) > .nav-underline {
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .group:hover > .nav-underline {
-        animation: none;
-    }
+/* Section divider — the line between one page section and the next, drawn
+   in the full logo-colour sweep instead of a plain hairline. border-image
+   only paints the sides that have a width, so this stays a top rule. */
+.section-divider {
+    border-top: 2px solid transparent;
+    border-image: var(--gradient-brand) 1;
 }

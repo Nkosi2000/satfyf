@@ -8,7 +8,7 @@
     </x-ui.page-hero>
 
     @foreach ($grouped as $group)
-        <x-ui.section class="hairline-t" width="wide">
+        <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
             <x-ui.section-header :eyebrow="$group['category']->label()">
                 {{ trans_choice(':count programme|:count programmes', $group['programs']->count(), ['count' => $group['programs']->count()]) }}
             </x-ui.section-header>

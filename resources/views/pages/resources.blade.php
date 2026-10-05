@@ -8,7 +8,7 @@
     </x-ui.page-hero>
 
     @forelse ($resources as $category => $items)
-        <x-ui.section class="hairline-t" width="wide">
+        <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
             <x-ui.section-header :eyebrow="$category ?: __('General')">{{ trans_choice(':count file|:count files', $items->count(), ['count' => $items->count()]) }}</x-ui.section-header>
             <div class="reveal-stagger mt-8 hairline-t">
                 @foreach ($items as $resource)
@@ -25,7 +25,7 @@
             </div>
         </x-ui.section>
     @empty
-        <x-ui.section class="hairline-t" width="wide">
+        <x-ui.section class="section-divider" width="wide" triangles="bottom-left">
             <x-ui.empty-state>{{ __('Resources are coming soon.') }}</x-ui.empty-state>
         </x-ui.section>
     @endforelse

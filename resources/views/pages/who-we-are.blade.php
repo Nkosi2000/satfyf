@@ -13,7 +13,7 @@
     </x-ui.page-hero>
 
     @if (! empty($mission['org_motto']))
-        <x-ui.section class="hairline-t" width="wide">
+        <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
             <p class="text-balance text-center text-3xl font-black tracking-tight text-fg sm:text-4xl">
                 &ldquo;{{ $mission['org_motto'] }}&rdquo;
             </p>
@@ -21,7 +21,7 @@
     @endif
 
     @if (! empty($content['who_we_are_goals_heading']))
-        <x-ui.section class="hairline-t" width="wide">
+        <x-ui.section class="section-divider" width="wide" triangles="bottom-left">
             <div @class(['grid items-center gap-12', 'lg:grid-cols-2' => $goalImages->isNotEmpty()])>
                 <div>
                     <x-ui.section-header>{{ $content['who_we_are_goals_heading'] }}</x-ui.section-header>
@@ -79,7 +79,7 @@
         </x-ui.section>
     @endif
 
-    <x-ui.section class="hairline-t" width="wide">
+    <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
         <x-ui.section-header :eyebrow="$content['who_we_are_vision_eyebrow'] ?? __('Vision 2030')">{{ $content['who_we_are_vision_heading'] ?? __('By 2030, we want to see.') }}</x-ui.section-header>
         <div class="reveal-stagger mt-8 grid gap-4 sm:grid-cols-3">
             @foreach ([1, 2, 3] as $i)
@@ -91,7 +91,7 @@
     </x-ui.section>
 
     @if (! empty($youthChapters['youth_chapters_intro']) || $provinces->isNotEmpty())
-        <x-ui.section class="hairline-t" width="wide">
+        <x-ui.section class="section-divider" width="wide" triangles="bottom-left">
             <x-ui.section-header wide :eyebrow="$youthChapters['youth_chapters_eyebrow'] ?? __('Youth Chapters')">{{ $youthChapters['youth_chapters_heading'] ?? __('Active across the country.') }}</x-ui.section-header>
             @if (! empty($youthChapters['youth_chapters_intro']))
                 <x-ui.lead wide class="mt-4">{{ $youthChapters['youth_chapters_intro'] }}</x-ui.lead>
@@ -109,7 +109,7 @@
     @endif
 
     @if ($team->isNotEmpty())
-        <x-ui.section class="hairline-t" width="wide">
+        <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
             <x-ui.section-header wide :eyebrow="$content['who_we_are_team_eyebrow'] ?? __('The Team')">{{ $content['who_we_are_team_heading'] ?? __('People behind the forum.') }}</x-ui.section-header>
             <x-ui.lead wide class="mt-4">{{ $content['who_we_are_team_body'] ?? __('A small, youth-led core team coordinates chapters and campaigns across the country, backed by volunteers, mentors and partner organisations who help run every Think Session, Imbizo and demonstration on the ground.') }}</x-ui.lead>
             <div class="reveal-stagger mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -134,7 +134,7 @@
     @endif
 
     @if (! empty($championsNetwork['champions_network_heading']))
-        <x-ui.section class="hairline-t" width="wide">
+        <x-ui.section class="section-divider" width="wide" triangles="bottom-left">
             <x-ui.card class="mx-auto flex max-w-3xl flex-col items-center gap-6 p-10 text-center">
                 <h2 class="text-balance text-3xl font-black tracking-tight text-fg sm:text-4xl">
                     {{ $championsNetwork['champions_network_heading'] }}

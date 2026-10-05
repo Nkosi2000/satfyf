@@ -43,10 +43,33 @@ it('renders the brand triangle pattern in inner page heroes and the footer', fun
         ->assertSee('triangle-pattern--bottom-left', false);
 });
 
-it('gives every primary nav link the colour-cycling underline', function () {
+it('gives each nav link its own underline colour', function () {
     $html = $this->get('/')->assertOk()->getContent();
 
-    expect(substr_count($html, 'nav-underline'))->toBe(10);
+    $underlineColorFor = function (string $label) use ($html): ?string {
+        preg_match('/'.preg_quote($label, '/').'\s*<span data-nav-underline[^>]*style="background-color: ([^"]+)"/', $html, $matches);
+
+        return $matches[1] ?? null;
+    };
+
+    expect($underlineColorFor('Home'))->toBe('var(--color-brand-red)')
+        ->and($underlineColorFor('Who We Are'))->toBe('var(--color-green)')
+        ->and($underlineColorFor('Why We Exist'))->toBe('var(--color-tertiary)')
+        ->and($underlineColorFor('Donate'))->toBe('var(--color-brand-red)')
+        ->and(substr_count($html, 'data-nav-underline'))->toBe(15);
+});
+
+it('draws section dividers in the brand gradient', function () {
+    $this->get('/who-we-are')
+        ->assertOk()
+        ->assertSee('class="section-divider', false)
+        ->assertDontSee('<section class="hairline-t', false);
+});
+
+it('spreads the triangle pattern across the home page sections', function () {
+    $html = $this->get('/')->assertOk()->getContent();
+
+    expect(substr_count($html, 'data-triangle-pattern'))->toBeGreaterThanOrEqual(6);
 });
 
 it('renders the no-smoking animation canvas below the Why We Exist heading', function () {

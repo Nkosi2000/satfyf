@@ -7,7 +7,7 @@
         </x-slot:image>
     </x-ui.page-hero>
 
-    <x-ui.section id="contact-form" class="hairline-t" width="wide">
+    <x-ui.section id="contact-form" class="section-divider" width="wide" triangles="bottom-right">
         <x-ui.section-header wide :eyebrow="$content['media_contact_eyebrow'] ?? __('Press enquiries')">{{ $content['media_contact_heading'] ?? __('Talk to our media team.') }}</x-ui.section-header>
         @if (! empty($content['media_contact_body']))
             <x-ui.lead wide class="mt-4">{{ $content['media_contact_body'] }}</x-ui.lead>
@@ -26,7 +26,7 @@
     </x-ui.section>
 
     @if ($articles->isNotEmpty())
-        <x-ui.section class="hairline-t" width="wide">
+        <x-ui.section class="section-divider" width="wide" triangles="bottom-left">
             <div class="flex items-end justify-between gap-4">
                 <x-ui.section-header wide :eyebrow="$content['media_news_eyebrow'] ?? __('Latest news')">{{ $content['media_news_heading'] ?? __('Recent stories.') }}</x-ui.section-header>
                 <a href="{{ route('articles.index') }}" class="shrink-0 text-sm text-muted hover:text-fg">{{ __('View all') }} &rarr;</a>
@@ -42,7 +42,7 @@
         </x-ui.section>
     @endif
 
-    <x-ui.section class="hairline-t" width="wide">
+    <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
         <div class="grid items-center gap-12 lg:grid-cols-2">
             <div>
                 <x-ui.section-header :eyebrow="$content['media_brand_eyebrow'] ?? __('Brand assets')">{{ $content['media_brand_heading'] ?? __('Our logo.') }}</x-ui.section-header>

@@ -20,7 +20,7 @@
         </x-slot:image>
     </x-ui.page-hero>
 
-    <x-ui.section class="hairline-t" width="wide">
+    <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
         <div class="reveal-stagger grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             @foreach ($articles as $article)
                 <a href="{{ route('articles.show', $article) }}" class="group block">

@@ -20,7 +20,7 @@
         </x-slot:image>
     </x-ui.page-hero>
 
-    <x-ui.section class="hairline-t" width="wide">
+    <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
         <x-ui.section-header :eyebrow="__('Upcoming')">{{ __('Join us.') }}</x-ui.section-header>
         <div class="reveal-stagger mt-8 hairline-t">
             @forelse ($upcoming as $event)
@@ -38,7 +38,7 @@
     </x-ui.section>
 
     @if ($past->isNotEmpty())
-        <x-ui.section class="hairline-t" width="wide">
+        <x-ui.section class="section-divider" width="wide" triangles="bottom-left">
             <x-ui.section-header :eyebrow="__('Past')">{{ __("Where we've been.") }}</x-ui.section-header>
             <div class="reveal-stagger mt-8 hairline-t">
                 @foreach ($past as $event)

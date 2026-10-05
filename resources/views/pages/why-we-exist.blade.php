@@ -7,7 +7,7 @@
         </x-slot:image>
     </x-ui.page-hero>
 
-    <x-ui.section class="hairline-t" width="wide">
+    <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
         @php
             $stats = collect([1, 2, 3])->map(fn ($i) => [
                 'label' => $content['why_we_exist_stat_'.$i.'_label'] ?? '',
@@ -24,7 +24,7 @@
         </div>
     </x-ui.section>
 
-    <x-ui.section class="hairline-t" width="wide">
+    <x-ui.section class="section-divider" width="wide" triangles="bottom-left">
         <x-ui.section-header :eyebrow="$content['why_we_exist_respond_eyebrow'] ?? __('How We Respond')">
             {{ $content['why_we_exist_respond_heading'] ?? __("We don't just warn. We show up.") }}
         </x-ui.section-header>

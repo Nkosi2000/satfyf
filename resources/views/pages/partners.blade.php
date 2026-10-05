@@ -9,7 +9,7 @@
 
     @foreach ($types as $type)
         @if ($partners->has($type->value))
-            <x-ui.section class="hairline-t" width="wide">
+            <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
                 <x-ui.section-header :eyebrow="$type->label()">
                     {{ trans_choice(':count organisation|:count organisations', $partners[$type->value]->count(), ['count' => $partners[$type->value]->count()]) }}
                 </x-ui.section-header>

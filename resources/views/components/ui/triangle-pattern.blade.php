@@ -4,7 +4,7 @@
 ])
 
 {{--
-    The brand letterhead's red ◀ ▶ triangle grid, fading out from one corner
+    The brand letterhead's red ▲ ▼ triangle grid, fading out from one corner
     of its parent (which must be position: relative). Purely decorative —
     see .triangle-pattern in app.css.
 --}}

@@ -7,7 +7,7 @@
         </x-slot:image>
     </x-ui.page-hero>
 
-    <x-ui.section class="hairline-t" width="wide">
+    <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
         <x-ui.section-header wide :eyebrow="$content['reports_list_eyebrow'] ?? __('Publications')">{{ $content['reports_list_heading'] ?? __('Read and download.') }}</x-ui.section-header>
 
         @if ($reports->isNotEmpty())

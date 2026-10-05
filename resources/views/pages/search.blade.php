@@ -3,7 +3,7 @@
         {{ $query !== '' ? __('Results for ":query"', ['query' => $query]) : __('Search the site.') }}
     </x-ui.page-hero>
 
-    <x-ui.section class="hairline-t" width="wide">
+    <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
         <form action="{{ route('search') }}" method="GET" class="flex max-w-xl items-center gap-2 rounded-full border border-hairline bg-surface p-2" style="box-shadow: var(--shadow-soft)">
             <svg viewBox="0 0 20 20" fill="none" class="ml-2 h-5 w-5 shrink-0 text-muted" aria-hidden="true">
                 <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5" />

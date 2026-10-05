@@ -16,7 +16,7 @@
         </x-slot:image>
     </x-ui.page-hero>
 
-    <x-ui.section class="hairline-t" width="wide">
+    <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
         <div class="reveal-stagger columns-2 gap-4 sm:columns-3">
             @foreach ($images as $image)
                 {{-- Border only, no hard shadow — a whole masonry grid of

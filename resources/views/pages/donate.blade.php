@@ -8,7 +8,7 @@
     </x-ui.page-hero>
 
     @if ($impacts->isNotEmpty())
-        <x-ui.section class="hairline-t" width="wide">
+        <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
             <x-ui.section-header wide :eyebrow="$content['donate_impact_eyebrow'] ?? __('Your impact')">{{ $content['donate_impact_heading'] ?? __('Where your support goes.') }}</x-ui.section-header>
             <div class="reveal-stagger mt-10 grid gap-6 md:grid-cols-3">
                 @foreach ($impacts as $impact)
@@ -29,13 +29,13 @@
     @endphp
 
     @if (filled($content['donate_bank_account_number'] ?? null))
-        <x-ui.section class="hairline-t" width="wide">
+        <x-ui.section class="section-divider" width="wide" triangles="bottom-left">
             <x-ui.section-header wide :eyebrow="$content['donate_bank_eyebrow'] ?? __('Banking details')">{{ $content['donate_bank_heading'] ?? __('Give by EFT.') }}</x-ui.section-header>
             <x-ui.detail-list class="mt-8 max-w-3xl" :items="$bankDetails" />
         </x-ui.section>
     @endif
 
-    <x-ui.section id="contact-form" class="hairline-t" width="wide">
+    <x-ui.section id="contact-form" class="section-divider" width="wide" triangles="bottom-right">
         <x-ui.section-header wide :eyebrow="$content['donate_form_eyebrow'] ?? __('Partner with us')">{{ $content['donate_form_heading'] ?? __('Other ways to give.') }}</x-ui.section-header>
         <x-contact-form :subject="__('Donations and sponsorship')" class="mt-8" />
     </x-ui.section>

@@ -7,7 +7,7 @@
         </x-slot:image>
     </x-ui.page-hero>
 
-    <x-ui.section class="hairline-t" width="wide">
+    <x-ui.section class="section-divider" width="wide" triangles="bottom-right">
         <div class="max-w-2xl space-y-10">
             <div>
                 <x-ui.section-header :eyebrow="$content['privacy_cookies_eyebrow'] ?? __('Cookies we set')">{{ $content['privacy_cookies_heading'] ?? __('Essential only.') }}</x-ui.section-header>
