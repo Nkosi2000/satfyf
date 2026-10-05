@@ -18,11 +18,11 @@
                 @endif
 
                 <div>
-                    <x-ui.section-header :eyebrow="$content['what_we_do_milestone_eyebrow'] ?? null">{{ $content['what_we_do_milestone_heading'] }}</x-ui.section-header>
+                    <x-ui.section-header wide :eyebrow="$content['what_we_do_milestone_eyebrow'] ?? null">{{ $content['what_we_do_milestone_heading'] }}</x-ui.section-header>
 
                     @foreach ([1, 2] as $i)
                         @if (! empty($content['what_we_do_milestone_paragraph_'.$i]))
-                            <x-ui.lead class="mt-6">{{ $content['what_we_do_milestone_paragraph_'.$i] }}</x-ui.lead>
+                            <x-ui.lead wide class="mt-6">{{ $content['what_we_do_milestone_paragraph_'.$i] }}</x-ui.lead>
                         @endif
                     @endforeach
                 </div>

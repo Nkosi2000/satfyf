@@ -331,6 +331,15 @@ it('renders the What We Do milestone section with its slideshow on the left', fu
         ], false);
 });
 
+it('spreads the What We Do milestone copy across the full column width', function () {
+    $html = $this->get('/what-we-do')->assertOk()->getContent();
+
+    preg_match('/data-what-we-do-milestone.*?<\/section>/s', $html, $section);
+
+    expect($section[0])->toContain('text-pretty')
+        ->not->toContain('max-w-2xl');
+});
+
 it('shows the What We Do milestone copy edited in admin', function () {
     SiteSetting::query()->updateOrCreate(['key' => 'what_we_do_milestone_paragraph_1'], ['group' => 'what_we_do', 'value' => json_encode(['en' => 'Edited milestone copy.'])]);
 
