@@ -1540,3 +1540,114 @@ img[data-loaded] {
     border-top: 5px solid transparent;
     border-image: var(--gradient-brand) 1;
 }
+
+/* Living theme — the main accent (buttons, links, focus rings, highlights;
+   everything built on --color-primary / --color-primary-soft) drifts
+   slowly through the logo colours site-wide: red → orange → yellow →
+   green → blue → brown → red, 10s per colour. Every stop is a text-safe
+   shade of that hue (≥4.5:1 for --color-primary, with white button text
+   ≥4.2:1; -soft matches the old red's ~4:1 on cream), so contrast holds
+   at every point in the cycle, in both themes.
+
+   @property registers the two tokens as real colours so they can be
+   animated at all. The animation steps every 0.5s (steps(20) across each
+   10s leg) rather than updating every frame: the base layer's 400ms
+   colour transition on every element blends each small step, so it still
+   reads as continuous while restyling the page twice a second instead of
+   sixty times. */
+@property --color-primary {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #d41530;
+}
+
+@property --color-primary-soft {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #ed2442;
+}
+
+html {
+    animation: theme-cycle 60s steps(20, end) infinite;
+}
+
+html.dark {
+    animation-name: theme-cycle-dark;
+}
+
+@keyframes theme-cycle {
+    0%,
+    100% {
+        --color-primary: #d41530;
+        --color-primary-soft: #ed2442;
+    }
+
+    16.667% {
+        --color-primary: #a3540f;
+        --color-primary-soft: #a96b2c;
+    }
+
+    33.333% {
+        --color-primary: #8a5f00;
+        --color-primary-soft: #9f730f;
+    }
+
+    50% {
+        --color-primary: #007847;
+        --color-primary-soft: #007847;
+    }
+
+    66.667% {
+        --color-primary: #212e7b;
+        --color-primary-soft: #3e47b2;
+    }
+
+    83.333% {
+        --color-primary: #ad5726;
+        --color-primary-soft: #ad5726;
+    }
+}
+
+@keyframes theme-cycle-dark {
+    0%,
+    100% {
+        --color-primary: #ed2442;
+        --color-primary-soft: #f0485f;
+    }
+
+    16.667% {
+        --color-primary: #a66a2c;
+        --color-primary-soft: #f89e41;
+    }
+
+    33.333% {
+        --color-primary: #9a6f0f;
+        --color-primary-soft: #fcb618;
+    }
+
+    50% {
+        --color-primary: #1c875b;
+        --color-primary-soft: #33936c;
+    }
+
+    66.667% {
+        --color-primary: #6a73a7;
+        --color-primary-soft: #7a82b0;
+    }
+
+    83.333% {
+        --color-primary: #b26133;
+        --color-primary-soft: #ba7249;
+    }
+}
+
+.tab-hidden {
+    animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html,
+    html.dark {
+        animation: none;
+    }
+}

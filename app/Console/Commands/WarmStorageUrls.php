@@ -11,6 +11,7 @@ use App\Models\Partner;
 use App\Models\Resource;
 use App\Models\TeamMember;
 use App\Models\Testimonial;
+use App\Models\WhatWeDoImage;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
@@ -53,6 +54,7 @@ class WarmStorageUrls extends Command
         $paths = [
             ...GalleryImage::pluck('image_path'),
             ...GoalImage::pluck('image_path'),
+            ...WhatWeDoImage::pluck('image_path'),
             ...Partner::whereNotNull('logo_path')->pluck('logo_path'),
             ...Testimonial::whereNotNull('photo_path')->pluck('photo_path'),
             ...TeamMember::whereNotNull('photo_path')->pluck('photo_path'),

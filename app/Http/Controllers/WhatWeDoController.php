@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\ProgramCategory;
 use App\Models\Program;
 use App\Models\SiteSetting;
+use App\Models\WhatWeDoImage;
 use Illuminate\View\View;
 
 class WhatWeDoController extends Controller
@@ -15,6 +16,7 @@ class WhatWeDoController extends Controller
 
         return view('pages.what-we-do', [
             'content' => SiteSetting::group('what_we_do'),
+            'slideshowImages' => WhatWeDoImage::allOrdered(),
             'grouped' => collect(ProgramCategory::cases())
                 ->map(fn (ProgramCategory $category) => [
                     'category' => $category,

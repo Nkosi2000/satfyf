@@ -27,10 +27,10 @@
                 rel="noopener noreferrer"
                 aria-label="{{ $social['label'] }}"
                 title="{{ $social['label'] }}"
-                class="flex h-10 w-10 items-center justify-center rounded-full text-fg transition-[background-color,color,transform] duration-200 ease-out hover:scale-110 hover:bg-(--social-hover) hover:text-on-accent focus-visible:bg-(--social-hover) focus-visible:text-on-accent"
+                class="flex h-12 w-12 items-center justify-center rounded-full text-fg transition-[background-color,color,transform] duration-200 ease-out hover:scale-110 hover:bg-(--social-hover) hover:text-on-accent focus-visible:bg-(--social-hover) focus-visible:text-on-accent"
                 style="--social-hover: {{ $hoverColors[$loop->index % count($hoverColors)] }}"
             >
-                <x-icon.social :name="$social['icon']" class="h-4 w-4" />
+                <x-icon.social :name="$social['icon']" class="h-5 w-5" />
             </a>
         @endforeach
     </aside>

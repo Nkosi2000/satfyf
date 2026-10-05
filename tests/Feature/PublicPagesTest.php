@@ -7,6 +7,7 @@ use App\Models\Partner;
 use App\Models\Province;
 use App\Models\SiteSetting;
 use App\Models\Testimonial;
+use App\Models\WhatWeDoImage;
 use Illuminate\Support\Facades\Storage;
 
 it('renders each simple public page successfully', function (string $uri, string $expectedText) {
@@ -313,4 +314,28 @@ it('omits the social rail when no social profiles are set', function () {
     SiteSetting::forgetCache();
 
     $this->get('/contact')->assertOk()->assertDontSee('data-social-rail', false);
+});
+
+it('renders the What We Do milestone section with its slideshow on the left', function () {
+    WhatWeDoImage::factory()->create(['caption' => 'Youth ambassadors at Parliament', 'order' => 0]);
+
+    $this->get('/what-we-do')
+        ->assertOk()
+        ->assertSeeInOrder([
+            'data-what-we-do-milestone',
+            'Youth ambassadors at Parliament',
+            'Our First Milestone',
+            'What we do',
+            'WHO Framework Convention on Tobacco Control',
+            'Youth Ambassadors in amplifying our call',
+        ], false);
+});
+
+it('shows the What We Do milestone copy edited in admin', function () {
+    SiteSetting::query()->updateOrCreate(['key' => 'what_we_do_milestone_paragraph_1'], ['group' => 'what_we_do', 'value' => json_encode(['en' => 'Edited milestone copy.'])]);
+
+    $this->get('/what-we-do')
+        ->assertOk()
+        ->assertSee('Edited milestone copy.')
+        ->assertDontSee('WHO Framework Convention on Tobacco Control');
 });

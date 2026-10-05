@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\SessionHeartbeatController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\WhatWeDoImageController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->group(function (): void {
@@ -59,6 +60,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::resource('resources', ResourceController::class)->except('show');
         Route::resource('gallery-images', GalleryImageController::class)->except('show');
         Route::resource('goal-images', GoalImageController::class)->except('show');
+        Route::resource('what-we-do-images', WhatWeDoImageController::class)->except('show');
         Route::resource('provinces', ProvinceController::class)->except('show');
         Route::resource('partners', PartnerController::class)->except('show');
         Route::resource('faqs', FaqItemController::class)->except('show');

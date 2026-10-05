@@ -68,7 +68,11 @@ return [
         'label' => 'What We Do',
         'section' => 'pages',
         'groups' => ['what_we_do'],
-        'fields' => ['what_we_do_hero_eyebrow', 'what_we_do_hero_heading', 'what_we_do_hero_subtext'],
+        'fields' => [
+            'what_we_do_hero_eyebrow', 'what_we_do_hero_heading', 'what_we_do_hero_subtext',
+            'what_we_do_milestone_eyebrow', 'what_we_do_milestone_heading',
+            'what_we_do_milestone_paragraph_1', 'what_we_do_milestone_paragraph_2',
+        ],
     ],
     'get-involved' => [
         'label' => 'Get Involved',

@@ -10,6 +10,7 @@ use App\Models\Partner;
 use App\Models\Resource;
 use App\Models\TeamMember;
 use App\Models\Testimonial;
+use App\Models\WhatWeDoImage;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,6 +21,7 @@ it('caches a signed url for every stored file path across every model', function
 
     $gallery = GalleryImage::factory()->create(['image_path' => 'gallery/one.jpg']);
     $goalImage = GoalImage::factory()->create(['image_path' => 'goals/one.jpg']);
+    $whatWeDoImage = WhatWeDoImage::factory()->create(['image_path' => 'what-we-do/one.jpg']);
     $partner = Partner::factory()->create(['logo_path' => 'partners/one.png']);
     $testimonial = Testimonial::factory()->create(['photo_path' => 'testimonials/one.jpg']);
     $teamMember = TeamMember::factory()->create(['photo_path' => 'team/one.jpg']);
@@ -35,6 +37,7 @@ it('caches a signed url for every stored file path across every model', function
 
     expect(Cache::get('storage_url:public:'.$gallery->image_path))->toBe('https://fake.test/'.$gallery->image_path)
         ->and(Cache::get('storage_url:public:'.$goalImage->image_path))->toBe('https://fake.test/'.$goalImage->image_path)
+        ->and(Cache::get('storage_url:public:'.$whatWeDoImage->image_path))->toBe('https://fake.test/'.$whatWeDoImage->image_path)
         ->and(Cache::get('storage_url:public:'.$partner->logo_path))->toBe('https://fake.test/'.$partner->logo_path)
         ->and(Cache::get('storage_url:public:'.$testimonial->photo_path))->toBe('https://fake.test/'.$testimonial->photo_path)
         ->and(Cache::get('storage_url:public:'.$teamMember->photo_path))->toBe('https://fake.test/'.$teamMember->photo_path)
