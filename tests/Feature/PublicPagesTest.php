@@ -30,6 +30,25 @@ it('renders the site-wide fluid smoke backdrop', function () {
         ->assertSee('data-fluid-smoke', false);
 });
 
+it('renders the ticker strip directly below the home hero', function () {
+    $html = $this->get('/')->assertOk()->getContent();
+
+    expect($html)->toMatch('/SATFYF-Facebook-Cover-1280x474\.jpeg.*?<\/section>\s*(?:<!--.*?-->\s*)?<div data-hero-ticker/s');
+});
+
+it('renders the brand triangle pattern in inner page heroes and the footer', function () {
+    $this->get('/who-we-are')
+        ->assertOk()
+        ->assertSee('triangle-pattern--top-right', false)
+        ->assertSee('triangle-pattern--bottom-left', false);
+});
+
+it('gives every primary nav link the colour-cycling underline', function () {
+    $html = $this->get('/')->assertOk()->getContent();
+
+    expect(substr_count($html, 'nav-underline'))->toBe(10);
+});
+
 it('renders the no-smoking animation canvas below the Why We Exist heading', function () {
     $this->get('/')
         ->assertOk()

@@ -47,6 +47,8 @@
         <span></span>
         <span></span>
         <span></span>
+        <span></span>
+        <span></span>
     </div>
     {{--
         One site-wide fluid-smoke canvas rather than one per section: the

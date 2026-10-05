@@ -20,6 +20,7 @@
          since this sits behind real page content on every inner page and
          can never compete with heading legibility. --}}
     <x-ui.light-rays variant="sweep" />
+    <x-ui.triangle-pattern corner="top-right" />
     <x-ui.section class="relative !py-0" width="wide">
         @isset($image)
             <div class="grid items-center gap-12 lg:grid-cols-[1fr_1fr]">

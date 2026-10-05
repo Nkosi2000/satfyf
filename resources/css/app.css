@@ -37,82 +37,80 @@
     --text-2xl--line-height: 2.625rem;
 
     /*
-     * Indigo / gold / white / black theme (replaces the earlier red/brown
-     * palette), matched directly to the brand cover photo
-     * (public/images/SATFYF-Facebook-Cover-1280x474.jpeg): the deep indigo
-     * background (#2b317b, sampled) carries the dominant accent role
-     * (buttons, links, hover states, gradient text); gold (#f9b413,
-     * sampled — the circle behind the heading) is the supporting accent
-     * (badges, ambient glow, gradient partner); white/black live in the
-     * structural ink/surface/fg tokens below, not as a hue token of their
-     * own. Every colour token is a WCAG-checked tint/shade for its specific
-     * role (ratios computed against white in light mode / black in dark
-     * mode) — ratios noted per token are exact, not estimated. Light values
-     * live here (the default); .dark overrides every one of these same
-     * custom properties. Structural tokens (ink/surface/hairline/fg/muted/
-     * faint) keep generic, role-based names since they're roles, not hues.
+     * SATFYF logo palette (from "SATFYF - Colour Specifications.pdf"):
+     * red #ED2442, green #007847, yellow #FCB618, blue #212E7B, orange
+     * #F89E41, brown #AD5726 and dark brown #311218. The --color-brand-*
+     * tokens are the exact spec values for decorative fills (gradients,
+     * backdrop blobs, triangles, underlines) and never change with the
+     * theme. The role tokens below map those hues onto jobs: red is the
+     * dominant accent (buttons, links, focus), yellow the supporting
+     * accent, blue/green/orange/brown decorative. Where an exact brand hue
+     * fails WCAG AA as text, the role token is a darkened (light mode) or
+     * brightened (dark mode) shade of it — ratios noted are exact, against
+     * white in light mode and black in dark mode. Light values live here;
+     * .dark overrides the role tokens.
      */
+    --color-brand-red: #ed2442;
+    --color-brand-green: #007847;
+    --color-brand-yellow: #fcb618;
+    --color-brand-blue: #212e7b;
+    --color-brand-orange: #f89e41;
+    --color-brand-brown: #ad5726;
+    --color-brand-dark-brown: #311218;
+
     --color-ink: #ffffff;
     --color-ink-raised: #f4f4f2;
     --color-surface: #ffffff;
     --color-surface-2: #ececea;
-    --color-hairline: rgb(0 0 0 / 9%);
-    --color-hairline-strong: rgb(0 0 0 / 18%);
+    --color-hairline: rgb(49 18 24 / 10%);
+    --color-hairline-strong: rgb(49 18 24 / 20%);
 
-    --color-fg: #000000;
-    --color-muted: #45484c;
-    --color-faint: #797c80;
+    /* Dark brown #311218 — the banner's name/heading colour — as the body
+       text colour instead of pure black (17:1 on white). */
+    --color-fg: #311218;
+    --color-muted: #4f4547;
+    --color-faint: #7d7476;
 
-    /* Indigo #2B317B — the cover photo's own background colour, 11.5:1 on
-       white, used as-is for text too. -soft is a brighter, more vivid
-       indigo (#3E47B2, 7.6:1) for buttons/gradients/fills; -deep is a
-       near-black indigo (#191D48, 16:1) for decorative use. */
-    --color-primary: #2b317b;
-    --color-primary-soft: #3e47b2;
-    --color-primary-deep: #191d48;
-    --color-primary-rgb: 43 49 123;
+    /* Red: #D41530 is the text-safe shade (5.3:1, and white-on-it 5.3:1
+       for buttons); -soft is the exact brand red for fills, hovers and
+       focus rings; -deep is the brand dark brown for dark blocks. */
+    --color-primary: #d41530;
+    --color-primary-soft: #ed2442;
+    --color-primary-deep: #311218;
+    --color-primary-rgb: 212 21 48;
 
-    /* Gold #8B6304 — a darkened, text-safe shade of the cover photo's
-       bright circle (#F9B413, which is only 1.8:1 on white and unusable as
-       text); 5.4:1 on white. -soft (#D19405) is a vivid amber for
-       decorative fills/gradients; -deep (#634603) a near-black bronze-gold
-       for decorative depth — the "bit of gold" supporting accent (badges,
-       ambient glow, gradient partner), deliberately never the dominant
-       colour. */
-    --color-secondary: #8b6304;
-    --color-secondary-soft: #d19405;
-    --color-secondary-deep: #634603;
+    /* Yellow: #8A5F00 is a text-safe shade of the brand yellow (5.7:1);
+       -soft is the exact brand yellow for fills; -deep the brand brown. */
+    --color-secondary: #8a5f00;
+    --color-secondary-soft: #fcb618;
+    --color-secondary-deep: #ad5726;
 
-    /* Kept as a minor decorative-only shade (ambient glow variation),
-       mirroring --color-primary-deep — not part of the palette's two named
-       hues. */
-    --color-tertiary: #191d48;
-    --color-tertiary-deep: #0d0f28;
+    /* Blue — decorative accents (ambient glow, gradients). 12:1 on white,
+       so it's text-safe as-is. */
+    --color-tertiary: #212e7b;
+    --color-tertiary-deep: #311218;
 
-    /* Red #ED2442 — kept exactly as before. Now that primary is indigo
-       rather than red, this reads as the conventional, unambiguous
-       "error/danger" red without competing with the brand accent at all.
-       ~4.3:1 on white, borderline for small text; shaded down for text,
-       kept exact for fills/borders. */
+    /* Green — 5.6:1 on white, text-safe as-is. */
+    --color-green: #007847;
+    --color-green-soft: #007847;
+
     --color-danger: #d7122f;
     --color-danger-soft: #ed2442;
 
-    /* Unused decorative-only token, kept for any future need — not part
-       of the indigo/gold/white/black palette. */
-    --color-orange: #a45606;
+    /* Orange: #A3540F text-safe (5.5:1); -soft the exact brand orange. */
+    --color-orange: #a3540f;
     --color-orange-soft: #f89e41;
-    --color-orange-deep: #783f04;
+    --color-orange-deep: #ad5726;
 
     --color-on-accent: #ffffff;
 
     --shadow-ring: 0 0 0 1px var(--color-hairline);
 
-    /* Brand-band gradient used for the hairline that separates one page
-       section from the next — a deep-indigo-to-gold sweep matching the
-       cover photo, not the contrast-adjusted text/fill tokens above, since
-       this is a decorative fill rather than text. */
-    --gradient-brand: linear-gradient(90deg, #191d48, #2b317b, #3e47b2, #8b6304);
-    --gradient-brand-vertical: linear-gradient(180deg, #191d48, #2b317b, #3e47b2, #8b6304);
+    /* Full logo sweep for the hairline that separates one page section
+       from the next, the scrollbar thumb and the right-edge accent —
+       exact brand hues, since these are decorative fills, not text. */
+    --gradient-brand: linear-gradient(90deg, #ed2442, #f89e41, #fcb618, #007847, #212e7b, #ad5726);
+    --gradient-brand-vertical: linear-gradient(180deg, #ed2442, #f89e41, #fcb618, #007847, #212e7b, #ad5726);
 
     /* Motion */
     --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
@@ -122,19 +120,18 @@
        retired (card-hard is now an alias for card-soft), but .press:active
        still references this to collapse a resting shadow to zero size on
        pointer-down, so the token stays defined and on-theme. */
-    --shadow-hard-color: #2b317b;
+    --shadow-hard-color: #311218;
     --shadow-hard-color-alt: var(--color-ink);
 
     /* Soft-style tokens — the site-wide page-background and shadow system
        (see the .card-soft/.badge-soft/.text-gradient-accent utilities
-       below, and card-hard's alias to card-soft above). Blurred ambient
-       shadows tinted with the brand indigo, and a warm off-white page
-       background instead of pure white. */
+       below). Blurred ambient shadows tinted with the brand dark brown,
+       and a warm off-white page background instead of pure white. */
     --color-cream: #fbf7f1;
     --color-cream-raised: #f3ecdf;
-    --shadow-soft: 0 32px 64px -18px rgb(43 49 123 / 38%);
-    --shadow-soft-sm: 0 16px 32px -12px rgb(43 49 123 / 30%);
-    --gradient-accent: linear-gradient(90deg, #2b317b, #8b6304);
+    --shadow-soft: 0 32px 64px -18px rgb(49 18 24 / 30%);
+    --shadow-soft-sm: 0 16px 32px -12px rgb(49 18 24 / 24%);
+    --gradient-accent: linear-gradient(90deg, #d41530, #a3540f);
 }
 
 .dark {
@@ -149,49 +146,40 @@
     --color-muted: #a6a6a6;
     --color-faint: #707070;
 
-    /* Indigo #2B317B is too dark for headroom on black; brightened for
-       text (#686FCA, 4.7:1), -soft brightened further (#7F85D2, 6.2:1) so
-       it still pops as a button/gradient fill against black. -deep is kept
-       identical to light mode — it's decorative-only, not text, so it
-       doesn't need re-checking against a different background. */
-    --color-primary: #686fca;
-    --color-primary-soft: #7f85d2;
-    --color-primary-deep: #191d48;
-    --color-primary-rgb: 104 111 202;
+    /* The exact brand red already reads on black (4.9:1). */
+    --color-primary: #ed2442;
+    --color-primary-soft: #f0485f;
+    --color-primary-deep: #311218;
+    --color-primary-rgb: 237 36 66;
 
-    /* Gold #8B6304 is far too dark for black; brightened for text/fills
-       (#DB9B06, 8.7:1). -soft is the cover photo's own bright gold
-       (#F9B413, 11.6:1 on black — used exactly as sampled, no adjustment
-       needed) — the "bit of gold" supporting accent, same restrained role
-       as light mode. -deep kept identical to light mode. */
-    --color-secondary: #db9b06;
-    --color-secondary-soft: #f9b413;
-    --color-secondary-deep: #634603;
+    /* The exact brand yellow is 11.8:1 on black — used as-is. */
+    --color-secondary: #fcb618;
+    --color-secondary-soft: #fcb618;
+    --color-secondary-deep: #ad5726;
 
-    /* Minor decorative-only shade (ambient glow variation) — reuses light
-       mode's primary/primary-deep values, mirroring how this token related
-       to primary before. */
-    --color-tertiary: #2b317b;
-    --color-tertiary-deep: #191d48;
+    /* Brand blue is too dark for black; brightened (#6B76D0, 5.1:1). */
+    --color-tertiary: #6b76d0;
+    --color-tertiary-deep: #212e7b;
 
-    /* Red #ED2442 already reads clearly on black; brightened slightly for
-       a touch more headroom, fills keep the exact brand red. */
+    /* Brand green is too dark for black; brightened (#22A86C, 6.9:1). */
+    --color-green: #22a86c;
+    --color-green-soft: #22a86c;
+
     --color-danger: #ef3e59;
     --color-danger-soft: #ed2442;
 
-    /* Unused decorative-only token, kept for any future need — not part
-       of the indigo/gold/white/black palette. */
-    --color-orange: #f4a859;
+    /* The exact brand orange is 10:1 on black — used as-is. */
+    --color-orange: #f89e41;
     --color-orange-soft: #f89e41;
-    --color-orange-deep: #783f04;
+    --color-orange-deep: #ad5726;
 
     --color-on-accent: #ffffff;
 
     --color-cream: #151512;
     --color-cream-raised: #1c1c18;
-    --shadow-soft: 0 32px 64px -18px rgb(104 111 202 / 45%);
-    --shadow-soft-sm: 0 16px 32px -12px rgb(104 111 202 / 36%);
-    --gradient-accent: linear-gradient(90deg, #686fca, #db9b06);
+    --shadow-soft: 0 32px 64px -18px rgb(237 36 66 / 32%);
+    --shadow-soft-sm: 0 16px 32px -12px rgb(237 36 66 / 26%);
+    --gradient-accent: linear-gradient(90deg, #ed2442, #fcb618);
 }
 
 @layer base {
@@ -237,14 +225,14 @@
 
 /* Scrollbar in the brand's colours, echoing the section-divider gradient.
    Firefox's `scrollbar-color` has no gradient support, so it falls back to
-   a single brand indigo rather than trying to approximate the band. */
+   a single brand red rather than trying to approximate the band. */
 html {
     /* Scales every rem-based size on the site — type, spacing, radii — down
        together, since Tailwind's whole scale here is rem-based. The type
        and layout scale reads oversized at the stock 16px root; this is one
        lever instead of re-tuning every text-* and spacing utility. */
     font-size: 65%;
-    scrollbar-color: #2b317b transparent;
+    scrollbar-color: #ed2442 transparent;
     scrollbar-width: thin;
 }
 
@@ -606,7 +594,8 @@ html {
     }
 }
 
-/* Ambient, site-wide backdrop: six blurred brand-colour blobs, fixed to the
+/* Ambient, site-wide backdrop: six blurred blobs, one per logo colour
+   (red, yellow, green, blue, orange, brown), fixed to the
    viewport (so they stay put rather than scrolling away) and drifting
    slowly and independently. Sits behind the edge accent and every section,
    giving the plain stretches between hero glows some quiet motion instead
@@ -640,7 +629,7 @@ html {
     width: 42vw;
     max-height: 32rem;
     max-width: 32rem;
-    background: var(--color-primary);
+    background: var(--color-brand-red);
     animation: ambient-drift-a 26s ease-in-out infinite;
 }
 
@@ -651,7 +640,7 @@ html {
     width: 36vw;
     max-height: 28rem;
     max-width: 28rem;
-    background: var(--color-secondary-soft);
+    background: var(--color-brand-yellow);
     animation: ambient-drift-b 32s ease-in-out infinite;
 }
 
@@ -662,7 +651,7 @@ html {
     width: 38vw;
     max-height: 30rem;
     max-width: 30rem;
-    background: var(--color-danger-soft);
+    background: var(--color-brand-green);
     animation: ambient-drift-c 30s ease-in-out infinite;
 }
 
@@ -673,7 +662,7 @@ html {
     width: 28vw;
     max-height: 22rem;
     max-width: 22rem;
-    background: var(--color-tertiary);
+    background: var(--color-brand-blue);
     animation: ambient-drift-a 24s ease-in-out infinite reverse;
 }
 
@@ -684,7 +673,7 @@ html {
     width: 26vw;
     max-height: 20rem;
     max-width: 20rem;
-    background: var(--color-secondary-soft);
+    background: var(--color-brand-orange);
     animation: ambient-drift-b 28s ease-in-out infinite reverse;
 }
 
@@ -695,7 +684,7 @@ html {
     width: 24vw;
     max-height: 18rem;
     max-width: 18rem;
-    background: var(--color-secondary-deep);
+    background: var(--color-brand-brown);
     animation: ambient-drift-c 34s ease-in-out infinite reverse;
 }
 
@@ -783,28 +772,28 @@ html {
 .light-rays:not(.light-rays--vertical, .light-rays--sweep) span:nth-child(1),
 .light-rays--diagonal span:nth-child(1) {
     left: 8%;
-    background: linear-gradient(180deg, transparent, var(--color-primary-soft) 40%, transparent 80%);
+    background: linear-gradient(180deg, transparent, var(--color-brand-red) 40%, transparent 80%);
     animation: ray-drift-a 22s ease-in-out infinite;
 }
 
 .light-rays:not(.light-rays--vertical, .light-rays--sweep) span:nth-child(2),
 .light-rays--diagonal span:nth-child(2) {
     left: 30%;
-    background: linear-gradient(180deg, transparent, var(--color-secondary-soft) 45%, transparent 85%);
+    background: linear-gradient(180deg, transparent, var(--color-brand-yellow) 45%, transparent 85%);
     animation: ray-drift-b 28s ease-in-out infinite;
 }
 
 .light-rays:not(.light-rays--vertical, .light-rays--sweep) span:nth-child(3),
 .light-rays--diagonal span:nth-child(3) {
     left: 58%;
-    background: linear-gradient(180deg, transparent, var(--color-primary) 40%, transparent 80%);
+    background: linear-gradient(180deg, transparent, var(--color-brand-green) 40%, transparent 80%);
     animation: ray-drift-a 26s ease-in-out infinite reverse;
 }
 
 .light-rays:not(.light-rays--vertical, .light-rays--sweep) span:nth-child(4),
 .light-rays--diagonal span:nth-child(4) {
     left: 80%;
-    background: linear-gradient(180deg, transparent, var(--color-secondary) 45%, transparent 85%);
+    background: linear-gradient(180deg, transparent, var(--color-brand-orange) 45%, transparent 85%);
     animation: ray-drift-b 24s ease-in-out infinite reverse;
 }
 
@@ -846,37 +835,37 @@ html {
 
 .light-rays--vertical span:nth-child(1) {
     left: 4%;
-    background: linear-gradient(180deg, transparent, var(--color-primary-soft) 35%, transparent 75%);
+    background: linear-gradient(180deg, transparent, var(--color-brand-red) 35%, transparent 75%);
     animation: ray-spotlight-a 9s ease-in-out infinite;
 }
 
 .light-rays--vertical span:nth-child(2) {
     left: 20%;
-    background: linear-gradient(180deg, transparent, var(--color-secondary-soft) 40%, transparent 78%);
+    background: linear-gradient(180deg, transparent, var(--color-brand-yellow) 40%, transparent 78%);
     animation: ray-spotlight-b 11s ease-in-out infinite;
 }
 
 .light-rays--vertical span:nth-child(3) {
     left: 38%;
-    background: linear-gradient(180deg, transparent, var(--color-primary) 35%, transparent 75%);
+    background: linear-gradient(180deg, transparent, var(--color-brand-green) 35%, transparent 75%);
     animation: ray-spotlight-a 8s ease-in-out infinite reverse;
 }
 
 .light-rays--vertical span:nth-child(4) {
     left: 55%;
-    background: linear-gradient(180deg, transparent, var(--color-secondary) 40%, transparent 78%);
+    background: linear-gradient(180deg, transparent, var(--color-brand-orange) 40%, transparent 78%);
     animation: ray-spotlight-b 10s ease-in-out infinite reverse;
 }
 
 .light-rays--vertical span:nth-child(5) {
     left: 74%;
-    background: linear-gradient(180deg, transparent, var(--color-primary-soft) 35%, transparent 75%);
+    background: linear-gradient(180deg, transparent, var(--color-brand-red) 35%, transparent 75%);
     animation: ray-spotlight-a 12s ease-in-out infinite;
 }
 
 .light-rays--vertical span:nth-child(6) {
     left: 91%;
-    background: linear-gradient(180deg, transparent, var(--color-secondary-soft) 40%, transparent 78%);
+    background: linear-gradient(180deg, transparent, var(--color-brand-green) 40%, transparent 78%);
     animation: ray-spotlight-b 9.5s ease-in-out infinite reverse;
 }
 
@@ -919,19 +908,19 @@ html {
 
 .light-rays--sweep span:nth-child(1) {
     left: -5%;
-    background: linear-gradient(180deg, transparent, var(--color-primary-soft) 45%, transparent 85%);
+    background: linear-gradient(180deg, transparent, var(--color-brand-red) 45%, transparent 85%);
     animation: ray-sweep-a 34s ease-in-out infinite;
 }
 
 .light-rays--sweep span:nth-child(2) {
     left: 40%;
-    background: linear-gradient(180deg, transparent, var(--color-secondary-soft) 45%, transparent 85%);
+    background: linear-gradient(180deg, transparent, var(--color-brand-yellow) 45%, transparent 85%);
     animation: ray-sweep-b 40s ease-in-out infinite reverse;
 }
 
 .light-rays--sweep span:nth-child(3) {
     left: 78%;
-    background: linear-gradient(180deg, transparent, var(--color-primary) 45%, transparent 85%);
+    background: linear-gradient(180deg, transparent, var(--color-brand-green) 45%, transparent 85%);
     animation: ray-sweep-a 36s ease-in-out infinite reverse;
 }
 
@@ -1439,5 +1428,118 @@ img[data-loaded] {
 
     [data-admin-sidebar] {
         transition: none;
+    }
+}
+
+/* Nav link underline — while its link is hovered, the bar cycles through
+   the logo colours (the current page's underline rests on brand red). Each link in the row
+   starts the cycle at a different colour via a negative delay, so moving
+   along the nav doesn't show the same colour twice in a row. */
+.nav-underline {
+    background-color: var(--color-brand-red);
+}
+
+.group:hover > .nav-underline {
+    animation: nav-underline-cycle 2.4s linear infinite;
+}
+
+a:nth-child(6n + 2) > .nav-underline {
+    animation-delay: -0.4s;
+}
+
+a:nth-child(6n + 3) > .nav-underline {
+    animation-delay: -0.8s;
+}
+
+a:nth-child(6n + 4) > .nav-underline {
+    animation-delay: -1.2s;
+}
+
+a:nth-child(6n + 5) > .nav-underline {
+    animation-delay: -1.6s;
+}
+
+a:nth-child(6n + 6) > .nav-underline {
+    animation-delay: -2s;
+}
+
+@keyframes nav-underline-cycle {
+    0%,
+    100% {
+        background-color: var(--color-brand-red);
+    }
+
+    16.6% {
+        background-color: var(--color-brand-orange);
+    }
+
+    33.3% {
+        background-color: var(--color-brand-yellow);
+    }
+
+    50% {
+        background-color: var(--color-brand-green);
+    }
+
+    66.6% {
+        background-color: var(--color-brand-blue);
+    }
+
+    83.3% {
+        background-color: var(--color-brand-brown);
+    }
+}
+
+/* The red ◀ ▶ triangle grid from the brand letterhead and email banner
+   (see x-ui.triangle-pattern). One SVG tile of two facing triangles, every
+   other row shifted half a tile, faded out from the chosen corner with a
+   radial mask so it thins into the section the way the print pattern does. */
+.triangle-pattern {
+    position: absolute;
+    pointer-events: none;
+    width: min(46rem, 60%);
+    height: min(30rem, 100%);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='40' viewBox='0 0 36 40'%3E%3Cg fill='%23ed2442'%3E%3Cpath d='M15 3v12L6 9z'/%3E%3Cpath d='M21 3v12l9-6z'/%3E%3Cpath d='M-3 23v12l-9-6z'/%3E%3Cpath d='M3 23v12l9-6z'/%3E%3Cpath d='M33 23v12l-9-6z'/%3E%3Cpath d='M39 23v12l9-6z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 36px 40px;
+}
+
+.triangle-pattern--top-right {
+    top: 0;
+    right: 0;
+    background-position: top right;
+    mask-image: radial-gradient(ellipse at top right, #000 0%, rgb(0 0 0 / 55%) 35%, transparent 70%);
+}
+
+.triangle-pattern--top-left {
+    top: 0;
+    left: 0;
+    background-position: top left;
+    mask-image: radial-gradient(ellipse at top left, #000 0%, rgb(0 0 0 / 55%) 35%, transparent 70%);
+}
+
+.triangle-pattern--bottom-right {
+    bottom: 0;
+    right: 0;
+    background-position: bottom right;
+    mask-image: radial-gradient(ellipse at bottom right, #000 0%, rgb(0 0 0 / 55%) 35%, transparent 70%);
+}
+
+.triangle-pattern--bottom-left {
+    bottom: 0;
+    left: 0;
+    background-position: bottom left;
+    mask-image: radial-gradient(ellipse at bottom left, #000 0%, rgb(0 0 0 / 55%) 35%, transparent 70%);
+}
+
+@media (max-width: 639px) {
+    .triangle-pattern {
+        width: 75%;
+        height: min(16rem, 100%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .group:hover > .nav-underline {
+        animation: none;
     }
 }

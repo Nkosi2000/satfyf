@@ -16,6 +16,24 @@
             />
         </section>
 
+        {{-- A loud, kinetic ticker strip — the marquee treatment used again
+             further down for partners, surfaced right under the hero so the
+             page announces its energy immediately. The separator dots cycle
+             through the logo colours that read on the dark strip. --}}
+        @php
+            $tickerDotColors = ['--color-brand-red', '--color-brand-yellow', '--color-brand-green', '--color-brand-orange'];
+        @endphp
+        <div data-hero-ticker class="block-ink overflow-hidden border-y-[3px] border-fg py-3" aria-hidden="true">
+            <div class="marquee-track flex w-max items-center gap-10 text-sm font-black tracking-[0.08em] uppercase">
+                @for ($i = 0; $i < 8; $i++)
+                    <span>{{ __('Speak up.') }}</span>
+                    <span style="color: var({{ $tickerDotColors[(2 * $i) % 4] }})">&bull;</span>
+                    <span>{{ __('Stand out.') }}</span>
+                    <span style="color: var({{ $tickerDotColors[(2 * $i + 1) % 4] }})">&bull;</span>
+                @endfor
+            </div>
+        </div>
+
         {{-- Why we exist — a subtly raised tint (not pure cream) breaks the
              page rhythm right after the hero, echoing the Stats section's
              later dark beat without competing with it. --}}
@@ -370,6 +388,7 @@
                 aria-hidden="true"
             ></div>
             <x-ui.light-rays class="opacity-70" />
+            <x-ui.triangle-pattern corner="top-right" />
             <div class="relative mx-auto flex w-full max-w-[110rem] flex-col items-center gap-6 text-center">
                 <h2 class="font-display text-balance text-5xl leading-[1.1] font-semibold tracking-tight text-on-accent sm:text-6xl lg:text-7xl">
                     {{ $closingCta['closing_cta_heading'] ?? __('Ready to speak up?') }}

@@ -25,8 +25,9 @@
     ];
 @endphp
 
-<footer class="border-t border-hairline bg-cream-raised">
-    <x-ui.section width="wide" class="!py-16">
+<footer class="relative overflow-hidden border-t border-hairline bg-cream-raised">
+    <x-ui.triangle-pattern corner="bottom-left" class="opacity-40" />
+    <x-ui.section width="wide" class="relative !py-16">
         <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr_1.2fr]">
             <div>
                 <a href="{{ route('home') }}" class="inline-flex items-center">

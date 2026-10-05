@@ -1,7 +1,6 @@
 @php
-    // Every link shares one quiet accent underline now — the old per-link
-    // rainbow rotation was a poster-system flourish that reads as noisy
-    // chrome against the site's restrained soft palette.
+    // Every link's underline cycles through the logo colours while it's
+    // hovered (see .nav-underline in app.css).
     $links = [
         ['label' => __('Home'), 'route' => 'home'],
         ['label' => __('Who We Are'), 'route' => 'who-we-are'],
@@ -59,7 +58,7 @@
                         class="group relative py-1 text-base font-bold text-muted transition-colors hover:text-fg {{ request()->routeIs($link['route']) ? 'text-fg' : '' }}"
                     >
                         {{ $link['label'] }}
-                        <span class="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-primary-soft transition-transform duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
+                        <span class="nav-underline absolute inset-x-0 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full transition-transform duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
                     </a>
                 @endforeach
             </nav>
@@ -72,7 +71,7 @@
                     class="group relative py-1 text-base font-bold text-muted transition-colors hover:text-fg {{ request()->routeIs($link['route']) ? 'text-fg' : '' }}"
                 >
                     {{ $link['label'] }}
-                    <span class="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-primary-soft transition-transform duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
+                    <span class="nav-underline absolute inset-x-0 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full transition-transform duration-200 ease-out-strong group-hover:scale-x-100 {{ request()->routeIs($link['route']) ? 'scale-x-100' : '' }}"></span>
                 </a>
             @endforeach
             <x-ui.button href="{{ route('get-involved') }}" size="sm">{{ __('Get Involved') }}</x-ui.button>

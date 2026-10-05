@@ -20,6 +20,7 @@
         aria-hidden="true"
     ></div>
     <x-ui.light-rays class="opacity-70" />
+    <x-ui.triangle-pattern corner="top-right" />
 
     <div @class([
         'relative mx-auto w-full max-w-[110rem] text-center' => ! $sideImage,
