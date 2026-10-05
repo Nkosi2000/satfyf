@@ -1,4 +1,21 @@
 export function initAdmin() {
+    document.querySelectorAll('[data-password-field]').forEach((wrapper) => {
+        const input = wrapper.querySelector('input');
+        const toggle = wrapper.querySelector('[data-password-toggle]');
+        const showIcon = wrapper.querySelector('[data-password-icon="show"]');
+        const hideIcon = wrapper.querySelector('[data-password-icon="hide"]');
+        if (!input || !toggle || !showIcon || !hideIcon) return;
+
+        toggle.addEventListener('click', () => {
+            const isVisible = input.type === 'password';
+            input.type = isVisible ? 'text' : 'password';
+            showIcon.hidden = isVisible;
+            hideIcon.hidden = !isVisible;
+            toggle.setAttribute('aria-pressed', String(isVisible));
+            toggle.setAttribute('aria-label', isVisible ? 'Hide password' : 'Show password');
+        });
+    });
+
     document.querySelectorAll('[data-image-input]').forEach((input) => {
         const preview = document.querySelector(`[data-image-preview="${input.dataset.imageInput}"]`);
         if (!preview) return;

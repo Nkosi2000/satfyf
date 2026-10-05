@@ -60,6 +60,32 @@
         @else
             <img data-image-preview="{{ $name }}" hidden class="mt-2 h-20 w-20 rounded-lg object-cover" alt="" />
         @endif
+    @elseif ($type === 'password')
+        <div class="relative" data-password-field>
+            <input
+                id="field-{{ $name }}"
+                type="password"
+                name="{{ $name }}"
+                class="{{ $inputClasses }} pr-11"
+            />
+            <button
+                type="button"
+                data-password-toggle
+                aria-controls="field-{{ $name }}"
+                aria-pressed="false"
+                aria-label="Show password"
+                class="absolute inset-y-0 right-0 flex w-11 items-center justify-center rounded-r-lg text-muted transition-colors hover:text-fg focus-visible:text-fg focus-visible:outline-none"
+            >
+                <svg data-password-icon="show" viewBox="0 0 20 20" fill="none" class="h-4.5 w-4.5" aria-hidden="true">
+                    <path d="M1.75 10S4.75 4 10 4s8.25 6 8.25 6-3 6-8.25 6S1.75 10 1.75 10Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                    <circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+                <svg data-password-icon="hide" hidden viewBox="0 0 20 20" fill="none" class="h-4.5 w-4.5" aria-hidden="true">
+                    <path d="M8.2 4.2A7.6 7.6 0 0 1 10 4c5.25 0 8.25 6 8.25 6a14 14 0 0 1-2.1 2.9M5.4 5.6C3 7.1 1.75 10 1.75 10S4.75 16 10 16c1.5 0 2.8-.5 3.9-1.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M8.2 8.3a2.5 2.5 0 0 0 3.5 3.5M2.5 2.5l15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+            </button>
+        </div>
     @else
         <input
             id="field-{{ $name }}"

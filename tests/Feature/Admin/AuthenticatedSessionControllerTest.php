@@ -7,6 +7,14 @@ describe('login', function () {
         $this->get(route('admin.login'))->assertOk();
     });
 
+    it('renders a show/hide toggle for the password field', function () {
+        $this->get(route('admin.login'))
+            ->assertOk()
+            ->assertSee('data-password-toggle', false)
+            ->assertSee('aria-controls="field-password"', false)
+            ->assertSee('aria-label="Show password"', false);
+    });
+
     it('logs in an admin user and redirects to the dashboard', function () {
         $user = User::factory()->admin()->create(['password' => 'correct-password']);
 
