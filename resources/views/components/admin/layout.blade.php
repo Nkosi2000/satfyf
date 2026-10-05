@@ -135,7 +135,9 @@
     data-admin-idle-redirect="{{ route('admin.dashboard') }}"
 >
     <div class="flex min-h-screen">
-        <aside data-admin-sidebar class="hidden shrink-0 border-r border-hairline-strong bg-surface lg:flex lg:flex-col">
+        {{-- Pinned to the viewport so it stays visible while the page scrolls;
+             the nav below scrolls on its own when the links outgrow the screen. --}}
+        <aside data-admin-sidebar class="hidden shrink-0 border-r border-hairline-strong bg-surface lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col">
             <div class="flex h-16 items-center justify-between gap-2 border-b border-hairline-strong px-5">
                 <a href="{{ route('admin.dashboard') }}" class="flex min-w-0 items-center gap-2.5">
                     <img src="{{ asset('images/48 x 48.png') }}" alt="SATFYF" class="brand-mark h-9 w-9 shrink-0 rounded-full object-cover" />
@@ -154,7 +156,7 @@
                 </button>
             </div>
 
-            <nav class="flex flex-1 flex-col gap-2 overflow-y-auto p-3">
+            <nav data-admin-sidebar-nav class="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto overscroll-contain p-3">
                 @foreach ($navSections as $heading => $items)
                     <div class="flex flex-col">
                         @if ($heading)

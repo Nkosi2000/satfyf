@@ -36,6 +36,19 @@ it('renders the collapsible sidebar and breadcrumb trail', function () {
         ->assertSee('aria-label="Breadcrumb"', false);
 });
 
+it('pins the sidebar to the viewport with its own scrolling nav', function () {
+    $admin = User::factory()->admin()->create();
+
+    $html = $this->actingAs($admin)
+        ->get(route('admin.dashboard'))
+        ->assertOk()
+        ->getContent();
+
+    expect($html)
+        ->toMatch('/<aside data-admin-sidebar class="[^"]*\blg:sticky lg:top-0\b[^"]*\blg:h-screen\b/')
+        ->toMatch('/<nav data-admin-sidebar-nav class="[^"]*\boverflow-y-auto\b/');
+});
+
 it('renders every nav section closed on the dashboard', function () {
     $admin = User::factory()->admin()->create();
 
