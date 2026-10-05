@@ -33,6 +33,19 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
 
+        // Social profiles shared by the footer and the fixed left-hand
+        // social rail — only the ones with a URL set in admin are listed.
+        View::composer(['components.footer', 'components.social-rail'], function ($view): void {
+            $social = SiteSetting::group('social');
+
+            $view->with('socials', collect([
+                ['label' => 'Facebook', 'url' => $social['social_facebook'] ?? null, 'icon' => 'facebook'],
+                ['label' => 'Instagram', 'url' => $social['social_instagram'] ?? null, 'icon' => 'instagram'],
+                ['label' => 'Twitter', 'url' => $social['social_twitter'] ?? null, 'icon' => 'twitter'],
+                ['label' => 'YouTube', 'url' => $social['social_youtube'] ?? null, 'icon' => 'youtube'],
+            ])->filter(fn (array $social): bool => filled($social['url']))->values()->all());
+        });
+
         // SatfyfBot: generous enough for a real back-and-forth conversation,
         // tight enough to bound the cost of scripted abuse from a single IP.
         RateLimiter::for('chat', fn (Request $request) => [

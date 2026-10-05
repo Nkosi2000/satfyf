@@ -72,6 +72,7 @@
     </main>
 
     <x-footer />
+    <x-social-rail />
     <x-chatbot />
     <x-back-to-top />
     <x-cookie-banner />

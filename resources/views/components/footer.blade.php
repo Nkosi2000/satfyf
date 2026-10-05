@@ -16,13 +16,6 @@
 
     // Same pages as the header's secondary nav (config/navigation.php).
     $supportNav = config('navigation.secondary');
-
-    $socials = [
-        ['label' => 'Facebook', 'url' => $settings['social_facebook'] ?? null, 'icon' => 'facebook'],
-        ['label' => 'Instagram', 'url' => $settings['social_instagram'] ?? null, 'icon' => 'instagram'],
-        ['label' => 'Twitter', 'url' => $settings['social_twitter'] ?? null, 'icon' => 'twitter'],
-        ['label' => 'YouTube', 'url' => $settings['social_youtube'] ?? null, 'icon' => 'youtube'],
-    ];
 @endphp
 
 <footer class="section-divider relative overflow-hidden bg-cream-raised">

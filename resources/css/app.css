@@ -553,8 +553,60 @@ html {
     }
 }
 
-.tab-hidden .coin {
+.tab-hidden .coin,
+.tab-hidden .hero-coin .coin-face {
     animation-play-state: paused;
+}
+
+/* Home hero coin — each face changes to the next logo colour at the moment
+   it's turned fully away (front at mid-spin, back at the start of a spin),
+   so the swap is never seen and every turn shows a new background. The
+   colour cycle runs over three spins of .coin's 7s rotation (21s), and
+   steps(1, end) holds each colour until its next keyframe instead of
+   fading. Front colours are picked to keep the red/green fist readable;
+   back colours all carry white text at AA. */
+.hero-coin-front {
+    background-color: var(--color-brand-blue);
+    animation: hero-coin-front-colors 21s steps(1, end) infinite;
+}
+
+.hero-coin-back {
+    background-color: var(--color-brand-red);
+    animation: hero-coin-back-colors 21s steps(1, end) infinite;
+}
+
+@keyframes hero-coin-front-colors {
+    0% {
+        background-color: var(--color-brand-blue);
+    }
+
+    16.667% {
+        background-color: var(--color-brand-orange);
+    }
+
+    50% {
+        background-color: #fbf7f1;
+    }
+
+    83.333%,
+    100% {
+        background-color: var(--color-brand-blue);
+    }
+}
+
+@keyframes hero-coin-back-colors {
+    0% {
+        background-color: var(--color-brand-red);
+    }
+
+    33.333% {
+        background-color: var(--color-brand-green);
+    }
+
+    66.667%,
+    100% {
+        background-color: var(--color-brand-dark-brown);
+    }
 }
 
 /* Browsers without backdrop-filter support would otherwise render .glass at
@@ -1386,7 +1438,8 @@ img[data-loaded] {
     .chatbot-ping,
     .empty-state-ping,
     .ambient-backdrop span,
-    .coin {
+    .coin,
+    .hero-coin .coin-face {
         animation: none;
     }
 
@@ -1484,6 +1537,6 @@ img[data-loaded] {
    in the full logo-colour sweep instead of a plain hairline. border-image
    only paints the sides that have a width, so this stays a top rule. */
 .section-divider {
-    border-top: 2px solid transparent;
+    border-top: 5px solid transparent;
     border-image: var(--gradient-brand) 1;
 }

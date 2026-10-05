@@ -7,13 +7,48 @@
         .text-gradient-accent in app.css for the tokens this introduces.
     --}}
     <div class="bg-cream">
-        {{-- Hero — full-bleed brand cover image, no overlaid content. --}}
-        <section class="relative overflow-hidden">
-            <img
-                src="{{ asset('images/SATFYF-Facebook-Cover-1280x474.jpeg') }}"
-                alt="SATFYF"
-                class="aspect-[1280/474] w-full object-cover"
-            />
+        {{-- Hero — copy on the left; on the right the brand fist as the
+             front face of a spinning coin, with the 2030 vision on the back.
+             Each face swaps to a new logo colour while it's turned away (see
+             .hero-coin in app.css), so every turn shows a fresh background. --}}
+        <section data-home-hero class="relative overflow-hidden pt-16 pb-20 sm:pt-20 sm:pb-28">
+            <x-ui.light-rays class="opacity-80" />
+            <x-ui.triangle-pattern corner="top-right" class="opacity-60" />
+
+            <div class="hero-enter relative mx-auto grid w-full max-w-[110rem] items-center gap-14 px-6 sm:px-8 lg:grid-cols-[1.1fr_0.9fr]">
+                <div>
+                    <x-ui.eyebrow soft icon>{{ $hero['hero_eyebrow'] ?? __('South African Tobacco-Free Youth Forum') }}</x-ui.eyebrow>
+
+                    <h1 class="mt-6 text-balance text-5xl leading-[1.05] font-black tracking-tight text-fg sm:text-6xl lg:text-7xl">
+                        {{ $hero['hero_heading'] ?? __('Speak up. Stand out.') }}
+                        <span class="text-gradient-accent">{{ $hero['hero_heading_accent'] ?? __('A smoke-free generation.') }}</span>
+                    </h1>
+
+                    <p class="mt-7 max-w-xl text-balance text-lg leading-relaxed text-muted">
+                        {{ $hero['hero_subtext'] ?? '' }}
+                    </p>
+
+                    <div class="mt-9 flex flex-wrap items-center gap-4">
+                        <x-ui.button href="{{ route('get-involved') }}" size="lg" magnetic>{{ __('Get Involved') }}</x-ui.button>
+                        <x-ui.button href="{{ route('who-we-are') }}" variant="secondary" size="lg">{{ __('Who We Are') }}</x-ui.button>
+                    </div>
+
+                    <p class="mt-7 text-sm font-medium text-faint">{{ __('Youth-led') }} &middot; {{ __('No membership fee') }} &middot; {{ __('Open to every school and community') }}</p>
+                </div>
+
+                <div class="coin-wrap relative mx-auto flex aspect-square w-full max-w-xs items-center justify-center sm:max-w-sm">
+                    <div class="coin hero-coin relative h-full w-full">
+                        <div class="coin-face hero-coin-front flex h-full w-full items-center justify-center rounded-full border-[3px] border-fg" style="box-shadow: var(--shadow-soft)">
+                            <img src="{{ asset('images/hero-fist.png') }}" alt="{{ __('A raised fist in the South African flag colours, crushing cigarettes') }}" class="h-[78%] w-[78%] object-contain" />
+                        </div>
+                        <div class="coin-face coin-face-back hero-coin-back flex h-full w-full flex-col items-center justify-center rounded-full border-[3px] border-fg text-center" style="box-shadow: var(--shadow-soft)">
+                            <img src="{{ asset('images/48 x 48.png') }}" alt="" class="brand-mark h-14 w-14 rounded-full border-[3px] border-on-accent object-cover sm:h-16 sm:w-16" />
+                            <p class="mt-4 text-5xl font-black text-on-accent sm:text-6xl">2030</p>
+                            <p class="text-xs font-bold tracking-[0.14em] text-on-accent uppercase">{{ __('Our Vision') }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         {{-- A loud, kinetic ticker strip — the marquee treatment used again

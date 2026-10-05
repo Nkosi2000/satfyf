@@ -33,7 +33,21 @@ it('renders the site-wide fluid smoke backdrop', function () {
 it('renders the ticker strip directly below the home hero', function () {
     $html = $this->get('/')->assertOk()->getContent();
 
-    expect($html)->toMatch('/SATFYF-Facebook-Cover-1280x474\.jpeg.*?<\/section>\s*(?:<!--.*?-->\s*)?<div data-hero-ticker/s');
+    expect($html)->toMatch('/<section data-home-hero.*?<\/section>\s*(?:<!--.*?-->\s*)?<div data-hero-ticker/s');
+});
+
+it('renders the home hero copy beside the spinning brand coin', function () {
+    $this->get('/')
+        ->assertOk()
+        ->assertSeeInOrder([
+            'data-home-hero',
+            __('Speak up. Stand out.'),
+            __('Get Involved'),
+            'hero-coin-front',
+            'images/hero-fist.png',
+            'hero-coin-back',
+            __('Our Vision'),
+        ], false);
 });
 
 it('renders the brand triangle pattern in inner page heroes and the footer', function () {
@@ -282,4 +296,21 @@ it('prefills the get-involved contact subject from the interest query parameter'
     $this->get('/get-involved?interest=Become a Youth Ambassador')
         ->assertOk()
         ->assertSee('value="Become a Youth Ambassador"', false);
+});
+
+it('pins the saved social profiles to the left edge of every page', function () {
+    SiteSetting::query()->updateOrCreate(['key' => 'social_facebook'], ['group' => 'social', 'value' => json_encode(['en' => 'https://facebook.com/SATFYF2030'])]);
+    SiteSetting::query()->updateOrCreate(['key' => 'social_instagram'], ['group' => 'social', 'value' => json_encode(['en' => ''])]);
+
+    $html = $this->get('/contact')->assertOk()->getContent();
+
+    expect($html)->toMatch('/<aside\s+data-social-rail.*?href="https:\/\/facebook\.com\/SATFYF2030".*?<\/aside>/s')
+        ->and($html)->not->toMatch('/<aside\s+data-social-rail[^>]*>(?:(?!<\/aside>).)*aria-label="Instagram"/s');
+});
+
+it('omits the social rail when no social profiles are set', function () {
+    SiteSetting::query()->where('group', 'social')->delete();
+    SiteSetting::forgetCache();
+
+    $this->get('/contact')->assertOk()->assertDontSee('data-social-rail', false);
 });
