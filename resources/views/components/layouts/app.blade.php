@@ -48,6 +48,18 @@
         <span></span>
         <span></span>
     </div>
+    {{--
+        One site-wide fluid-smoke canvas rather than one per section: the
+        effect is transparent by default and already meant to blend into
+        whatever sits behind it, so a single fixed layer behind the entire
+        page reads the same as many separate ones would, at a fraction of
+        the WebGL cost (one context and one shader compile per page load).
+        The sticky nav's bar is 85% opaque cream, so the smoke only shows
+        through it as a faint blur.
+    --}}
+    <div class="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+        <x-ui.fluid-smoke :speed="0.25" :scale="1.1" :warp="0.9" :rise="0.25" :swirl="0.2" :contrast="1.4" :softness="0.45" :mouse="0.3" />
+    </div>
     <div class="site-edge-accent" aria-hidden="true"></div>
     <div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
 

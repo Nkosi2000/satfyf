@@ -24,6 +24,12 @@ it('renders each simple public page successfully', function (string $uri, string
     'privacy' => ['/privacy', 'What we store, and why.'],
 ]);
 
+it('renders the site-wide fluid smoke backdrop', function () {
+    $this->get('/')
+        ->assertOk()
+        ->assertSee('data-fluid-smoke', false);
+});
+
 it('renders the no-smoking animation canvas below the Why We Exist heading', function () {
     $this->get('/')
         ->assertOk()
